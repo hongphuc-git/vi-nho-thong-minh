@@ -2,7 +2,7 @@
 import { publicAsset } from '@/lib/publicAsset'
 import { ref, watch } from 'vue'
 import { motion } from 'motion-v'
-import { ArrowUpRight, BookOpen, GraduationCap, Heart, Lightbulb, Mail, Megaphone, NotebookPen, Phone, School, Users } from '@lucide/vue'
+import { ArrowUpRight, BookOpen, GraduationCap, Heart, Lightbulb, Mail, Megaphone, NotebookPen, Phone, School, Users, Wallet, Pencil, Sprout } from '@lucide/vue'
 import { Card } from '@/components/ui/card'
 
 const props = withDefaults(defineProps<{ photoSrc?: string }>(), {
@@ -44,6 +44,10 @@ const members = [
         <dl class="team-facts">
           <Card class="team-fact"><dt><School aria-hidden="true" /> ĐƠN VỊ THỰC HIỆN</dt><dd>Trường THCS Thượng Long</dd><dd class="fact-detail">Phân hiệu Phúc Khánh · Xã Thượng Long, Phú Thọ</dd></Card>
         </dl>
+        <div class="team-paper-signature">
+          <div class="team-tools-icons" aria-hidden="true"><span><Wallet /></span><span><NotebookPen /></span><span><Pencil /></span><span><Sprout /></span></div>
+          <p>Mỗi bạn một thế mạnh.<br /><strong>Cùng làm nên điều có ích.</strong></p>
+        </div>
       </motion.div>
     </div>
 
@@ -164,6 +168,26 @@ const members = [
 .team-photo-class { position: absolute; right: -9px; bottom: 62px; display: flex; align-items: center; gap: 7px; padding: 9px 14px; background: #ffe6a4; color: #73512b; font-family: 'Lora', Georgia, serif; font-size: 15px; transform: rotate(-5deg); box-shadow: 1px 3px 5px #78573218; border-radius: 2px 7px 3px 5px; }
 .team-photo-class svg { width: 15px; height: 15px; color: #b58137; }
 @media (max-width: 500px) { .team-photo { margin: 12px 6px 14px; padding: 0; } .team-photo-paper { padding: 13px 13px 10px; } .team-photo-paper figcaption { padding: 15px 4px 9px; font-size: 13px; } .team-photo-paper figcaption svg { width: 13px; } .team-photo-class { bottom: 62px; right: -5px; font-size: 12px; padding: 7px 10px; } .team-photo-clip { height: 46px; width: 15px; left: 20px; } .team-tape { width: 78px; height: 25px; top: -8px; } }
+
+.team-spread { align-items: stretch; }
+.team-paper { display: flex; flex-direction: column; justify-content: center; margin-block: 10px 17px; padding: clamp(28px, 3vw, 40px); box-shadow: 0 6px 20px #7955360a; }
+.paper-heading h3 { font-size: clamp(30px, 2.8vw, 39px); line-height: 1.4; margin-top: 12px; }
+.team-intro { font-size: 15px; line-height: 1.9; margin-top: 17px; }
+.team-facts { margin-top: 25px; }
+.team-fact { padding: 21px; }
+.team-fact dd { font-size: 21px; }
+.team-paper-signature { display: flex; align-items: center; flex-wrap: wrap; gap: 17px; padding-top: 23px; margin-top: 25px; border-top: 1px dashed #d9cbbb; }
+.team-tools-icons { display: flex; gap: 8px; }
+.team-tools-icons > span { display: grid; place-items: center; width: 43px; height: 48px; border-radius: 11px 5px 11px 5px; background: #d9ecf8; color: #47799d; }
+.team-tools-icons > span:nth-child(2) { background: #f9dfe9; color: #aa6a83; }
+.team-tools-icons > span:nth-child(3) { background: #fff0bd; color: #ac8235; }
+.team-tools-icons > span:nth-child(4) { background: #e1edd4; color: #6c8a57; }
+.team-tools-icons svg { width: 27px; height: 27px; stroke-width: 1.4; }
+.team-paper-signature p { font-family: 'Lora', Georgia, serif; font-size: 13px; font-style: italic; line-height: 1.8; color: #80634f; }
+.team-paper-signature strong { font-weight: 500; color: #654631; }
+@media (max-width: 1050px) { .team-paper { padding: 27px; } .team-tools-icons > span { width: 37px; height: 42px; } }
+@media (max-width: 800px) { .team-paper { margin-block: 0; } }
+@media (max-width: 500px) { .team-paper { padding: 25px 20px; } .paper-heading h3 { font-size: 30px; } .team-intro { font-size: 14px; } .team-fact { padding: 17px; } .team-fact dd { font-size: 19px; } }
 </style>
 
 
