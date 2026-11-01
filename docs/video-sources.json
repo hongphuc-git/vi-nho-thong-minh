@@ -1,0 +1,30 @@
+{
+  "sources": [
+    {
+      "original": "75b19e1f-e2e2-4a02-9ad5-a105e9f674c0.mp4",
+      "video": "public/videos/gioi-thieu-tu-lop-hoc.mp4",
+      "poster": "public/images/video-posters/gioi-thieu-tu-lop-hoc.jpg",
+      "posterTimestampSeconds": 2.7
+    },
+    {
+      "original": "16e6bc6d-e017-4ed1-a488-9284a8fa0f62.mp4",
+      "video": "public/videos/nhom-du-an-tai-truong.mp4",
+      "poster": "public/images/video-posters/nhom-du-an-tai-truong.jpg",
+      "posterTimestampSeconds": 2.7
+    },
+    {
+      "original": "315934a7-4334-406e-83c1-05df7b059336.mp4",
+      "video": "public/videos/cau-chuyen-do-dung-hoc-tap.mp4",
+      "poster": "public/images/video-posters/cau-chuyen-do-dung-hoc-tap.jpg",
+      "posterTimestampSeconds": 4
+    },
+    {
+      "original": "2e00f107-7486-40b1-ac39-64d12684e039.mp4",
+      "video": "public/videos/khoanh-khac-cua-nhom.mp4",
+      "poster": "public/images/video-posters/khoanh-khac-cua-nhom.jpg",
+      "posterTimestampSeconds": 1
+    }
+  ],
+  "duplicateOmitted": "75b19e1f-e2e2-4a02-9ad5-a105e9f674c0 (1).mp4",
+  "originalsPreserved": true
+}

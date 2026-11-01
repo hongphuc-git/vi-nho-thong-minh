@@ -1,0 +1,10 @@
+# Ảnh nền phần mở đầu
+
+- Công cụ: built-in `image_gen`, qua skill `imagegen`.
+- File được dùng trên website: `public/images/financial-learning-hero.png`.
+- Mục đích: ảnh minh họa cho màn hình mở đầu toàn chiều rộng, theo chủ đề Ví nhỏ thông minh.
+- Đây không phải ảnh hoạt động thực tế, ảnh học sinh trong nhóm hoặc ảnh sản phẩm mẫu đã hoàn thiện. Website có chú thích ảnh minh họa được tạo bằng AI.
+
+## Prompt đã dùng
+
+Use case: photorealistic-natural. Asset type: full-bleed website landing hero background, landscape 16:9, high resolution. Create a beautiful cinematic editorial photograph-style illustration for a Vietnamese secondary school student entrepreneurship project about a four-compartment physical wallet and financial learning kit. Scene: warm authentic rural northern Vietnamese classroom and study table next to open wooden windows, lush green school garden and hazy mountains visible outdoors, warm late afternoon sunshine from upper right. Foreground right: a tactile denim fabric wallet opened to four pastel fabric pockets (sage green, golden yellow, dusty blue, muted peach), simple icon motifs without words; a cream notebook, blank activity cards, pencils, small plant and a few neutral play tokens on a wooden desk. Upper right/background: two Vietnamese secondary-school-age students in simple white school shirts, quietly learning together, naturally composed, small and softly out of focus, not portraits of real people. Composition: very wide environmental scene filling entire image, dark rich forest green shaded area and lower contrast across left 60 percent for a large cream headline and text overlay to be placed later by code; detailed learning kit on lower right 35 percent and depth with classroom greenery in background. No text, letters, numbers, logos, currency banknotes, watermarks, UI, frames or buttons anywhere. Premium natural photography feel, realistic materials, subtle film grain, emotionally warm, green and amber palette, cinematic sun rays, not cartoon or 3D render. Main physical subject must remain in frame when cropped to a portrait mobile viewport focused on right center.

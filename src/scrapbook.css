@@ -1,0 +1,211 @@
+/* Shared paper, ink and stationery details for the scrapbook direction. */
+:root {
+  --background: #fffaf1;
+  --foreground: #54392c;
+  --primary: #583023;
+  --primary-foreground: #fffaf1;
+  --secondary: #e0eef8;
+  --secondary-foreground: #285c92;
+  --muted: #f4eee3;
+  --muted-foreground: #786657;
+  --border: #dfd3c2;
+  --ring: #397db1;
+  --paper: #fffaf1;
+  --ink: #54392c;
+  --sage: #d9e8ce;
+  --yellow: #f9e6a6;
+  --blue: #c9e3f5;
+  --pink: #f4d0dc;
+}
+
+body {
+  background-color: var(--paper);
+  background-image: linear-gradient(#93b7d110 1px, transparent 1px), linear-gradient(90deg, #93b7d110 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+::selection { background: #c6e4f7; color: #542f24; }
+#app .serif-word { color: #28649c; }
+#app .eyebrow { color: #326590; }
+#app .project-highlights { background: #e6f1f8; border-bottom: 1px dashed #b8cddd; }
+#app .highlight-number { color: #593322; }
+#app .learning-ticker { background: #d5e9f5; }
+#app .information-card,
+#app .information-accordion,
+#app .content-accordion,
+#app .featured-video,
+#app .playlist-button {
+  background: #fffdf7;
+  color: #54392c;
+  border-color: #ddceba;
+  border-width: 1px;
+  border-radius: 8px 18px 10px 16px;
+  box-shadow: 3px 5px 0 #e4d9c52e;
+}
+#app .information-card:nth-child(1) { background: #eaf4fc; }
+#app .information-card:nth-child(2) { background: #fff4d2; }
+#app .information-card > svg,
+#app .information-accordion summary > span > svg,
+#app .summary-topic-content a { color: #2a659a; }
+#app .group-photo { border: 9px solid #fffdf6; border-radius: 5px; box-shadow: 0 5px 16px #62453018; }
+#app .group-photo-placeholder { background: radial-gradient(ellipse at top right, #f2ccdd99, transparent 70%), #e5f0f8; }
+#app .group-photo-placeholder h3 { color: #583a2b; }
+#app .player-heading { background: #604033; color: #fffaf1; }
+#app .content-icon { color: #306897; background: #e1eff8; }
+#app .canvas-block { background: #fcf6e9; border-color: #e3d7c3; border-radius: 7px; }
+#app .canvas-highlighted { background: #e4eff8; }
+#app .canvas-block h3 { color: #306393; }
+#app .content-table-scroll caption { background: #e2eef7; color: #355b80; }
+#app .content-table-scroll thead th { background: #f3eadd; color: #604333; }
+#app .kit-section { background: #eef5fa; }
+@media (min-width: 601px) { #app .kit-section { padding-bottom: 62px; } }
+#app .kit-card { border: 1px solid #d8d4c9; border-radius: 5px; box-shadow: 4px 6px 0 #a8bdcd20; overflow: visible; }
+#app .kit-art { position: relative; border-radius: 3px; }
+#app .kit-art::after { content: ''; position: absolute; top: -12px; left: calc(50% - 32px); width: 64px; height: 24px; background: #f0cf7c99; transform: rotate(-7deg); }
+#app .kit-card:nth-child(even) .kit-art::after { background: repeating-linear-gradient(135deg, #f3bdd399 0 7px, #fff6edbb 7px 14px); transform: rotate(8deg); }
+#app .kit-wallet .kit-art img { max-width: 90%; max-height: 88%; object-fit: contain; transform: rotate(-5deg); }
+#app .kit-image-preview { display: grid; place-items: center; width: 100%; height: 100%; }
+#app .kit-image-preview .image-preview-trigger { display: grid; place-items: center; height: 100%; }
+#app .kit-image-preview img { width: auto; height: auto; max-width: 78%; max-height: 190px; object-fit: contain; transform: rotate(-5deg); box-shadow: 4px 6px 12px #54392c20; }
+#app .kit-wallet .kit-image-preview img { max-width: 86%; max-height: 190px; }
+#app .kit-image-preview .image-preview-hint { bottom: 10px; right: 10px; }
+@media (prefers-reduced-motion: no-preference) {
+  #app .kit-image-preview img { transition: transform .3s ease, box-shadow .3s ease; }
+  #app .kit-card:focus-within .kit-image-preview img { transform: rotate(0deg) translateY(-4px); box-shadow: 5px 10px 18px #54392c26; }
+  #app .kit-image-preview .image-preview-trigger:active img { transform: rotate(0deg) scale(.97); }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  #app .kit-card:hover .kit-image-preview img { transform: rotate(0deg) translateY(-5px) scale(1.025); box-shadow: 5px 10px 18px #54392c26; }
+}
+@media (max-width: 600px) {
+  #app .kit-image-preview img, #app .kit-wallet .kit-image-preview img { max-height: 135px; }
+  #app .kit-image-preview .image-preview-hint { padding: 4px 6px; font-size: 9px; bottom: 5px; right: 5px; }
+}
+#app .pocket-card { border-radius: 8px 8px 30px 8px; border: 1px solid #a0a0a020; }
+#app .playground-section { background: #f8eaf0; }
+#app .allocation-panel,
+#app .scenario-panel { background: #fffdf7; border: 1px solid #e0cbcf; border-radius: 10px; box-shadow: 4px 6px 0 #c396a51a; }
+#app .journey-marker > span:first-child { background: #d9eaf6; color: #2c608c; border: 1px dashed #8caec8; border-radius: 8px; }
+#app .journey-grid li:last-child .journey-marker > span:first-child { background: #fce6a5; color: #644425; border-color: #c7a958; }
+#app .journey-footnote { background: #f4ead8; border: 1px dashed #dac6a7; }
+#app .together-section { background: #5c3c30; }
+#app .together-section .serif-word,
+#app .contact-card .serif-word { color: #c1e0f5; }
+#app .together-quote > p,
+#app .audience-grid p,
+#app .contact-card > div > p:not(.eyebrow) { color: #eee0d3; }
+#app .contact-card { background: #5c382b; border-radius: 10px; border: 1px solid #6e4a39; }
+#app .contact-card .eyebrow { color: #e8d5ba; }
+#app .cream-button { background: #dceefb; color: #553a2d; }
+#app .cream-button:hover { background: #c4e2f7; }
+#app .price-tag { background: #fff0b7; color: #5c3b26; }
+#app .price-tag::before { background: repeating-linear-gradient(135deg, #f1b8cebb 0 7px, #fff6e7bb 7px 14px); }
+#app .brand-symbol { color: #396d9a; background: #dcecf7; }
+#app .footer-logo { display: block; width: 142px; flex-shrink: 0; }
+#app .footer-logo img { display: block; width: 100%; height: auto; object-fit: contain; }
+#app .featured-video-copy h3,
+#app .playlist-heading h3,
+#app .playlist-title { color: #5b3c2d; }
+#app .playlist-button.is-selected { background: #e6f1fa; border-color: #84afcf; }
+#app .floating-contact { background: #f5d1df; color: #583023; border: 2px solid #fffaf1; }
+#app .floating-contact:hover { background: #ecc0d2; }
+
+/* Unified 1240px shell & readable typography scale across all sections */
+#app .shell { width: min(1240px, calc(100% - 96px)); }
+#app .eyebrow { font-size: 12px; letter-spacing: 1.6px; margin-bottom: 16px; }
+#app .text-link { font-size: 14px; }
+#app .promise-strip { background: #f3f8fc; border-block: 1px dashed #c5d9e8; }
+#app .promise-inner > span { font-size: 14.5px; font-weight: 600; color: #473120; }
+#app .promise-inner > span svg { color: #2b6291; width: 20px; height: 20px; }
+#app .section-heading > p,
+#app .section-heading > div > p:not(.eyebrow),
+#app .center-heading > p:last-child { font-size: 15px; line-height: 1.8; color: #5f4936; }
+
+/* Bộ công cụ */
+#app .kit-card { border-radius: 14px; background: #fffdf8; box-shadow: 0 4px 0 #dce7f0, 0 12px 24px #54392c0a; }
+#app .item-number { font-family: 'Lora', Georgia, serif; font-style: italic; font-weight: 700; font-size: 16px; color: #4d3726; }
+#app .kit-card-copy { padding: 18px 20px 24px; }
+#app .kit-card-copy h3 { font-family: 'Lora', Georgia, serif; font-size: 18.5px; font-weight: 700; color: #3f2818; }
+#app .kit-card-copy p { font-size: 14px; line-height: 1.75; color: #634d3a; margin-top: 8px; }
+#app .image-note { font-size: 13px; color: #6e5945; margin-top: 24px; }
+
+/* Bốn ngăn ví */
+#app .pocket-card { padding: 26px 24px 38px; box-shadow: 0 4px 0 #0000000a, 0 10px 20px #54392c0a; }
+#app .pocket-card-top > span { font-family: 'Lora', Georgia, serif; font-style: italic; font-weight: 700; font-size: 18px; opacity: .75; }
+#app .pocket-card h3 { font-family: 'Lora', Georgia, serif; font-size: 19.5px; font-weight: 700; color: #3d2717; }
+#app .pocket-card > p { font-size: 14.5px; line-height: 1.75; color: #4e3827; }
+
+/* Trải nghiệm tương tác */
+#app .allocation-panel,
+#app .scenario-panel { padding: 32px; border-radius: 18px; box-shadow: 0 4px 0 #e9d8de, 0 12px 24px #54392c0a; }
+#app .panel-title h3 { font-family: 'Lora', Georgia, serif; font-size: 21px; font-weight: 700; color: #3f2818; }
+#app .panel-description { font-size: 14px; color: #67523f; }
+#app .allocation-row > div { font-size: 14.5px; font-weight: 500; color: #46301f; }
+#app .allocation-total { font-size: 14px; padding: 16px 18px; border-radius: 12px; background: #eef5fa; border: 1px solid #d1e2ef; color: #3f2818; }
+#app .allocation-total > strong { font-size: 17px; color: #286299; }
+#app .allocation-total.over-budget { background: #f8e2d7; border-color: #e9c2b0; color: #853e25; }
+#app .allocation-total.over-budget > strong { color: #853e25; }
+#app .activity-note,
+#app .playground-privacy { font-size: 13px; color: #6c5743; }
+#app .scenario-label { font-size: 11.5px; color: #2c6293; }
+#app .scenario-panel > h3 { font-family: 'Lora', Georgia, serif; font-size: 27px; font-weight: 700; color: #3f2818; }
+#app .scenario-panel > p:not(.activity-note) { font-size: 14.5px; line-height: 1.8; color: #5c4633; }
+#app .answer-button { font-size: 14px; font-weight: 500; padding: 14px 16px; min-height: 52px; border-radius: 12px; color: #452e1d; }
+#app .answer-button.selected { background: #eaf3fb; border-color: #6b9ec7; font-weight: 600; }
+#app .scenario-feedback { font-size: 14px; line-height: 1.75; padding: 12px 16px; background: #fcf7eb; border-radius: 0 10px 10px 0; color: #4f3927; }
+
+/* Hành trình 30 ngày */
+#app .small-label { font-size: 12.5px; font-weight: 600; padding: 6px 13px; background: #eef5fa; border-color: #c9dced; color: #2b5f8c; }
+#app .journey-grid { gap: 20px; }
+#app .journey-grid > li { display: flex; flex-direction: column; padding: 22px 20px; background: #fffdf8; border: 1px solid #dfd3c0; border-radius: 18px; box-shadow: 0 4px 0 #e9dfd0, 0 10px 20px #54392c0a; }
+#app .journey-marker { margin-bottom: 18px; }
+#app .journey-marker > span:first-child { font-family: 'Lora', Georgia, serif; font-weight: 700; font-size: 15px; }
+#app .journey-grid .eyebrow { font-size: 11.5px; margin-bottom: 8px; }
+#app .journey-grid h3 { font-family: 'Lora', Georgia, serif; font-size: 19.5px; font-weight: 700; color: #3f2818; }
+#app .journey-grid h3 + p { font-size: 14.5px; line-height: 1.75; color: #5e4835; margin-top: 10px; }
+#app .journey-days { align-self: flex-start; font-size: 12px; font-weight: 600; color: #2c6293; background: #eef5fa; padding: 4px 11px; border-radius: 999px; margin-top: auto; }
+#app .journey-footnote { padding: 20px 26px; border-radius: 14px; }
+#app .journey-footnote p { font-size: 14px; line-height: 1.75; color: #5a4431; }
+
+/* Cùng đồng hành, FAQ, Liên hệ & Footer */
+#app .together-quote > p { font-size: 15px; max-width: 420px; }
+#app .audience-symbol { font-size: 21px; font-weight: 700; }
+#app .audience-grid h3 { font-family: 'Lora', Georgia, serif; font-size: 19px; font-weight: 700; }
+#app .audience-grid p { font-size: 14.5px; line-height: 1.8; }
+#app .project-status { padding: 24px 28px; border-radius: 16px; }
+#app .project-status > div { font-size: 15px; color: #432c1b; }
+#app .project-status > p { font-size: 14px; line-height: 1.8; color: #5f4a37; }
+#app .project-status > span { font-size: 11.5px; font-weight: 700; color: #786049; }
+#app .faq-section > div > p:last-child { font-size: 15px; color: #634d3a; }
+#app .faq-list summary { font-size: 16px; font-weight: 600; color: #3f2818; }
+#app .faq-list details > p { font-size: 14.5px; line-height: 1.85; color: #5b4532; }
+#app .contact-card { border-radius: 22px; padding: 52px 58px; }
+#app .contact-card .eyebrow { font-size: 12px; }
+#app .contact-card > div > p:not(.eyebrow) { font-size: 15px; line-height: 1.85; }
+#app .contact-phone { font-size: 15px; font-weight: 600; }
+#app .price-tag { width: 265px; border-radius: 12px; }
+#app .price-tag > span:first-child { font-size: 11.5px; font-weight: 700; }
+#app .price-tag > p { font-size: 13.5px; line-height: 1.8; }
+#app .price-tag .price-note { font-size: 12px; color: #6c5742; line-height: 1.65; }
+#app .footer-main > p { font-size: 14px; color: #624d3a; }
+#app .footer-bottom { font-size: 13px; color: #6e5946; }
+
+@media (max-width: 1100px) {
+  #app .shell { width: calc(100% - 64px); }
+}
+
+@media (max-width: 800px) {
+  #app .shell { width: calc(100% - 40px); }
+  #app .contact-card { padding: 38px 28px; }
+}
+
+@media (max-width: 600px) {
+  #app .shell { width: calc(100% - 32px); }
+  #app .allocation-panel,
+  #app .scenario-panel { padding: 22px 18px; }
+  #app .contact-card { padding: 32px 22px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #app .kit-art img { transition: none; }
+}
