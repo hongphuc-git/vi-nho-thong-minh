@@ -3,17 +3,52 @@ import { onMounted, onUnmounted, ref } from 'vue'
 import { Button } from '@/components/ui/button'
 
 const currentHash = ref('#tom-tat')
+const navigationElement = ref<HTMLElement | null>(null)
+let scrollFrame: number | undefined
+let navigationObserver: ResizeObserver | undefined
 
-function updateCurrentHash() {
-  currentHash.value = window.location.hash || '#tom-tat'
+function updateCurrentSection() {
+  scrollFrame = undefined
+  const activationLine = (navigationElement.value?.getBoundingClientRect().height ?? 78) + 40
+  let activeHref = '#tom-tat'
+  let lastHref = activeHref
+
+  for (const item of navigation) {
+    const section = document.getElementById(item.href.slice(1))
+    if (!section) continue
+    lastHref = item.href
+    if (section.getBoundingClientRect().top <= activationLine) activeHref = item.href
+  }
+
+  if (window.scrollY > 0 && window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2) {
+    activeHref = lastHref
+  }
+  currentHash.value = activeHref
+}
+
+function scheduleSectionUpdate() {
+  if (scrollFrame !== undefined) return
+  scrollFrame = window.requestAnimationFrame(updateCurrentSection)
 }
 
 onMounted(() => {
-  updateCurrentHash()
-  window.addEventListener('hashchange', updateCurrentHash)
+  scheduleSectionUpdate()
+  window.addEventListener('scroll', scheduleSectionUpdate, { passive: true })
+  window.addEventListener('resize', scheduleSectionUpdate)
+  window.addEventListener('hashchange', scheduleSectionUpdate)
+  window.addEventListener('pageshow', scheduleSectionUpdate)
+  navigationObserver = new ResizeObserver(scheduleSectionUpdate)
+  navigationObserver.observe(document.documentElement)
 })
 
-onUnmounted(() => window.removeEventListener('hashchange', updateCurrentHash))
+onUnmounted(() => {
+  window.removeEventListener('scroll', scheduleSectionUpdate)
+  window.removeEventListener('resize', scheduleSectionUpdate)
+  window.removeEventListener('hashchange', scheduleSectionUpdate)
+  window.removeEventListener('pageshow', scheduleSectionUpdate)
+  navigationObserver?.disconnect()
+  if (scrollFrame !== undefined) window.cancelAnimationFrame(scrollFrame)
+})
 
 const navigation = [
   { href: '#tom-tat', label: 'Dự án' },
@@ -29,7 +64,7 @@ const navigation = [
 </script>
 
 <template>
-  <nav class="site-navigation" aria-label="Điều hướng các phần của dự án">
+  <nav ref="navigationElement" class="site-navigation" aria-label="Điều hướng các phần của dự án">
     <div class="navigation-inner">
       <Button
         v-for="item in navigation"
@@ -50,7 +85,7 @@ const navigation = [
   top: 0;
   z-index: 40;
   padding: 10px 20px;
-  background: #fcf7eced;
+  background: #f8e8e4ed;
   backdrop-filter: blur(12px);
 }
 
@@ -66,7 +101,7 @@ const navigation = [
   padding: 6px 10px;
   border: 1px solid #79583d1a;
   border-radius: 40px;
-  background: #fffdf6;
+  background: var(--surface-paper);
   box-shadow: 0 3px 14px #62453015, 0 1px 3px #62453012;
   overflow-x: auto;
 }

@@ -18,7 +18,7 @@ const tools = [
     link: '#trai-nghiem', action: 'Thử chia tiền mô phỏng',
   },
   {
-    id: 'huong-dan-so', title: 'Sổ thu–chi 30 ngày', color: 'yellow', image: publicAsset('/images/learning-kit/journal-cover.png'),
+    id: 'huong-dan-so', title: 'Sổ thu–chi 30 ngày', color: 'yellow', image: publicAsset('/images/learning-kit/daily-journal.png'),
     description: 'Ghi chép và theo dõi chi tiêu mỗi ngày.',
     intro: 'Một vài dòng ghi chép giúp em nhìn lại những lựa chọn của mình.',
     steps: ['Ghi ngày, khoản nhận vào, khoản chi ra và lý do của từng khoản.', 'Tính số dư bằng số dư trước đó cộng khoản thu và trừ khoản chi.', 'Cuối tuần, xem lại khoản nào cần thiết và khoản nào có thể điều chỉnh.', 'Tiếp tục thực hành theo lộ trình 30 ngày đề xuất. Có thể ghi bằng tiền mô phỏng; không cần công khai thông tin tài chính cá nhân.'],
@@ -58,6 +58,12 @@ function revealGuide(id: string, event: Event) {
   practiceDestination = ''
   guideOpener = event.currentTarget instanceof HTMLElement ? event.currentTarget : null
   currentGuide.value = id
+}
+
+function openFromCard(id: string, event: MouseEvent) {
+  if (!(event.target instanceof Element)) return
+  if (event.target.closest('a, button')) return
+  revealGuide(id, event)
 }
 
 function updateGuideOpen(open: boolean) {
@@ -124,8 +130,8 @@ onUnmounted(() => window.removeEventListener('hashchange', syncGuide))
       </header>
 
       <div class="discovery-grid">
-        <motion.div v-for="(item, index) in guideLinks" :key="item.id" class="discovery-item" :initial="{ opacity: 0, y: 16 }" :while-in-view="{ opacity: 1, y: 0 }" :in-view-options="{ once: true }" :transition="{ duration: 0.4, delay: index * 0.08 }">
-          <Card class="discovery-card" :class="`discovery-${item.color}`">
+        <motion.div v-for="(item, index) in guideLinks" :key="item.id" class="discovery-item" :while-hover="{ y: -6 }" :initial="{ opacity: 0, y: 16 }" :while-in-view="{ opacity: 1, y: 0 }" :in-view-options="{ once: true }" :transition="{ duration: 0.4, delay: index * 0.08 }">
+          <Card class="discovery-card" :class="`discovery-${item.color}`" @click="openFromCard(item.id, $event)">
             <a class="qr-link" :href="`#${item.id}`" :aria-label="`Mở hướng dẫn ${item.title}`" @click.prevent="revealGuide(item.id, $event)">
               <QrcodeVue v-if="pageUrl" :value="item.url" :size="176" :margin="4" level="M" render-as="svg" foreground="#173d2d" background="#fffaf0" role="img" :aria-label="`Mã QR hướng dẫn ${item.title}`" />
               <span v-else class="qr-loading">Đang chuẩn bị mã QR…</span>
@@ -137,7 +143,7 @@ onUnmounted(() => window.removeEventListener('hashchange', syncGuide))
             </div>
             <h3><span>{{ item.title }}</span></h3>
             <p class="discovery-description">{{ item.description }}</p>
-            <Button as-child variant="ghost" class="discovery-link"><a :href="`#${item.id}`" @click.prevent="revealGuide(item.id, $event)">Quét hoặc bấm để xem <ArrowRight aria-hidden="true" /></a></Button>
+            <Button variant="outline" type="button" class="discovery-link" @click="revealGuide(item.id, $event)">Mở hướng dẫn <ArrowRight aria-hidden="true" /></Button>
           </Card>
         </motion.div>
       </div>
@@ -146,6 +152,7 @@ onUnmounted(() => window.removeEventListener('hashchange', syncGuide))
 
       <Dialog :open="Boolean(selectedGuide)" :title="selectedGuide?.title ?? 'Hướng dẫn sử dụng'" description="Thực hành từng bước cùng Ví nhỏ thông minh. Đóng cửa sổ để trở lại thẻ đang xem." @update:open="updateGuideOpen" @close-auto-focus="restoreGuideFocus">
         <div v-if="selectedGuide" class="guide-dialog-content">
+          <ImagePreview v-if="selectedGuide.id === 'huong-dan-vi'" class="guide-reference-page" :src="publicAsset('/images/learning-kit/pocket-guide.png')" alt="Trang học liệu giải thích ý nghĩa bốn ngăn ví" />
           <p>{{ selectedGuide.intro }}</p>
           <ol><li v-for="(step, index) in selectedGuide.steps" :key="step"><span aria-hidden="true">{{ index + 1 }}</span><p>{{ step }}</p></li></ol>
           <Button as-child class="guide-practice-link"><a :href="selectedGuide.link" @click="followPracticeLink(selectedGuide.link)">{{ selectedGuide.action }} <ArrowRight aria-hidden="true" /></a></Button>
@@ -156,7 +163,7 @@ onUnmounted(() => window.removeEventListener('hashchange', syncGuide))
 </template>
 
 <style scoped>
-.kit-discovery { position: relative; padding: 72px 0 64px; background-color: #fffaf0; background-image: linear-gradient(#91b4cd16 1px, transparent 1px), linear-gradient(90deg, #91b4cd16 1px, transparent 1px); background-size: 27px 27px; color: #563528; border-top: 14px solid transparent; border-image: repeating-linear-gradient(90deg, #b4daee 0 24px, #fff6e7 24px 48px) 14; }
+.kit-discovery { position: relative; padding: 72px 0 30px; background-color: var(--paper); background-image: linear-gradient(var(--paper-grid) 1px, transparent 1px), linear-gradient(90deg, var(--paper-grid) 1px, transparent 1px); background-size: 28px 28px; color: #563528; border-top: 14px solid transparent; border-image: repeating-linear-gradient(90deg, #b4daee 0 24px, #fff6e7 24px 48px) 14; }
 .discovery-shell { width: min(1440px, calc(100% - 80px)); margin-inline: auto; }
 .discovery-heading { position: relative; text-align: center; margin-bottom: 48px; padding-inline: 85px; }
 .discovery-eyebrow { margin-bottom: 16px; color: #3972a0; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; }
@@ -198,7 +205,7 @@ onUnmounted(() => window.removeEventListener('hashchange', syncGuide))
   .discovery-card h3 { font-size: 23px; }
 }
 @media (max-width: 600px) {
-  .kit-discovery { padding-block: 48px; }
+  .kit-discovery { padding: 48px 0 28px; }
   .discovery-shell { width: calc(100% - 32px); }
   .discovery-heading { padding-inline: 0; margin-bottom: 28px; }
   .heading-wallet, .heading-calculator { display: none; }
@@ -217,9 +224,19 @@ onUnmounted(() => window.removeEventListener('hashchange', syncGuide))
 .discovery-art :deep(.image-preview-trigger) { display: grid; place-items: center; overflow: visible; }
 .discovery-art :deep(.image-preview-hint) { bottom: 0; right: 5px; }
 .guide-dialog-content > p { color: #72543b; font-size: 15px; line-height: 1.9; }
+.guide-reference-page { max-width: 280px; margin: 0 auto 24px; }
 .guide-dialog-content ol { list-style: none; display: grid; gap: 14px; padding: 0; margin: 22px 0; }
 .guide-dialog-content li { display: flex; align-items: flex-start; gap: 14px; padding: 16px; background: #f0f5f8; border-radius: 14px; }
 .guide-dialog-content li > span { display: grid; place-items: center; width: 30px; height: 30px; flex-shrink: 0; background: #cce3f4; border-radius: 50%; color: #315f84; font-weight: 600; }
 .guide-dialog-content li > p { color: #624a36; font-size: 14px; line-height: 1.9; }
 .guide-practice-link { min-height: 44px; height: auto; white-space: normal; padding: 12px 18px; }
+.discovery-card { cursor: pointer; transition: box-shadow .2s, border-color .2s; }
+.discovery-card:focus-within { border-color: #81aac6; box-shadow: 0 5px 0 #c4dcea55; }
+.discovery-link { width: 100%; margin-top: auto; border: 1px solid #bbcfb1; border-radius: 24px; background: #eff6e9; }
+.discovery-art > .card-doodle { pointer-events: none; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .discovery-card:hover { border-color: #a9c7dc; box-shadow: 0 12px 24px #654b2b20; }
+  .discovery-art img { transition: transform .25s; }
+  .discovery-card:hover .discovery-art img { transform: rotate(0deg) scale(1.03); }
+}
 </style>

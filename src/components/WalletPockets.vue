@@ -17,7 +17,7 @@ import { walletPockets } from '@/data/walletPockets'
 
       <div class="wallet-pocket-grid">
         <motion.article v-for="pocket in walletPockets" :key="pocket.number" class="wallet-pocket-item" :class="`wallet-${pocket.color}`" :while-hover="{ y: -7 }" :transition="{ type: 'spring', stiffness: 260, damping: 22 }">
-          <div class="pocket-receipt" aria-hidden="true"><span>{{ pocket.label }}</span><component :is="pocket.icon" /><i></i><i></i></div>
+          <div class="pocket-receipt" aria-hidden="true"><span>{{ pocket.label }}</span><i></i></div>
           <Card class="wallet-pocket-front">
             <div class="wallet-pocket-top"><span class="pocket-icon"><component :is="pocket.icon" aria-hidden="true" /></span><span class="pocket-index">NGĂN <strong>{{ pocket.number }}</strong></span></div>
             <h3>{{ pocket.name }}</h3><p class="pocket-description">{{ pocket.description }}</p>
@@ -38,7 +38,7 @@ import { walletPockets } from '@/data/walletPockets'
 </template>
 
 <style scoped>
-.wallet-learning-section { display: block; width: 100%; min-width: 0; position: relative; padding: 58px 0 38px; color: #563b2a; background-image: radial-gradient(ellipse at 0 40%, #cce7f63d, transparent 38%), radial-gradient(ellipse at 100% 70%, #f4d4df38, transparent 35%); }
+.wallet-learning-section { display: block; width: 100%; min-width: 0; position: relative; padding: 32px 0 38px; color: #563b2a; background-image: radial-gradient(ellipse at 0 40%, #cce7f63d, transparent 38%), radial-gradient(ellipse at 100% 70%, #f4d4df38, transparent 35%); }
 .wallet-pockets-shell { width: min(1360px, calc(100% - 80px)); margin-inline: auto; }
 .wallet-pockets-heading { display: flex; align-items: center; gap: 28px; margin-bottom: 28px; }
 .wallet-sticker { position: relative; display: grid; place-items: center; width: 92px; height: 92px; background: #e0eff8; border: 5px solid #fffdf6; border-radius: 28px; box-shadow: 3px 5px 0 #b0ccdb33; transform: rotate(-9deg); flex-shrink: 0; }
@@ -46,7 +46,7 @@ import { walletPockets } from '@/data/walletPockets'
 .wallet-sticker > svg:last-child { position: absolute; top: -12px; right: -13px; width: 28px; height: 28px; fill: #ffe595; color: #a77b39; }
 .wallet-eyebrow { color: #3471a2; font-size: 11px; letter-spacing: 1.3px; font-weight: 600; margin-bottom: 12px; }
 .wallet-pockets-heading h2 { font-family: 'Lora', Georgia, serif; font-size: clamp(30px, 3vw, 43px); font-weight: 700; line-height: 1.3; letter-spacing: -.8px; }
-.wallet-pockets-heading h2 br { display: none; }
+.wallet-pockets-heading h2 br { display: block; }
 .wallet-pockets-heading h2 em { color: #3275a6; font-weight: 500; }
 .wallet-heading-note { display: flex; align-items: flex-start; gap: 12px; margin-left: auto; padding: 16px 22px; background: #fff0c6; border: 1px solid #eee0b7; box-shadow: 3px 4px 0 #eadcaf38; transform: rotate(3deg); flex-shrink: 0; }
 .wallet-heading-note > span { color: #bf8d2f; font-size: 24px; }
@@ -58,7 +58,7 @@ import { walletPockets } from '@/data/walletPockets'
 .wallet-pink { --pocket-fill: #f4d3df; --pocket-shadow: #dbb4c4; }
 .pocket-receipt { position: absolute; top: 7px; left: 12%; width: 76%; height: 112px; padding: 14px 16px; border: 1px solid #e1d5c1; background: #fffdf6; box-shadow: 0 3px 12px #5e443117; transform: rotate(-4deg); }
 .wallet-pocket-item:nth-child(even) .pocket-receipt { transform: rotate(5deg); }
-.pocket-receipt > span { font-size: 9px; letter-spacing: 1px; font-weight: 600; color: #82715d; }
+.pocket-receipt > span { display: block; font-size: 10px; line-height: 1.6; letter-spacing: .7px; font-weight: 600; color: #75634e; }
 .pocket-receipt > svg { position: absolute; top: 34px; right: 18px; width: 31px; height: 31px; color: #a99373; stroke-width: 1.3; }
 .pocket-receipt i { display: block; width: 50%; border-top: 1px dashed #d5c8b3; margin-top: 11px; }
 .wallet-pocket-front { position: relative; width: 100%; padding: 26px 24px 24px; background: var(--pocket-fill); border: 1px solid var(--pocket-shadow); border-radius: 9px 9px 38px 9px; box-shadow: 0 5px 0 var(--pocket-shadow), 0 12px 22px #654b2b0b; color: #543b2c; overflow: hidden; }
@@ -85,6 +85,6 @@ import { walletPockets } from '@/data/walletPockets'
 .wallet-next-step { display: flex; justify-content: center; align-items: center; gap: 10px; padding-top: 24px; font-family: 'Lora', Georgia, serif; font-style: italic; color: #4f7b9b; font-size: 14px; }
 @media (max-width: 1200px) { .wallet-heading-note { display: none; } .wallet-pocket-grid { gap: 15px; } .wallet-pocket-front { padding: 23px 19px; } .wallet-pocket-front h3 { font-size: 19px; } }
 @media (max-width: 950px) { .wallet-pocket-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; } .wallet-pockets-heading h2 br { display: block; } .wallet-pockets-footer { flex-direction: column; align-items: stretch; gap: 18px; } .wallet-try-button { align-self: flex-start; } }
-@media (max-width: 600px) { .wallet-learning-section { padding: 38px 0 30px; } .wallet-pockets-shell { width: calc(100% - 36px); } .wallet-pockets-heading { gap: 18px; margin-bottom: 18px; } .wallet-sticker { width: 58px; height: 65px; border-radius: 18px; } .wallet-sticker > svg:first-child { width: 32px; height: 32px; } .wallet-sticker > svg:last-child { width: 22px; height: 22px; } .wallet-eyebrow { font-size: 9px; letter-spacing: .7px; line-height: 1.8; margin-bottom: 8px; } .wallet-pockets-heading h2 { font-size: 29px; } .wallet-pockets-footer { padding: 18px; } .wallet-footer-note { align-items: flex-start; gap: 12px; } .wallet-next-step { font-size: 12px; text-align: center; } }
+@media (max-width: 600px) { .wallet-learning-section { padding: 28px 0 30px; } .wallet-pockets-shell { width: calc(100% - 36px); } .wallet-pockets-heading { gap: 18px; margin-bottom: 18px; } .wallet-sticker { width: 58px; height: 65px; border-radius: 18px; } .wallet-sticker > svg:first-child { width: 32px; height: 32px; } .wallet-sticker > svg:last-child { width: 22px; height: 22px; } .wallet-eyebrow { font-size: 9px; letter-spacing: .7px; line-height: 1.8; margin-bottom: 8px; } .wallet-pockets-heading h2 { font-size: 29px; } .wallet-pockets-footer { padding: 18px; } .wallet-footer-note { align-items: flex-start; gap: 12px; } .wallet-next-step { font-size: 12px; text-align: center; } }
 @media (max-width: 520px) { .wallet-pocket-grid { grid-template-columns: 1fr; gap: 22px; } .wallet-pocket-front { padding: 26px; } .wallet-pocket-front h3 { font-size: 23px; } .pocket-description { font-size: 14px; } .pocket-example p { font-size: 13px; } .wallet-pocket-item { padding-top: 52px; } .wallet-pocket-top { margin-bottom: 15px; } }
 </style>

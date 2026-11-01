@@ -13,7 +13,7 @@ import ImagePreview from '@/components/ImagePreview.vue'
       <FallingDecorations />
       <header class="scrap-header">
         <a href="#dau-trang" class="scrap-brand" aria-label="Ví nhỏ thông minh — trang chủ"><img :src="publicAsset('/images/vi-nho-logo.png')" alt="Ví nhỏ thông minh" width="1280" height="1280" /></a>
-        <p class="scrap-school"><strong>TRƯỜNG THCS THƯỢNG LONG</strong><span>Dự án khởi nghiệp học sinh</span></p>
+        <div class="scrap-school"><img :src="publicAsset('/images/thuong-long-school-logo.png')" alt="Logo Trường THCS Thượng Long" width="1254" height="1254" /><p><strong>TRƯỜNG THCS THƯỢNG LONG</strong><span>Dự án khởi nghiệp của học sinh</span></p></div>
         <Button as-child class="scrap-start"><a href="#trai-nghiem">Cùng bắt đầu <ArrowUpRight aria-hidden="true" /></a></Button>
       </header>
 
@@ -57,14 +57,16 @@ import ImagePreview from '@/components/ImagePreview.vue'
 
 <style scoped>
 .scrap-cover { padding: 24px 0 30px; overflow: hidden; color: #512b20; background: repeating-linear-gradient(90deg, #b5d9ee 0 23px, #faf3e5 23px 46px); }
-.scrap-paper { position: relative; isolation: isolate; padding: 24px max(32px, calc((100vw - 1440px) / 2)) 72px; background-color: #fffaf0; background-image: linear-gradient(#95bbd522 1px, transparent 1px), linear-gradient(90deg, #95bbd522 1px, transparent 1px), radial-gradient(ellipse at 0% 65%, #f4b4c35c, transparent 30%), radial-gradient(ellipse at 100% 0%, #f4b4c370, transparent 30%); background-size: 26px 26px, 26px 26px, 100% 100%, 100% 100%; filter: drop-shadow(0 4px 3px #67503c1c); }
-.scrap-paper::before, .scrap-paper::after { content: ''; position: absolute; z-index: -1; left: 0; width: 100%; height: 17px; background: #fffaf0; clip-path: polygon(0 50%, 2% 12%, 4% 65%, 6% 30%, 8% 70%, 10% 15%, 12% 60%, 14% 20%, 16% 65%, 18% 30%, 20% 80%, 22% 20%, 24% 55%, 26% 10%, 28% 75%, 30% 30%, 32% 65%, 34% 20%, 36% 70%, 38% 25%, 40% 80%, 42% 15%, 44% 55%, 46% 10%, 48% 65%, 50% 30%, 52% 70%, 54% 20%, 56% 60%, 58% 10%, 60% 80%, 62% 35%, 64% 70%, 66% 20%, 68% 65%, 70% 15%, 72% 70%, 74% 25%, 76% 80%, 78% 20%, 80% 65%, 82% 10%, 84% 60%, 86% 30%, 88% 70%, 90% 20%, 92% 80%, 94% 30%, 96% 65%, 98% 20%, 100% 50%, 100% 100%, 0 100%); }
+.scrap-paper { position: relative; isolation: isolate; padding: 24px max(32px, calc((100vw - 1440px) / 2)) 72px; background-color: var(--paper); background-image: linear-gradient(var(--paper-grid) 1px, transparent 1px), linear-gradient(90deg, var(--paper-grid) 1px, transparent 1px); background-size: 28px 28px; filter: drop-shadow(0 4px 3px #67503c1c); }
+.scrap-paper::before, .scrap-paper::after { content: ''; position: absolute; z-index: -1; left: 0; width: 100%; height: 17px; background: var(--paper); clip-path: polygon(0 50%, 2% 12%, 4% 65%, 6% 30%, 8% 70%, 10% 15%, 12% 60%, 14% 20%, 16% 65%, 18% 30%, 20% 80%, 22% 20%, 24% 55%, 26% 10%, 28% 75%, 30% 30%, 32% 65%, 34% 20%, 36% 70%, 38% 25%, 40% 80%, 42% 15%, 44% 55%, 46% 10%, 48% 65%, 50% 30%, 52% 70%, 54% 20%, 56% 60%, 58% 10%, 60% 80%, 62% 35%, 64% 70%, 66% 20%, 68% 65%, 70% 15%, 72% 70%, 74% 25%, 76% 80%, 78% 20%, 80% 65%, 82% 10%, 84% 60%, 86% 30%, 88% 70%, 90% 20%, 92% 80%, 94% 30%, 96% 65%, 98% 20%, 100% 50%, 100% 100%, 0 100%); }
 .scrap-paper::before { top: -15px; }
 .scrap-paper::after { bottom: -15px; transform: rotate(180deg); }
 .scrap-header { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 20px; max-width: 1440px; margin-inline: auto; }
 .scrap-brand { display: inline-flex; align-items: center; justify-self: start; width: 126px; flex-shrink: 0; }
 .scrap-brand img { display: block; width: 100%; height: auto; object-fit: contain; }
-.scrap-school { display: grid; gap: 5px; text-align: center; font-size: 14px; line-height: 1.6; }
+.scrap-school { display: flex; align-items: center; justify-content: center; gap: 14px; text-align: center; font-size: 14px; line-height: 1.6; min-width: 0; }
+.scrap-school > img { display: block; width: 70px; height: 70px; flex-shrink: 0; object-fit: contain; border-radius: 50%; background: #fff; }
+.scrap-school > p { display: grid; gap: 5px; }
 .scrap-school strong { font-size: 14px; }
 .scrap-start, .scrap-primary { background: #552d20; color: #fffcf5; border-radius: 22px; box-shadow: inset 0 0 0 1px #ffffff22, 0 3px 0 #3b1f1812; }
 .scrap-start { justify-self: end; min-height: 48px; padding-inline: 25px; font-size: 14px; gap: 12px; border-radius: 40px; }
@@ -103,6 +105,7 @@ import ImagePreview from '@/components/ImagePreview.vue'
   .scrap-brand { width: 104px; }
   .scrap-school { grid-column: 1 / -1; grid-row: 2; font-size: 11px; margin-top: 4px; }
   .scrap-school strong { font-size: 11px; }
+  .scrap-school > img { width: 54px; height: 54px; }
   .scrap-start { min-height: 44px; padding-inline: 17px; font-size: 12px; }
   .scrap-layout { display: flex; flex-direction: column; margin-top: 8px; }
   .scrap-copy { width: 100%; padding-block: 22px 0; }
@@ -117,7 +120,7 @@ import ImagePreview from '@/components/ImagePreview.vue'
   .scrap-collage { width: 100%; max-width: 620px; height: auto; aspect-ratio: 1 / 1.2; margin: 35px auto 20px; }
 }
 @media (max-width: 380px) { .scrap-paper { padding-inline: 18px; } .scrap-actions { flex-direction: column; align-items: stretch; } .scrap-wide-break { display: none; } }
-.scrap-product-sheet { position: absolute; z-index: 3; left: 20%; top: 25%; width: 66%; margin: 0; padding: 10px; background: #fffdf6; border: 1px solid #e4d8c6; border-radius: 5px; box-shadow: 0 10px 28px #62432c26; transform: rotate(5deg); }
+.scrap-product-sheet { position: absolute; z-index: 3; left: 20%; top: 25%; width: 66%; margin: 0; padding: 10px; background: var(--surface-paper); border: 1px solid #e4d8c6; border-radius: 5px; box-shadow: 0 10px 28px #62432c26; transform: rotate(5deg); }
 .scrap-product-sheet :deep(.image-preview-trigger > img) { display: block; width: 100%; height: auto; border-radius: 2px; }
 .product-sheet-tape { position: absolute; z-index: 1; top: -13px; left: calc(50% - 55px); width: 110px; height: 28px; background: repeating-linear-gradient(135deg, #f4b8d0cc 0 9px, #fff5ebcc 9px 18px); transform: rotate(3deg); }
 .scrap-product-sheet figcaption { display: grid; gap: 8px; padding: 18px 8px 10px; text-align: center; color: #58392b; }
@@ -125,9 +128,9 @@ import ImagePreview from '@/components/ImagePreview.vue'
 .scrap-product-sheet figcaption svg { display: inline; width: 18px; height: 18px; color: #d985a6; vertical-align: middle; }
 .scrap-wash { position: absolute; inset: 6% 0 1% 4%; background: #c8e5f3b3; border-radius: 38% 32% 28% 20%; transform: rotate(-7deg); }
 .scrap-wash::after { content: ''; position: absolute; inset: 6%; border: 2px dashed #77b0d3; border-radius: 35% 40% 25% 30%; }
-.scrap-journal { position: absolute; left: 3%; top: 2%; width: 43%; padding: 8px; background: #fffdf4; transform: rotate(-12deg); box-shadow: 0 6px 16px #49312026; }
+.scrap-journal { position: absolute; left: 3%; top: 2%; width: 43%; padding: 8px; background: var(--surface-paper); transform: rotate(-12deg); box-shadow: 0 6px 16px #49312026; }
 .scrap-journal img, .scrap-goal img { display: block; width: 100%; height: auto; }
-.scrap-goal { position: absolute; right: 1%; top: 9%; width: 39%; padding: 8px; background: #fffdf6; transform: rotate(11deg); box-shadow: 0 6px 18px #49312025; }
+.scrap-goal { position: absolute; right: 1%; top: 9%; width: 39%; padding: 8px; background: var(--surface-paper); transform: rotate(11deg); box-shadow: 0 6px 18px #49312025; }
 .journal-tape { position: absolute; top: -13px; left: 12%; width: 100px; height: 28px; background: repeating-linear-gradient(0deg, #f3ce6d99 0 4px, #f9dd8b99 4px 8px); transform: rotate(-7deg); }
 .scrap-clip { position: absolute; z-index: 2; right: 16%; top: -16px; width: 15px; height: 48px; border: 3px solid #468bc5; border-radius: 12px; transform: rotate(9deg); }
 .scrap-sticky { position: absolute; z-index: 4; padding: 16px; background: #ffe795; color: #49381d; box-shadow: 3px 6px 9px #5d422424; text-align: center; font-family: 'Lora', Georgia, serif; line-height: 1.25; }

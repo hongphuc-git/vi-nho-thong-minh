@@ -16,11 +16,11 @@ import { ArrowUp, Mail, Phone, School, Heart } from '@lucide/vue'
 </template>
 
 <style scoped>
-.project-footer { margin-top: 42px; background: #e1edf5; color: #52392c; border-top: 1px solid #bfd5e5; }
+.project-footer { margin-top: 42px; background: #f1d8d4; color: #52392c; border-top: 1px solid #dcb9b7; }
 .footer-ribbon { height: 10px; background: repeating-linear-gradient(110deg, #adcfe7 0 15px, #fff0bf 15px 30px, #edc9d6 30px 45px, #d0e1bc 45px 60px); }
 .footer-content { width: min(1240px, calc(100% - 80px)); margin-inline: auto; display: flex; align-items: center; gap: 36px; padding-block: 31px; }
 .footer-identity { display: flex; align-items: center; gap: 16px; text-decoration: none; flex-shrink: 0; }
-.footer-identity img { width: 82px; height: 82px; object-fit: contain; background: #fffaf0; border: 1px solid #d1dce3; border-radius: 19px 8px 19px 8px; }
+.footer-identity img { width: 82px; height: 82px; object-fit: contain; background: var(--surface-paper); border: 1px solid #d1dce3; border-radius: 19px 8px 19px 8px; }
 .footer-identity strong { display: block; font-family: 'Lora', Georgia, serif; font-size: 22px; font-weight: 600; line-height: 1.5; }
 .footer-identity small { display: block; margin-top: 4px; font-size: 12px; color: #756354; }
 .footer-contact { margin-left: auto; font-size: 12px; line-height: 1.9; }
@@ -30,7 +30,7 @@ import { ArrowUp, Mail, Phone, School, Heart } from '@lucide/vue'
 .footer-contact a:hover { text-decoration: underline; text-underline-offset: 4px; }
 .footer-top { display: grid; justify-items: center; gap: 7px; font-size: 10px; flex-shrink: 0; }
 .footer-top svg { width: 39px; height: 39px; padding: 10px; border-radius: 50%; background: #fff7df; border: 1px solid #d7c7a5; }
-.footer-colophon { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; width: min(1240px, calc(100% - 80px)); margin-inline: auto; border-top: 1px dashed #b6cbd9; padding-block: 17px 24px; font-size: 10px; line-height: 1.8; color: #6d6258; }
+.footer-colophon { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; width: min(1240px, calc(100% - 80px)); margin-inline: auto; border-top: 1px dashed #cca6a6; padding-block: 17px 24px; font-size: 10px; line-height: 1.8; color: #6d6258; }
 .footer-colophon > span { display: flex; align-items: center; flex-wrap: wrap; gap: 7px; }
 .footer-colophon svg { width: 13px; height: 13px; color: #b36f8a; }
 @media (max-width: 1000px) { .footer-content { flex-wrap: wrap; gap: 22px; } .footer-contact { margin-left: 0; flex: 1; min-width: 250px; } }

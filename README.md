@@ -212,3 +212,16 @@ ContactInvitation.vue thay mục liên hệ nền nâu bằng trang giấy xanh 
 Nút gửi lời nhắn chỉ mở ứng dụng email với tiêu đề/nội dung gợi ý; người dùng tự điền và gửi. Liên kết điện thoại chỉ mở trình gọi. CSS dùng tiền tố invitation-* để không bị các quy tắc contact/price cũ ghi đè, đặc biệt tránh chữ nhạt trên nền vàng.
 
 Chủ dự án tự kiểm tra bố cục hai/một cột, nút email và gọi điện, phóng to ảnh, khả năng đọc nhãn giá và thao tác bàn phím. Agent không chạy ứng dụng, build, kiểm thử, lint hoặc format.
+
+## Phân bổ thêm ảnh học liệu từ thư mục image
+
+Các bản sao phục vụ web trong public/images/learning-kit giữ nguyên nội dung nguồn:
+- spending-goals.png: image/sổ theo dõi thu chi/4.png, trang mục tiêu chi tiêu.
+- daily-journal.png: image/sổ theo dõi thu chi/32.png, nhật ký chi tiêu; dùng ở thẻ QR sổ.
+- monthly-review.png: image/sổ theo dõi thu chi/36.png, tổng kết tháng.
+- simulation-banknotes.png: image/thẻ tiền mô phỏng/1.png, các mệnh giá mô phỏng.
+- pocket-guide.png: image/sổ theo dõi thu chi/3.png, giải thích bốn ngăn; dùng trong hướng dẫn ví.
+
+Phần Liên hệ thay ảnh ví lặp lại bằng ba lựa chọn xem trước: mục tiêu chi tiêu, tổng kết tháng, tiền mô phỏng; bấm ảnh để phóng to. Không dùng các trang nhật ký có bố cục giống nhau như những ảnh khác biệt chỉ vì khác số tệp. Ảnh bìa và ảnh sản phẩm ở các phần trước được giữ nguyên.
+
+Chủ dự án tự kiểm tra chuyển ba ảnh, phóng to ảnh, thẻ QR sổ và hướng dẫn ví. Agent không chạy ứng dụng, build, kiểm thử, lint hoặc format.

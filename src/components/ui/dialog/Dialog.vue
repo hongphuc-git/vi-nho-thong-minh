@@ -33,7 +33,7 @@ const emit = defineEmits<{
 
 <style scoped>
 .dialog-overlay { position: fixed; inset: 0; z-index: 100; background: #2d241cc4; backdrop-filter: blur(5px); }
-.dialog-content { position: fixed; z-index: 101; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(960px, calc(100% - 32px)); max-height: calc(100svh - 40px); display: flex; flex-direction: column; overflow: hidden; border: 1px solid #e5d5bf; border-radius: 22px; background: #fffaf1; color: #54392c; box-shadow: 0 24px 80px #1d120d55; }
+.dialog-content { position: fixed; z-index: 101; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(960px, calc(100% - 32px)); max-height: calc(100svh - 40px); display: flex; flex-direction: column; overflow: hidden; border: 1px solid #e5d5bf; border-radius: 22px; background: var(--surface-paper); color: #54392c; box-shadow: 0 24px 80px #1d120d55; }
 .dialog-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; padding: 22px 24px; border-bottom: 1px dashed #ddcfbb; flex-shrink: 0; }
 .dialog-title { font-family: 'Lora', Georgia, serif; font-size: clamp(20px, 3vw, 27px); line-height: 1.4; font-weight: 700; }
 .dialog-description { margin-top: 7px; font-size: 12px; line-height: 1.8; color: #79634d; }

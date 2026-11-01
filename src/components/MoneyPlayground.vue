@@ -84,7 +84,7 @@ function reset() {
 </template>
 
 <style scoped>
-.practice-section { position: relative; padding: 64px 0 42px; color: #56392b; background-color: #fcf1f4; background-image: linear-gradient(#c4aeb711 1px, transparent 1px), linear-gradient(90deg, #c4aeb711 1px, transparent 1px), radial-gradient(ellipse at 0% 30%, #d5eaf76b, transparent 45%); background-size: 28px 28px, 28px 28px, 100% 100%; border-block: 1px solid #eddde2; }
+.practice-section { position: relative; padding: 64px 0 42px; color: #56392b; background-color: var(--paper); background-image: linear-gradient(var(--paper-grid) 1px, transparent 1px), linear-gradient(90deg, var(--paper-grid) 1px, transparent 1px); background-size: 28px 28px; border-block: 1px solid #eddde2; }
 .practice-shell { width: min(1320px, calc(100% - 80px)); margin-inline: auto; }
 .practice-heading { display: flex; align-items: center; justify-content: space-between; gap: 35px; margin-bottom: 40px; }
 .practice-eyebrow { font-size: 10px; letter-spacing: 1.4px; font-weight: 600; line-height: 1.8; color: #35749d; }

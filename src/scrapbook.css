@@ -1,6 +1,12 @@
 /* Shared paper, ink and stationery details for the scrapbook direction. */
 :root {
-  --background: #fffaf1;
+  --background: #f8e8e4;
+  --surface-paper: #fff7ed;
+  --paper-grid: #a46b7010;
+  --card: var(--surface-paper);
+  --card-foreground: #54392c;
+  --popover: var(--surface-paper);
+  --popover-foreground: #54392c;
   --foreground: #54392c;
   --primary: #583023;
   --primary-foreground: #fffaf1;
@@ -10,7 +16,7 @@
   --muted-foreground: #786657;
   --border: #dfd3c2;
   --ring: #397db1;
-  --paper: #fffaf1;
+  --paper: #f8e8e4;
   --ink: #54392c;
   --sage: #d9e8ce;
   --yellow: #f9e6a6;
@@ -20,7 +26,7 @@
 
 body {
   background-color: var(--paper);
-  background-image: linear-gradient(#93b7d110 1px, transparent 1px), linear-gradient(90deg, #93b7d110 1px, transparent 1px);
+  background-image: linear-gradient(var(--paper-grid) 1px, transparent 1px), linear-gradient(90deg, var(--paper-grid) 1px, transparent 1px);
   background-size: 28px 28px;
 }
 
@@ -35,7 +41,7 @@ body {
 #app .content-accordion,
 #app .featured-video,
 #app .playlist-button {
-  background: #fffdf7;
+  background: var(--surface-paper);
   color: #54392c;
   border-color: #ddceba;
   border-width: 1px;
@@ -84,7 +90,7 @@ body {
 #app .pocket-card { border-radius: 8px 8px 30px 8px; border: 1px solid #a0a0a020; }
 #app .playground-section { background: #f8eaf0; }
 #app .allocation-panel,
-#app .scenario-panel { background: #fffdf7; border: 1px solid #e0cbcf; border-radius: 10px; box-shadow: 4px 6px 0 #c396a51a; }
+#app .scenario-panel { background: var(--surface-paper); border: 1px solid #e0cbcf; border-radius: 10px; box-shadow: 4px 6px 0 #c396a51a; }
 #app .journey-marker > span:first-child { background: #d9eaf6; color: #2c608c; border: 1px dashed #8caec8; border-radius: 8px; }
 #app .journey-grid li:last-child .journey-marker > span:first-child { background: #fce6a5; color: #644425; border-color: #c7a958; }
 #app .journey-footnote { background: #f4ead8; border: 1px dashed #dac6a7; }
@@ -122,7 +128,7 @@ body {
 #app .center-heading > p:last-child { font-size: 15px; line-height: 1.8; color: #5f4936; }
 
 /* Bộ công cụ */
-#app .kit-card { border-radius: 14px; background: #fffdf8; box-shadow: 0 4px 0 #dce7f0, 0 12px 24px #54392c0a; }
+#app .kit-card { border-radius: 14px; background: var(--surface-paper); box-shadow: 0 4px 0 #dce7f0, 0 12px 24px #54392c0a; }
 #app .item-number { font-family: 'Lora', Georgia, serif; font-style: italic; font-weight: 700; font-size: 16px; color: #4d3726; }
 #app .kit-card-copy { padding: 18px 20px 24px; }
 #app .kit-card-copy h3 { font-family: 'Lora', Georgia, serif; font-size: 18.5px; font-weight: 700; color: #3f2818; }
@@ -157,7 +163,7 @@ body {
 /* Hành trình 30 ngày */
 #app .small-label { font-size: 12.5px; font-weight: 600; padding: 6px 13px; background: #eef5fa; border-color: #c9dced; color: #2b5f8c; }
 #app .journey-grid { gap: 20px; }
-#app .journey-grid > li { display: flex; flex-direction: column; padding: 22px 20px; background: #fffdf8; border: 1px solid #dfd3c0; border-radius: 18px; box-shadow: 0 4px 0 #e9dfd0, 0 10px 20px #54392c0a; }
+#app .journey-grid > li { display: flex; flex-direction: column; padding: 22px 20px; background: var(--surface-paper); border: 1px solid #dfd3c0; border-radius: 18px; box-shadow: 0 4px 0 #e9dfd0, 0 10px 20px #54392c0a; }
 #app .journey-marker { margin-bottom: 18px; }
 #app .journey-marker > span:first-child { font-family: 'Lora', Georgia, serif; font-weight: 700; font-size: 15px; }
 #app .journey-grid .eyebrow { font-size: 11.5px; margin-bottom: 8px; }
@@ -208,4 +214,19 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   #app .kit-art img { transition: none; }
+}
+
+/* Warm paper surfaces on the shared blush background. */
+#app .team-paper,
+#app .team-photo,
+#app .crew-card,
+#app .discovery-card,
+#app .practice-ledger,
+#app .practice-scenario,
+#app .question-paper,
+#app .film-featured,
+#app .film-choice:not(.film-choice-selected),
+#app .content-topic,
+#app .content-table-scroll {
+  background-color: var(--surface-paper);
 }
