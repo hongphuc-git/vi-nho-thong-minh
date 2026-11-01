@@ -28,9 +28,13 @@ const members = [
       <div class="team-story">
         <figure class="team-photo">
           <span class="team-tape" aria-hidden="true"></span>
+          <span class="team-photo-clip" aria-hidden="true"></span>
+          <div class="team-photo-paper">
           <img v-if="props.photoSrc && !photoFailed" :src="props.photoSrc" alt="Bốn thành viên nhóm Ví nhỏ thông minh tại cổng trường" loading="lazy" @error="photoFailed = true" />
           <div v-else class="team-photo-fallback"><Users aria-hidden="true" /><p>Nhóm học sinh lớp 9B1<br />Trường THCS Thượng Long</p></div>
-          <figcaption>Cùng học. Cùng làm. Cùng lớn lên.</figcaption>
+          <figcaption>Cùng học. Cùng làm. Cùng lớn lên. <Heart aria-hidden="true" /></figcaption>
+          </div>
+          <span class="team-photo-class">Lớp 9B1 <Heart aria-hidden="true" /></span>
         </figure>
       </div>
 
@@ -144,6 +148,22 @@ const members = [
 @media (max-width: 1100px) { .crew-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 650px) { .mentor-note { grid-template-columns: 1fr; gap: 16px; padding: 20px; } .mentor-links { padding: 12px 0 0; border-left: 0; border-top: 1px solid #e7d9b8; } .crew-roster { margin-top: 30px; } .crew-roster-heading { align-items: flex-start; gap: 14px; } .crew-roster-heading > span { font-size: 11px; padding: 7px 9px; } .crew-roster-heading h3 { font-size: 24px; } .crew-project-note { grid-template-columns: 1fr; padding: 20px; gap: 18px; } .crew-progress { border-left: 0; border-top: 1px dashed #d9c49f; padding: 16px 0 0; } }
 @media (max-width: 480px) { .crew-grid { grid-template-columns: 1fr; gap: 15px; } .crew-card { padding: 19px 20px; } .crew-card-heading { margin-bottom: 12px; } .crew-card h4 { font-size: 20px; } .crew-task { margin-top: 14px; } .crew-roster-heading { flex-direction: column; } }
+
+/* Separate paper silhouette from tape and clip so decorations stay outside the torn edge. */
+.team-photo { position: relative; isolation: isolate; padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; margin: 14px 8px 17px; transform: rotate(-1deg); }
+.team-photo::before { content: ''; position: absolute; z-index: -1; inset: -7px -9px -10px -13px; background: #b9d7e9; background-image: repeating-linear-gradient(14deg, #ffffff30 0 1px, transparent 1px 4px); mask: url('/images/scrapbook/team-torn-edge.svg') center / 100% 100% no-repeat; transform: rotate(2.6deg); }
+.team-photo::after { content: ''; position: absolute; z-index: -2; inset: 8px -3px -13px -4px; background: #886a4722; filter: blur(10px); transform: rotate(1deg); }
+.team-photo-paper { position: relative; padding: 19px 19px 15px; background-color: #fffaf0; background-image: repeating-linear-gradient(23deg, #9675470c 0 1px, transparent 1px 4px), repeating-linear-gradient(112deg, #fffefa55 0 1px, transparent 1px 7px); mask: url('/images/scrapbook/team-torn-edge.svg') center / 100% 100% no-repeat; }
+.team-photo-paper > img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: contain; background: #ece5d6; border-radius: 0; }
+.team-photo-paper figcaption { position: relative; padding: 19px 10px 15px; font-size: clamp(14px, 1.4vw, 19px); line-height: 1.8; background: transparent; color: #624734; }
+.team-photo-paper figcaption::after { content: ''; display: block; width: 58%; height: 5px; margin: 6px auto 0; background: #e9a3ba; border-radius: 50%; transform: rotate(-1deg); }
+.team-photo-paper figcaption svg { display: inline-block; width: 17px; height: 17px; vertical-align: middle; margin-left: 4px; color: #d98aa5; stroke-width: 1.7; }
+.team-tape { top: -10px; left: 42%; width: 99px; height: 31px; z-index: 3; transform: rotate(-3deg); background-image: repeating-linear-gradient(90deg, #e79db9aa 0 6px, #fff4e780 6px 12px), repeating-linear-gradient(0deg, #e79db9aa 0 6px, #fff4e780 6px 12px); }
+.team-photo-clip { position: absolute; z-index: 3; left: 25px; top: -9px; width: 18px; height: 60px; border: 2px solid #a18160; border-radius: 13px; transform: rotate(12deg); box-shadow: 1px 1px 1px #75523122; pointer-events: none; }
+.team-photo-clip::after { content: ''; position: absolute; inset: 4px 3px 7px; border: 1.5px solid #a18160; border-top: 0; border-radius: 0 0 8px 8px; }
+.team-photo-class { position: absolute; right: -9px; bottom: 62px; display: flex; align-items: center; gap: 7px; padding: 9px 14px; background: #ffe6a4; color: #73512b; font-family: 'Lora', Georgia, serif; font-size: 15px; transform: rotate(-5deg); box-shadow: 1px 3px 5px #78573218; border-radius: 2px 7px 3px 5px; }
+.team-photo-class svg { width: 15px; height: 15px; color: #b58137; }
+@media (max-width: 500px) { .team-photo { margin: 12px 6px 14px; padding: 0; } .team-photo-paper { padding: 13px 13px 10px; } .team-photo-paper figcaption { padding: 15px 4px 9px; font-size: 13px; } .team-photo-paper figcaption svg { width: 13px; } .team-photo-class { bottom: 62px; right: -5px; font-size: 12px; padding: 7px 10px; } .team-photo-clip { height: 46px; width: 15px; left: 20px; } .team-tape { width: 78px; height: 25px; top: -8px; } }
 </style>
 
 

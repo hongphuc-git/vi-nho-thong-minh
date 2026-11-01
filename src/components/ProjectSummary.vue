@@ -40,18 +40,18 @@ import ImagePreview from '@/components/ImagePreview.vue'
         <div class="summary-visual">
           <figure class="summary-idea-image">
             <span class="summary-photo-tape" aria-hidden="true"></span>
-            <ImagePreview class="product-photo-link" :src="publicAsset('/images/learning-kit/kit-photo.png')" alt="Bộ công cụ Ví nhỏ thông minh">
+            <ImagePreview class="product-photo-link" :src="publicAsset('/images/learning-kit/summary-spending-goals.png')" alt="Trang mục tiêu chi tiêu ngắn hạn và dài hạn">
               <img
-                :src="publicAsset('/images/learning-kit/kit-photo.png')"
-                alt="Bộ sản phẩm thực tế gồm ví đen, sổ thu chi, bảng mục tiêu, thẻ tình huống và tiền mô phỏng"
+                :src="publicAsset('/images/learning-kit/summary-spending-goals.png')"
+                alt="Mục tiêu chi tiêu với các ô ghi kế hoạch ngắn hạn và dài hạn"
                 loading="lazy"
-                width="2048"
-                height="1536"
+                width="1545"
+                height="2000"
               />
             </ImagePreview>
             <figcaption>
               <span class="photo-caption-marker" aria-hidden="true">01</span>
-              <div><strong>Bộ công cụ Ví nhỏ thông minh</strong><span>Những học liệu cùng em thực hành mỗi ngày.</span></div>
+              <div><strong>Mục tiêu chi tiêu của em</strong><span>Ghi điều muốn làm, lập kế hoạch ngắn hạn và dài hạn.</span></div>
             </figcaption>
           </figure>
         </div>
@@ -86,7 +86,7 @@ import ImagePreview from '@/components/ImagePreview.vue'
 .product-photo-link { border-radius: 4px; }
 .product-photo-link :deep(.image-preview-trigger:focus-visible) { outline: 3px solid #356c91; outline-offset: 4px; }
 .product-photo-link :deep(.image-preview-hint) { font-size: 14px; padding: 8px 11px; color: #5c4633; }
-.product-photo-link img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: contain; background: #fff1f5; }
+.product-photo-link img { display: block; width: 100%; height: auto; max-height: 420px; aspect-ratio: 1545 / 2000; object-fit: contain; background: #fffdf7; }
 .summary-idea-image figcaption { display: flex; align-items: center; gap: 12px; padding: 18px 0 20px; }
 .photo-caption-marker { display: grid; place-items: center; width: 34px; height: 39px; flex-shrink: 0; border: 1px solid #dbacbf; border-radius: 7px; background: #f6d7e4; color: #80435b; font-family: 'Lora', Georgia, serif; font-size: 15px; }
 .summary-idea-image figcaption > div { display: grid; gap: 4px; min-width: 0; }

@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue'
 import { motion } from 'motion-v'
+import { PageFlip } from 'page-flip/dist/js/page-flip.module.js'
 import { ArrowLeft, ArrowRight, CirclePlay, Heart, Play, RotateCcw } from '@lucide/vue'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
@@ -10,90 +11,169 @@ const selectedId = ref(projectVideos[0]?.id ?? '')
 const selectedVideo = computed(() => projectVideos.find(video => video.id === selectedId.value))
 const selectedIndex = computed(() => projectVideos.findIndex(video => video.id === selectedId.value))
 const player = ref<HTMLVideoElement | null>(null)
+const spread = ref<HTMLElement | null>(null)
+const flipLayer = ref<HTMLElement | null>(null)
 const playing = ref(false)
 const waiting = ref(false)
 const failed = ref(false)
 const started = ref(false)
-const turnPhase = ref<'idle' | 'closing' | 'opening'>('idle')
-const turningVideo = computed(() => turnPhase.value !== 'idle')
-const pendingVideoId = ref<string | null>(null)
-const turnDirection = ref(1)
-const pageTurnSequence = ref(0)
-const pageStartRotation = ref(0)
-const pageEndRotation = ref(0)
-const pageStartOpacity = ref(1)
-const pageEndOpacity = ref(1)
-const reducedMotion = ref(true)
+const turningVideo = ref(false)
+const showPageTurn = ref(false)
+let pageFlip: PageFlip | undefined
 let motionPreference: MediaQueryList | undefined
+let disposed = false
+let resizeObserver: ResizeObserver | undefined
+let turnVersion = 0
 const status = computed(() => failed.value ? 'Chưa tải được phim' : waiting.value ? 'Đang tải video…' : playing.value ? 'Đang phát' : started.value ? 'Đã tạm dừng' : 'Sẵn sàng để xem')
 
-function selectVideo(id: string) {
-  if (turningVideo.value || id === selectedId.value) return
-  const nextIndex = projectVideos.findIndex(video => video.id === id)
-  const nextVideo = projectVideos[nextIndex]
-  const previousVideo = selectedVideo.value
-  if (!nextVideo || !previousVideo) return
-  turnDirection.value = nextIndex > selectedIndex.value ? 1 : -1
-  player.value?.pause()
-  playing.value = false
-  waiting.value = false
-  pendingVideoId.value = id
-  pageStartRotation.value = 0
-  pageEndRotation.value = reducedMotion.value ? 0 : turnDirection.value * 180
-  pageStartOpacity.value = 1
-  pageEndOpacity.value = reducedMotion.value ? 0 : 1
-  pageTurnSequence.value += 1
-  turnPhase.value = 'closing'
+// Only inert poster copies enter the flip engine; Vue retains the live player.
+function copySpread(): HTMLElement[] {
+  if (!spread.value) return []
+  const copies: HTMLElement[] = []
+  for (const page of spread.value.querySelectorAll(':scope > .book-page')) {
+    const copy = page.cloneNode(true)
+    if (!(copy instanceof HTMLElement)) continue
+    copy.className = 'album-flip-page'
+    copy.inert = true
+    copy.setAttribute('aria-hidden', 'true')
+    copy.setAttribute('data-density', 'soft')
+    for (const element of copy.querySelectorAll('[id], [aria-describedby], [aria-labelledby]')) {
+      element.removeAttribute('id')
+      element.removeAttribute('aria-describedby')
+      element.removeAttribute('aria-labelledby')
+    }
+    for (const video of copy.querySelectorAll('video')) {
+      const poster = document.createElement('img')
+      poster.src = video.poster
+      poster.alt = ''
+      poster.className = 'album-flip-poster'
+      video.replaceWith(poster)
+    }
+    if (page.classList.contains('book-contents-page')) {
+      const content = document.createElement('div')
+      content.className = 'album-flip-contents'
+      content.append(...Array.from(copy.childNodes))
+      copy.appendChild(content)
+    }
+    copies.push(copy)
+  }
+  return copies
 }
 
 function finishPageTurn() {
-  if (turnPhase.value === 'closing' && pendingVideoId.value) {
-    pageStartRotation.value = reducedMotion.value ? 0 : turnDirection.value * 180
-    pageEndRotation.value = reducedMotion.value ? 0 : turnDirection.value * 360
-    pageStartOpacity.value = reducedMotion.value ? 0 : 1
-    pageEndOpacity.value = 1
-    selectedId.value = pendingVideoId.value
-    pendingVideoId.value = null
-    failed.value = false
-    started.value = false
-    turnPhase.value = 'opening'
-  } else if (turnPhase.value === 'opening') {
-    turnPhase.value = 'idle'
-  }
+  showPageTurn.value = false
+  turningVideo.value = false
 }
 
-function updateMotionPreference() {
-  reducedMotion.value = motionPreference?.matches ?? true
-  if (turningVideo.value) {
-    pageStartRotation.value = 0
-    pageEndRotation.value = 0
-    pageStartOpacity.value = 1
-    pageEndOpacity.value = 1
-    pageTurnSequence.value += 1
+function cancelPageTurn() {
+  turnVersion += 1
+  pageFlip?.getRender().finishAnimation()
+  finishPageTurn()
+}
+
+async function selectVideo(id: string) {
+  if (turningVideo.value || id === selectedId.value || disposed) return
+  const nextIndex = projectVideos.findIndex(video => video.id === id)
+  if (nextIndex < 0) return
+  const forward = nextIndex > selectedIndex.value
+  const oldPages = copySpread()
+  const currentSpread = spread.value
+  const layer = flipLayer.value
+  const shouldAnimate = !motionPreference?.matches && currentSpread && layer && currentSpread.clientWidth >= 860 && oldPages.length === 2
+  player.value?.pause()
+  playing.value = false
+  waiting.value = false
+  failed.value = false
+  started.value = false
+  turningVideo.value = true
+  const version = ++turnVersion
+  selectedId.value = id
+  await nextTick()
+  if (disposed || version !== turnVersion) return
+  if (!shouldAnimate || !currentSpread || !layer) {
+    finishPageTurn()
+    return
   }
-  if (pendingVideoId.value) {
-    selectedId.value = pendingVideoId.value
-    failed.value = false
-    started.value = false
+  const newPages = copySpread()
+  if (newPages.length !== 2) {
+    finishPageTurn()
+    return
   }
-  pendingVideoId.value = null
-  turnPhase.value = 'idle'
+  const pages = forward ? [...oldPages, ...newPages] : [...newPages, ...oldPages]
+  const firstPage = forward ? 0 : 2
+  try {
+    if (!pageFlip) {
+      const host = document.createElement('div')
+      layer.appendChild(host)
+      pageFlip = new PageFlip(host, {
+        width: currentSpread.clientWidth / 2,
+        height: currentSpread.clientHeight,
+        size: 'fixed', usePortrait: false, autoSize: false,
+        drawShadow: true, maxShadowOpacity: 0.24, flippingTime: 950,
+        useMouseEvents: false, showPageCorners: false, mobileScrollSupport: false,
+        startPage: firstPage,
+      })
+      const engine = pageFlip
+      engine.on('changeState', event => {
+        if (event.data === 'read') finishPageTurn()
+      })
+      await new Promise<void>(resolve => {
+        engine.on('init', () => resolve())
+        engine.loadFromHTML(pages)
+      })
+      engine.off('init')
+    } else {
+      const settings = pageFlip.getSettings()
+      settings.width = currentSpread.clientWidth / 2
+      settings.height = currentSpread.clientHeight
+      const host = layer.firstElementChild
+      if (host instanceof HTMLElement) {
+        host.style.minWidth = `${currentSpread.clientWidth}px`
+        host.style.minHeight = `${currentSpread.clientHeight}px`
+      }
+      pageFlip.updateFromHtml(pages)
+      pageFlip.update()
+    }
+    if (disposed || version !== turnVersion) return
+    pageFlip.turnToPage(firstPage)
+    showPageTurn.value = true
+    await nextTick()
+    if (disposed || version !== turnVersion) return
+    if (forward) pageFlip.flipNext('bottom')
+    else pageFlip.flipPrev('bottom')
+  } catch {
+    // Keep the selected video available even if the decorative engine fails.
+    finishPageTurn()
+  }
 }
 
 onMounted(() => {
   motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
-  updateMotionPreference()
-  motionPreference.addEventListener('change', updateMotionPreference)
+  motionPreference.addEventListener('change', cancelPageTurn)
+  window.addEventListener('resize', cancelPageTurn)
+  let previousWidth = spread.value?.clientWidth ?? 0
+  resizeObserver = new ResizeObserver(entries => {
+    const width = entries[0]?.contentRect.width ?? previousWidth
+    if (Math.abs(width - previousWidth) > 1) cancelPageTurn()
+    previousWidth = width
+  })
+  if (spread.value) resizeObserver.observe(spread.value)
 })
 
 onUnmounted(() => {
-  motionPreference?.removeEventListener('change', updateMotionPreference)
+  disposed = true
+  cancelPageTurn()
+  resizeObserver?.disconnect()
+  motionPreference?.removeEventListener('change', cancelPageTurn)
+  window.removeEventListener('resize', cancelPageTurn)
+  pageFlip?.off('changeState')
+  pageFlip?.destroy()
   player.value?.pause()
 })
 
 function selectAdjacent(offset: number) {
   const video = projectVideos[selectedIndex.value + offset]
-  if (video) selectVideo(video.id)
+  if (video) void selectVideo(video.id)
 }
 
 function retryVideo() {
@@ -113,16 +193,11 @@ function retryVideo() {
 
     <motion.div v-if="selectedVideo" :initial="{ opacity: 0, y: 14 }" :while-in-view="{ opacity: 1, y: 0 }" :in-view-options="{ once: true }" :transition="{ duration: 0.45 }">
       <Card class="video-book">
-        <div class="book-spread">
+        <div ref="spread" class="book-spread" :class="{ 'book-is-turning': showPageTurn }">
           <div class="book-page book-player-page">
             <motion.div
-              :key="`${selectedVideo.id}-${pageTurnSequence}`"
               class="book-player-content"
               :inert="turningVideo"
-              :initial="{ rotateY: pageStartRotation, opacity: pageStartOpacity }"
-              :animate="{ rotateY: pageEndRotation, opacity: pageEndOpacity }"
-              :transition="{ duration: reducedMotion ? 0.1 : 0.55, ease: turnPhase === 'closing' ? 'easeIn' : 'easeOut' }"
-              @animation-complete="finishPageTurn"
             >
             <div class="book-page-face">
             <div class="book-page-heading"><span>THƯỚC PHIM {{ String(selectedIndex + 1).padStart(2, '0') }}</span><span class="book-heading-rule" aria-hidden="true"></span></div>
@@ -143,8 +218,8 @@ function retryVideo() {
             </div>
             <footer class="book-page-footer"><span aria-hidden="true">{{ String(selectedIndex + 1).padStart(2, '0') }}</span><span class="book-footer-rule" aria-hidden="true"></span><span class="book-player-status" role="status">{{ status }}</span></footer>
             </div>
-            <span class="book-page-back" aria-hidden="true"></span>
             </motion.div>
+
           </div>
 
           <aside class="book-page book-contents-page" aria-labelledby="book-contents-title">
@@ -161,6 +236,7 @@ function retryVideo() {
             </ol>
             <footer class="book-page-footer book-contents-footer"><span>{{ String(projectVideos.length).padStart(2, '0') }} thước phim · Những điều nhỏ, được lưu lại.</span><Heart aria-hidden="true" /></footer>
           </aside>
+          <div ref="flipLayer" class="album-flip-layer" :class="{ 'album-flip-visible': showPageTurn }" aria-hidden="true" inert></div>
         </div>
       </Card>
       <div class="album-controls" role="group" aria-label="Chuyển video trong album">
@@ -183,20 +259,26 @@ function retryVideo() {
 .album-heading > p:last-child { margin-top: 12px; color: #5c4633; font-size: 15px; line-height: 1.8; }
 .video-book { position: relative; isolation: isolate; padding: 9px 10px 17px; border: 1px solid #a86d76; border-radius: 24px 24px 28px 28px; background: linear-gradient(90deg, #be858c, #d5a1a6 47%, #a46870 50%, #d5a1a6 53%, #be858c); box-shadow: 0 5px 0 #a16b7566, 0 17px 30px #75424e1c; color: #583023; }
 .video-book::before { content: ''; position: absolute; z-index: -1; inset: 13px 14px 9px; border: 1px solid #d6bfa8; border-radius: 21px 21px 23px 23px; background: repeating-linear-gradient(0deg, #ead7bf 0 1px, #fff3e2 1px 3px); pointer-events: none; }
-.book-spread { position: relative; display: grid; grid-template-columns: minmax(0, 1.18fr) minmax(0, 1fr); align-items: stretch; border: 1px solid #ead7bf; border-radius: 18px 18px 21px 21px; background: #fff7ed; box-shadow: 0 3px 0 #e5ceb5, 0 6px 0 #faead6, 0 8px 0 #d9bfa8; }
+.book-spread { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; border: 1px solid #ead7bf; border-radius: 18px 18px 21px 21px; background: #fff7ed; box-shadow: 0 3px 0 #e5ceb5, 0 6px 0 #faead6, 0 8px 0 #d9bfa8; }
 .book-page { position: relative; min-width: 0; display: flex; flex-direction: column; padding: clamp(23px, 2.6vw, 37px); background-color: #fff7ed; }
-.book-page.book-player-page { padding: 0; perspective: 2600px; isolation: isolate; z-index: 2; background-color: #f7ead8; }
-.book-player-content { position: relative; display: flex; flex-direction: column; flex: 1; min-width: 0; border-radius: inherit; transform-origin: right center; transform-style: preserve-3d; }
-.book-page-face { position: relative; display: flex; flex-direction: column; flex: 1; min-width: 0; padding: clamp(23px, 2.6vw, 37px); border-radius: inherit; backface-visibility: hidden; background-color: #fff7ed; background-image: linear-gradient(90deg, #e7d3bb22, transparent 10%, transparent 93%, #9b735b1f); box-shadow: -1px 0 0 #dac1a6; }
-.book-page-back { position: absolute; inset: 0; border: 1px solid #e0c7ac; border-radius: inherit; background-color: #fff7ed; background-image: linear-gradient(90deg, #aa806033, #fff7ed 15%, #fff2e2 85%, #aa806026); transform: rotateY(180deg); backface-visibility: hidden; box-shadow: 9px 4px 20px #58302314; pointer-events: none; }
-.book-page-face::after { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; background: linear-gradient(90deg, #9b735b0a, transparent 20%, #704b2929 85%, #704b2940); opacity: 0; }
-@media (prefers-reduced-motion: no-preference) { .book-page-face::after { transition: opacity .3s ease; } .book-player-content[inert] .book-page-face::after { opacity: 1; } }
-@media (max-width: 1100px) { .book-page-face { padding: 25px; } }
+.book-page.book-player-page { padding: 0; }
+.book-player-content { display: flex; flex-direction: column; flex: 1; min-width: 0; border-radius: inherit; }
+.book-page-face { display: flex; flex-direction: column; flex: 1; min-width: 0; padding: clamp(23px, 2.6vw, 37px); border-radius: inherit; background-color: #fff7ed; background-image: linear-gradient(90deg, #e7d3bb22, transparent 10%, transparent 93%, #9b735b1f); }
+.book-player-content[inert] { pointer-events: none; }
+.album-flip-layer { position: absolute; inset: 0; z-index: 10; visibility: hidden; pointer-events: none; overflow: hidden; border-radius: inherit; }
+.album-flip-visible { visibility: visible; }
+.album-flip-layer :deep(.stf__parent) { width: 100%; height: 100%; }
+.album-flip-layer :deep(.stf__wrapper) { height: 100%; }
+.album-flip-layer :deep(.album-flip-page) { overflow: hidden; background: #fff7ed; color: #583023; }
+.album-flip-layer :deep(.album-flip-page > .book-player-content) { height: 100%; }
+.album-flip-layer :deep(.album-flip-contents) { position: relative; display: flex; flex-direction: column; height: 100%; padding: clamp(23px, 2.6vw, 37px); background-image: linear-gradient(90deg, #9b735b24, transparent 9%, transparent 94%, #e7d3bb22); }
+.album-flip-layer :deep(.album-flip-poster) { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: contain; border-radius: 9px; background: #281d18; }
+.book-is-turning > .book-page { visibility: hidden; }
+@media (max-width: 1100px) { .book-page-face { padding: 25px; } .album-flip-layer :deep(.album-flip-contents) { padding: 25px; } }
 @media (max-width: 500px) { .book-page-face { padding: 23px 17px; } }
-.book-player-content[inert] { pointer-events: none; will-change: transform; }
 .book-choice[aria-disabled='true'], .album-controls button[aria-disabled='true'] { cursor: wait; }
 .book-player-page { border-radius: 18px 0 0 21px; background-image: linear-gradient(90deg, #e7d3bb22, transparent 10%, transparent 93%, #9b735b1f); }
-.book-contents-page { padding-left: clamp(28px, 3vw, 44px); border-radius: 0 18px 21px 0; border-left: 1px solid #d9bfa8; background-image: linear-gradient(90deg, #9b735b24, transparent 9%, transparent 94%, #e7d3bb22); }
+.book-contents-page { border-radius: 0 18px 21px 0; border-left: 1px solid #d9bfa8; background-image: linear-gradient(90deg, #9b735b24, transparent 9%, transparent 94%, #e7d3bb22); }
 .book-page-heading { display: flex; align-items: center; gap: 17px; min-height: 26px; margin-bottom: 20px; color: #945164; font-size: 12px; font-weight: 600; line-height: 1.8; letter-spacing: 1.7px; }
 .book-heading-rule, .book-footer-rule { flex: 1; min-width: 18px; border-top: 1px solid #dbb4b2; }
 .book-screen { border-radius: 9px; background: #281d18; }
@@ -250,7 +332,7 @@ function retryVideo() {
 .book-error button { min-height: 44px; height: auto; white-space: normal; }
 .book-error a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: underline; text-underline-offset: 4px; }
 @media (prefers-reduced-motion: no-preference) { .book-choice { transition: background-color .2s, border-color .2s; } }
-@media (max-width: 1100px) { .book-page { padding: 25px; } .book-contents-page { padding-left: 30px; } .book-choice { grid-template-columns: 20px 82px minmax(0, 1fr); gap: 8px; padding-inline: 7px; } .book-choice-title { font-size: 14px; } .book-ribbon { right: 17px; } }
+@media (max-width: 1100px) { .book-page { padding: 25px; }  .book-choice { grid-template-columns: 20px 82px minmax(0, 1fr); gap: 8px; padding-inline: 7px; } .book-choice-title { font-size: 14px; } .book-ribbon { right: 17px; } }
 @media (max-width: 900px) { .video-album { width: calc(100% - 40px); } .book-spread { grid-template-columns: 1fr; } .book-player-page { border-radius: 18px 18px 0 0; background-image: linear-gradient(90deg, #e7d3bb22, transparent 10%); } .book-contents-page { border-left: 0; border-top: 1px solid #dcc3af; border-radius: 0 0 21px 21px; background-image: linear-gradient(180deg, #9b735b14, transparent 20px); padding: 29px 25px 25px; } .book-ribbon { top: -1px; height: 61px; } .book-choice { grid-template-columns: 28px 112px minmax(0, 1fr); gap: 15px; } .book-page-footer { margin-top: 8px; } }
 @media (max-width: 500px) { .video-album { width: calc(100% - 24px); padding-block: 32px 40px; } .album-heading { padding-inline: 4px; margin-bottom: 25px; } .album-heading h2 { font-size: 31px; letter-spacing: -.6px; } .album-heading > p:last-child { font-size: 14px; } .album-eyebrow { font-size: 11px; letter-spacing: 1.5px; } .video-book { padding: 6px 6px 13px; border-radius: 18px; } .book-page { padding: 23px 17px; } .book-page-heading { font-size: 11px; letter-spacing: 1px; gap: 10px; } .book-contents-page { padding-top: 26px; } .book-contents-heading h3 { font-size: 24px; } .book-contents-heading .album-eyebrow { font-size: 10px; letter-spacing: .7px; } .book-choice { grid-template-columns: 21px 82px minmax(0, 1fr); gap: 8px; padding: 10px 6px; min-height: 92px; } .book-choice-number { font-size: 18px; } .book-choice-status { font-size: 12px; } .book-page-footer { gap: 10px; font-size: 12px; } .album-controls { gap: 12px; } .album-controls button { padding-inline: 13px; font-size: 13px; } .album-controls > span { font-size: 13px; } .album-play-note { padding-inline: 6px; text-align: left; } }
 @media (max-width: 350px) { .book-choice { grid-template-columns: 18px 68px minmax(0, 1fr); gap: 6px; } .book-contents-heading h3 { font-size: 22px; } .album-controls > span { order: -1; width: 100%; text-align: center; } }

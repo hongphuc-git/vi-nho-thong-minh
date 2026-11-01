@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { motion } from 'motion-v'
 import { computed, ref } from 'vue'
-import { ArrowUpRight, Check, Heart, Mail, MessageCircle, Phone, Sparkles } from '@lucide/vue'
+import { ArrowUpRight, Check, GraduationCap, Heart, Mail, MessageCircle, Phone, ShieldCheck, Users } from '@lucide/vue'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import ImagePreview from '@/components/ImagePreview.vue'
@@ -20,98 +20,206 @@ const selectedPage = computed(() => learningPages.find(page => page.id === selec
 
 <template>
   <section id="lien-he" class="invitation-section" aria-labelledby="contact-title">
+    <header class="invitation-heading">
+      <p class="invitation-margin-note">Những kỹ năng nhỏ.<br />Tạo nên<br />thay đổi lớn.<span aria-hidden="true">☺</span></p>
+      <p class="invitation-eyebrow"><MessageCircle aria-hidden="true" /> GÓC KẾT NỐI</p>
+      <h2 id="contact-title">Một chiếc ví nhỏ.<br /><em>Một khởi đầu ý nghĩa.</em></h2>
+      <aside class="invitation-pink-note"><span class="invitation-note-tape" aria-hidden="true"></span><p>Giáo dục tài chính<br />cho thế hệ<br />tự tin hơn <Heart aria-hidden="true" /></p></aside>
+    </header>
+
     <div class="invitation-sheet">
-      <div class="invitation-copy">
-        <p class="invitation-eyebrow"><MessageCircle aria-hidden="true" /> MÌNH CÙNG BẮT ĐẦU NHÉ?</p>
-        <h2 id="contact-title">Một chiếc ví nhỏ.<br /><em>Một khởi đầu ý nghĩa.</em></h2>
-        <p class="invitation-intro">Bạn muốn cùng con thực hành tại nhà, hay mang một hoạt động mới đến lớp học? Hãy trò chuyện cùng nhóm để tìm hiểu bộ công cụ và khả năng tổ chức trải nghiệm.</p>
-        <div class="invitation-audiences" aria-label="Đối tượng có thể liên hệ"><span>Phụ huynh</span><span>Thầy cô</span><span>Lớp học & CLB</span></div>
+      <Card class="invitation-copy">
+        <span class="invitation-letter-tape" aria-hidden="true"></span>
+        <div>
+          <p class="invitation-letter-label">GỬI BẠN MỘT LỜI MỜI</p>
+          <h3>Mình cùng bắt đầu nhé!</h3>
+          <p class="invitation-intro">Cùng con thực hành tại nhà, hoặc mang một hoạt động mới đến lớp học. Hãy trò chuyện cùng nhóm để tìm hiểu bộ công cụ và cách tổ chức trải nghiệm.</p>
+        </div>
+        <div class="invitation-audiences" aria-label="Đối tượng có thể liên hệ">
+          <span><Heart aria-hidden="true" /> Phụ huynh</span>
+          <span><GraduationCap aria-hidden="true" /> Thầy cô</span>
+          <span><Users aria-hidden="true" /> Lớp học & CLB</span>
+        </div>
         <div class="invitation-letter">
           <img class="invitation-school-logo" :src="publicAsset('/images/thuong-long-school-logo.png')" alt="Logo Trường THCS Thượng Long" width="1254" height="1254" loading="lazy" />
-          <div><p>NGƯỜI ĐỒNG HÀNH</p><h3>Cô Nguyễn Thu Hà</h3><span>Giáo viên hướng dẫn · Trường THCS Thượng Long</span></div>
+          <div><p>GIÁO VIÊN HƯỚNG DẪN</p><h4>Cô Nguyễn Thu Hà</h4><span>Trường THCS Thượng Long</span></div>
         </div>
-        <div class="invitation-actions">
-          <Button as-child class="invitation-email-button"><a :href="emailLink"><Mail aria-hidden="true" /> Gửi lời nhắn cho dự án <ArrowUpRight aria-hidden="true" /></a></Button>
-          <Button as-child variant="outline" class="invitation-call-button"><a href="tel:0327227803"><Phone aria-hidden="true" /> 0327 227 803</a></Button>
+        <div class="invitation-contact">
+          <Button as-child class="invitation-email-button"><a :href="emailLink"><Mail aria-hidden="true" /><span>Gửi lời nhắn cho dự án</span><ArrowUpRight aria-hidden="true" /></a></Button>
+          <div class="invitation-secondary-actions">
+            <Button as-child variant="outline" class="invitation-call-button"><a href="tel:0327227803"><Phone aria-hidden="true" /> 0327 227 803</a></Button>
+            <a class="invitation-email-address" href="mailto:thuha03ulis@gmail.com"><Mail aria-hidden="true" /><span>thuha03ulis@gmail.com</span></a>
+          </div>
+          <p class="invitation-handnote"><Heart aria-hidden="true" /> Một lời nhắn nhỏ, cùng làm điều hay.</p>
         </div>
-        <a class="invitation-email-address" href="mailto:thuha03ulis@gmail.com">thuha03ulis@gmail.com <ArrowUpRight aria-hidden="true" /></a>
-        <p class="invitation-handnote"><Heart aria-hidden="true" /> Một lời nhắn nhỏ, một cơ hội cùng làm điều hay.</p>
-      </div>
+      </Card>
 
       <motion.div class="invitation-product-wrap" :initial="{ opacity: 0, y: 12 }" :while-in-view="{ opacity: 1, y: 0 }" :in-view-options="{ once: true }" :transition="{ duration: .4 }">
         <Card class="invitation-product">
           <span class="invitation-tape" aria-hidden="true"></span>
-          <header class="invitation-product-heading"><span>BỘ CÔNG CỤ CÁ NHÂN</span><span>Đang hoàn thiện mẫu</span></header>
-          <ImagePreview v-if="selectedPage" :key="selectedPage.id" class="invitation-product-photo" :src="selectedPage.image" :alt="selectedPage.description"><img :src="selectedPage.image" :alt="selectedPage.description" loading="lazy" /></ImagePreview>
-          <div class="invitation-page-choices" role="group" aria-label="Chọn học liệu xem trước"><Button v-for="page in learningPages" :key="page.id" variant="ghost" type="button" :aria-pressed="selectedPageId === page.id" @click="selectedPageId = page.id"><img :src="page.image" alt="" loading="lazy" /><span>{{ page.title }}</span></Button></div>
-          <p class="invitation-photo-caption" aria-live="polite">{{ selectedPage?.description }}</p>
-          <div class="invitation-price"><div><span>GIÁ THỬ NGHIỆM DỰ KIẾN</span><p><strong>55.000<small>đ</small></strong><span>/ bộ</span></p></div><span class="invitation-price-stamp" aria-hidden="true"><Sparkles /><span>Ví nhỏ<br />Thói quen lớn</span></span></div>
-          <ul class="invitation-includes" aria-label="Thành phần dự kiến của bộ cá nhân"><li v-for="item in includedItems" :key="item"><Check aria-hidden="true" />{{ item }}</li></ul>
-          <p class="invitation-price-note">Quy cách và giá có thể điều chỉnh khi hoàn thiện sản phẩm. Liên hệ nhóm để trao đổi thông tin cụ thể.</p>
+          <header class="invitation-product-heading"><h3>BỘ CÔNG CỤ CÁ NHÂN</h3><span>Đang hoàn thiện mẫu</span></header>
+          <div class="invitation-journal-spread" role="group" aria-label="Hai trang học liệu trong sổ thu–chi">
+            <figure><ImagePreview :src="publicAsset('/images/learning-kit/contact-journal-instructions.png')" alt="Trang hướng dẫn sử dụng sổ thu–chi"><img :src="publicAsset('/images/learning-kit/contact-journal-instructions.png')" alt="Hướng dẫn ghi sổ và nhìn lại cách sử dụng tiền" width="1545" height="2000" loading="lazy" /></ImagePreview><figcaption>Hiểu cách bắt đầu</figcaption></figure>
+            <figure><ImagePreview :src="publicAsset('/images/learning-kit/contact-spending-diary.png')" alt="Trang nhật ký chi tiêu với bốn ngăn tiền và tổng kết ngày"><img :src="publicAsset('/images/learning-kit/contact-spending-diary.png')" alt="Nhật ký chi tiêu hằng ngày trong học liệu của dự án" width="1545" height="2000" loading="lazy" /></ImagePreview><figcaption>Tự tay thực hành mỗi ngày</figcaption></figure>
+          </div>
+          <div class="invitation-details-row">
+            <div class="invitation-page-choices" role="group" aria-label="Xem ảnh học liệu chi tiết">
+              <figure v-for="page in learningPages" :key="page.id" class="invitation-thumbnail">
+                <ImagePreview :src="page.image" :alt="page.description"><img :src="page.image" :alt="page.title" loading="lazy" /></ImagePreview>
+                <figcaption>{{ page.title }}</figcaption>
+              </figure>
+            </div>
+            <div class="invitation-price"><span>GIÁ THỬ NGHIỆM DỰ KIẾN</span><p><strong>55.000<small>đ</small></strong><span>/ bộ</span></p></div>
+          </div>
+          <div class="invitation-product-footer">
+            <ul class="invitation-includes" aria-label="Thành phần dự kiến của bộ cá nhân"><li v-for="item in includedItems" :key="item"><Check aria-hidden="true" />{{ item }}</li></ul>
+            <p class="invitation-price-note">Quy cách và giá có thể điều chỉnh khi hoàn thiện sản phẩm. Liên hệ nhóm để trao đổi thông tin cụ thể.</p>
+          </div>
         </Card>
       </motion.div>
     </div>
-    <p class="invitation-bottom-note">Có thể thực hành bằng tiền mô phỏng <span aria-hidden="true">✦</span> Đồng hành tại gia đình và lớp học</p>
+    <div class="invitation-bottom-note"><p><ShieldCheck aria-hidden="true" /> Thực hành bằng tiền mô phỏng</p><p><Heart aria-hidden="true" /> Đồng hành tại gia đình & lớp học</p></div>
   </section>
 </template>
 
 <style scoped>
-.invitation-section { width: min(1320px, calc(100% - 80px)); margin: 12px auto 55px; padding-top: 20px; color: #54392c; }
-.invitation-sheet { position: relative; display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr); gap: 54px; align-items: center; padding: 44px 46px; border: 1px solid #d7e1e5; border-radius: 8px 26px 9px 23px; background-color: #edf5fa; background-image: linear-gradient(#93b5ce1a 1px, transparent 1px), linear-gradient(90deg, #93b5ce1a 1px, transparent 1px); background-size: 27px 27px; box-shadow: 0 6px 0 #d8e7ef80, 0 15px 30px #694b2e08; }
-.invitation-sheet::before { content: ''; position: absolute; top: -13px; left: 11%; width: 105px; height: 28px; transform: rotate(-5deg); background: repeating-linear-gradient(135deg, #f0bdcfb3 0 8px, #fff6ecb3 8px 16px); pointer-events: none; }
-.invitation-copy { min-width: 0; }
-.invitation-eyebrow { display: flex; align-items: center; gap: 7px; font-size: 10px; font-weight: 600; letter-spacing: 1.2px; color: #5482a2; line-height: 1.8; }
+.invitation-section { width: min(1440px, calc(100% - 80px)); margin: 16px auto 55px; padding-top: 28px; color: #54392c; }
+.invitation-heading { position: relative; min-height: 180px; padding: 0 205px 12px; text-align: center; margin-bottom: 38px; }
+.invitation-eyebrow { display: flex; align-items: center; justify-content: center; gap: 9px; font-size: 11px; font-weight: 600; letter-spacing: 2px; line-height: 1.8; color: #39769d; }
 .invitation-eyebrow svg { width: 18px; height: 18px; }
-.invitation-copy h2 { margin-top: 18px; font-family: 'Lora', Georgia, serif; font-size: clamp(30px, 3vw, 43px); font-weight: 700; line-height: 1.45; letter-spacing: -1px; }
-.invitation-copy h2 em { font-weight: 500; color: #407b9f; text-decoration: underline; text-decoration-color: #eeb7cb; text-decoration-thickness: 3px; text-underline-offset: 7px; }
-.invitation-intro { max-width: 490px; margin-top: 22px; color: #745b46; font-size: 14px; line-height: 1.95; }
-.invitation-audiences { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
-.invitation-audiences > span { padding: 5px 11px; border: 1px solid #cbdde8; border-radius: 20px; background: #fffdf69c; font-size: 10px; line-height: 1.7; color: #6a8498; }
-.invitation-letter { display: flex; align-items: center; gap: 14px; margin-top: 27px; padding-top: 21px; border-top: 1px dashed #bdced9; }
-.invitation-school-logo { display: block; width: 64px; height: 64px; object-fit: contain; flex-shrink: 0; border-radius: 50%; border: 3px solid #fffdf7; background: #fff; }
-.invitation-letter-icon { display: grid; place-items: center; width: 45px; height: 45px; border: 1px solid #e5c2cc; border-radius: 11px; background: #f5dce5; color: #b97e95; flex-shrink: 0; transform: rotate(-5deg); }
-.invitation-letter-icon svg { width: 25px; height: 25px; stroke-width: 1.4; }
-.invitation-letter > div > p { font-size: 8px; font-weight: 600; letter-spacing: 1px; color: #7c8b94; }
-.invitation-letter h3 { margin-top: 4px; font-family: 'Lora', Georgia, serif; font-size: 20px; font-weight: 600; color: #5c4030; }
-.invitation-letter > div > span { display: block; margin-top: 5px; font-size: 10px; line-height: 1.8; color: #82705c; }
-.invitation-actions { display: flex; flex-wrap: wrap; gap: 11px; margin-top: 23px; }
-.invitation-email-button, .invitation-call-button { min-height: 48px; height: auto; padding: 12px 17px; gap: 9px; border-radius: 24px; font-size: 12px; white-space: normal; text-align: left; }
-.invitation-email-button { background: #62402f; color: #fffaf1; }
+.invitation-heading h2 { margin-top: 12px; font-family: 'Lora', Georgia, serif; font-size: clamp(32px, 3.5vw, 49px); font-weight: 700; line-height: 1.4; letter-spacing: -.8px; }
+.invitation-heading h2 em { font-weight: 500; color: #39779f; text-decoration: underline; text-decoration-color: #e7a4bb; text-decoration-thickness: 3px; text-underline-offset: 9px; }
+.invitation-sheet { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.06fr); gap: 36px; align-items: start; }
+.invitation-copy { position: relative; display: flex; flex-direction: column; gap: 26px; min-width: 0; padding: 38px 32px 30px; background-color: #fffbf2; background-image: repeating-linear-gradient(0deg, transparent 0 31px, #d9c8a824 31px 32px), repeating-linear-gradient(125deg, #b4996a05 0 1px, transparent 1px 4px); border: 0; border-radius: 1px; box-shadow: -8px 7px 0 #c8dfed, 0 12px 24px #76533412; }
+.invitation-letter-tape { position: absolute; left: -19px; top: 0; width: 100px; height: 27px; transform: rotate(-30deg); background: repeating-linear-gradient(135deg, #f0bdd0c9 0 7px, #fbe3e6c9 7px 14px); pointer-events: none; }
+.invitation-letter-label { color: #887254; font-size: 9px; font-weight: 500; letter-spacing: 1.3px; }
+.invitation-copy h3 { margin-top: 10px; font-family: 'Lora', Georgia, serif; font-size: clamp(27px, 2.5vw, 36px); font-weight: 700; line-height: 1.4; }
+.invitation-intro { margin-top: 17px; font-size: 14px; line-height: 1.95; color: #745b46; }
+.invitation-audiences { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.invitation-audiences > span { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 13px 8px; border: 1px solid #e6c4cf; border-radius: 11px; background: #f9e0e5; font-size: 11px; line-height: 1.7; text-align: center; }
+.invitation-audiences > span:nth-child(2) { border-color: #bfd4e3; background: #e0edf6; }
+.invitation-audiences > span:nth-child(3) { border-color: #cfd9b3; background: #eaf0d9; }
+.invitation-audiences svg { width: 24px; height: 24px; stroke-width: 1.5; flex-shrink: 0; }
+.invitation-letter { display: flex; align-items: center; gap: 17px; padding-top: 25px; border-top: 1px dashed #d2bea0; }
+.invitation-school-logo { display: block; width: 82px; height: 82px; object-fit: contain; flex-shrink: 0; border-radius: 50%; border: 3px solid #fffdf7; background: #fff; }
+.invitation-letter > div { min-width: 0; }
+.invitation-letter > div > p { font-size: 9px; letter-spacing: 1px; font-weight: 600; color: #42789b; }
+.invitation-letter h4 { margin-top: 7px; font-family: 'Lora', Georgia, serif; font-size: clamp(20px, 2vw, 27px); line-height: 1.5; font-weight: 600; }
+.invitation-letter > div > span { display: block; margin-top: 5px; font-size: 12px; line-height: 1.8; color: #78624a; }
+.invitation-contact { margin-top: 4px; }
+.invitation-email-button { width: 100%; min-height: 60px; height: auto; padding: 15px 20px; display: flex; justify-content: flex-start; gap: 12px; border-radius: 13px; background: #62402f; color: #fffaf1; font-size: 15px; line-height: 1.8; white-space: normal; text-align: left; }
 .invitation-email-button:hover { background: #7c5540; }
-.invitation-call-button { background: #fffdf7; border-color: #c9dbe7; color: #487493; }
-.invitation-actions svg { width: 16px; height: 16px; flex-shrink: 0; }
-.invitation-email-address { display: inline-flex; align-items: center; gap: 7px; min-height: 44px; max-width: 100%; padding-block: 8px; color: #5d8098; font-size: 12px; line-height: 1.7; text-decoration: underline; text-underline-offset: 4px; overflow-wrap: anywhere; }
-.invitation-email-address svg { width: 13px; height: 13px; flex-shrink: 0; }
-.invitation-handnote { display: flex; align-items: flex-start; gap: 8px; margin-top: 13px; color: #9b7184; font-family: 'Lora', Georgia, serif; font-style: italic; font-size: 13px; line-height: 1.8; }
-.invitation-handnote svg { width: 17px; height: 18px; flex-shrink: 0; margin-top: 3px; }
-.invitation-product-wrap { min-width: 0; }
-.invitation-product { position: relative; padding: 16px 17px 19px; border: 1px solid #e7dac5; border-radius: 5px 10px 5px 9px; background: #fffdf7; box-shadow: 5px 7px 0 #c3d6e14d, 0 8px 20px #6e503314; }
-.invitation-tape { position: absolute; z-index: 1; top: -13px; right: 26%; width: 88px; height: 27px; background: repeating-linear-gradient(0deg, #eecf8d99 0 4px, #ffe5ad99 4px 8px); transform: rotate(6deg); pointer-events: none; }
-.invitation-product-heading { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; padding: 5px 3px 13px; font-size: 8px; line-height: 1.7; font-weight: 600; letter-spacing: .8px; color: #8e785e; }
-.invitation-product-heading > span:last-child { padding: 3px 8px; background: #edf3e6; border: 1px solid #dce6d2; border-radius: 15px; font-size: 8px; font-weight: 400; letter-spacing: 0; color: #6b8054; }
-.invitation-product-photo { width: 100%; }
-.invitation-photo-caption { padding: 10px 4px 0; text-align: center; font-size: 11px; line-height: 1.8; color: #7e694f; }
-.invitation-product-photo img { display: block; width: 100%; height: 320px; object-fit: contain; background: #fffdf4; }
-.invitation-page-choices { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 12px; }
-.invitation-page-choices button { display: flex; flex-direction: column; height: auto; min-height: 72px; padding: 7px; gap: 5px; white-space: normal; border: 1px solid #e4dac9; border-radius: 8px; color: #795b42; background: #fffaf0; font-size: 10px; line-height: 1.6; }
-.invitation-page-choices button[aria-pressed='true'] { border-color: #80abc9; background: #e8f2f9; color: #396b90; }
-.invitation-page-choices img { display: block; width: 100%; height: 47px; object-fit: contain; }
-.invitation-price { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 15px; padding: 15px 16px; background: #fff0bd; border: 1px dashed #dcc48d; border-radius: 5px; color: #74502d; }
-.invitation-price > div > span { font-size: 8px; letter-spacing: .8px; font-weight: 600; line-height: 1.8; }
-.invitation-price > div > p { display: flex; align-items: baseline; gap: 9px; }
-.invitation-price strong { font-family: 'Lora', Georgia, serif; font-size: 36px; font-weight: 700; line-height: 1.5; }
-.invitation-price small { font-size: 20px; margin-left: 2px; }
-.invitation-price > div > p > span { font-size: 11px; color: #987c4d; }
-.invitation-price-stamp { display: grid; justify-items: center; gap: 3px; padding-left: 14px; border-left: 1px dashed #d2bb83; color: #ad8c49; text-align: center; flex-shrink: 0; }
-.invitation-price-stamp svg { width: 26px; height: 26px; }
-.invitation-price-stamp > span { font-family: 'Lora', Georgia, serif; font-size: 11px; font-style: italic; line-height: 1.5; }
-.invitation-includes { display: flex; flex-wrap: wrap; gap: 7px 14px; margin: 16px 0 0; padding: 0; list-style: none; }
-.invitation-includes li { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; line-height: 1.8; color: #7e694f; }
-.invitation-includes svg { width: 12px; height: 12px; color: #8ba46f; }
-.invitation-price-note { margin-top: 13px; padding-top: 11px; border-top: 1px dashed #e6dac7; font-size: 10px; line-height: 1.85; color: #8c745b; }
-.invitation-bottom-note { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px; margin-top: 24px; font-size: 11px; line-height: 1.8; color: #9b846b; text-align: center; }
-.invitation-bottom-note > span { color: #c6a25b; }
-@media (max-width: 1100px) { .invitation-section { width: calc(100% - 56px); } .invitation-sheet { padding: 34px 30px; gap: 30px; } .invitation-copy h2 { font-size: 34px; } .invitation-actions { flex-direction: column; align-items: flex-start; } .invitation-intro { font-size: 13px; } }
-@media (max-width: 800px) { .invitation-sheet { grid-template-columns: 1fr; gap: 34px; } .invitation-actions { flex-direction: row; } .invitation-product-wrap { width: min(530px, 100%); margin-inline: auto; } .invitation-copy h2 { font-size: 38px; } .invitation-intro { max-width: none; } }
-@media (max-width: 500px) { .invitation-section { width: calc(100% - 32px); margin-bottom: 38px; } .invitation-sheet { padding: 28px 20px; border-radius: 6px 18px 7px 15px; } .invitation-copy h2 { font-size: 29px; letter-spacing: -.7px; } .invitation-eyebrow { font-size: 8px; letter-spacing: .8px; } .invitation-intro { font-size: 13px; } .invitation-actions { flex-direction: column; align-items: stretch; } .invitation-actions a { justify-content: center; } .invitation-product { padding: 14px 12px 16px; } .invitation-price { padding: 13px 12px; } .invitation-price strong { font-size: 32px; } .invitation-price-stamp { padding-left: 10px; } .invitation-handnote { font-size: 12px; } .invitation-bottom-note { font-size: 10px; } }
+.invitation-email-button > svg:first-child { width: 23px; height: 23px; flex-shrink: 0; }
+.invitation-email-button > svg:last-child { margin-left: auto; width: 18px; height: 18px; flex-shrink: 0; }
+.invitation-secondary-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 15px; margin-top: 13px; }
+.invitation-call-button { min-height: 46px; height: auto; padding: 11px 15px; gap: 8px; border-radius: 10px; border-color: #bba68a; background: #fffaf0; color: #62402f; font-size: 12px; }
+.invitation-call-button svg { width: 17px; height: 17px; }
+.invitation-email-address { display: flex; align-items: center; gap: 8px; min-height: 44px; max-width: 100%; color: #39749a; font-size: 12px; line-height: 1.7; text-decoration: underline; text-underline-offset: 4px; }
+.invitation-email-address span { overflow-wrap: anywhere; min-width: 0; }
+.invitation-email-address svg { width: 18px; height: 18px; flex-shrink: 0; }
+.invitation-handnote { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 20px; color: #39769d; font-family: 'Lora', Georgia, serif; font-style: italic; font-size: 15px; line-height: 1.8; text-align: center; }
+.invitation-handnote svg { width: 20px; height: 20px; color: #c87a97; flex-shrink: 0; }
+.invitation-product-wrap { display: flex; min-width: 0; }
+.invitation-product { position: relative; display: flex; flex-direction: column; width: 100%; min-width: 0; padding: 20px; border: 0; border-radius: 1px; background-color: #fffdf7; background-image: repeating-linear-gradient(125deg, #b4996a06 0 1px, transparent 1px 4px); box-shadow: 4px 5px 0 #e8d9c2, 0 12px 24px #76533412; }
+.invitation-tape { position: absolute; z-index: 1; top: -13px; left: 43%; width: 98px; height: 28px; background: repeating-linear-gradient(90deg, #aac9e2a1 0 7px, #e4eef6b3 7px 14px); transform: rotate(6deg); pointer-events: none; }
+.invitation-product-heading { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; padding: 5px 0 14px; }
+.invitation-product-heading h3 { font-family: 'Lora', Georgia, serif; font-size: 16px; font-weight: 600; line-height: 1.6; }
+.invitation-product-heading > span { padding: 4px 10px; background: #eaf0d9; border: 1px solid #d9e1c3; border-radius: 16px; font-size: 10px; line-height: 1.6; color: #5b7143; }
+.invitation-journal-spread { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; padding: 18px 12px 12px; background: #edf3ed; border: 1px solid #dbe3d4; }
+.invitation-journal-spread figure { min-width: 0; margin: 0; padding: 6px 6px 10px; background: #fffef9; box-shadow: 2px 4px 8px #644c3020; transform: rotate(-2deg); }
+.invitation-journal-spread figure:nth-child(2) { transform: rotate(2deg); }
+.invitation-journal-spread img { display: block; width: 100%; height: auto; aspect-ratio: 1545 / 2000; object-fit: contain; }
+.invitation-journal-spread figcaption { padding-top: 10px; text-align: center; font-family: 'Lora', Georgia, serif; font-size: 11px; font-style: italic; line-height: 1.6; color: #57734b; }
+.invitation-details-row { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 12px; margin-top: 13px; }
+.invitation-page-choices { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; min-width: 0; }
+.invitation-thumbnail { min-width: 0; margin: 0; padding: 7px 5px; border: 1px solid #e5d8c3; border-radius: 9px; background: #fcf5e7; }
+.invitation-thumbnail img { display: block; width: 100%; height: 69px; object-fit: contain; }
+.invitation-thumbnail figcaption { padding-top: 7px; font-size: 9px; line-height: 1.6; text-align: center; color: #735d44; }
+.invitation-thumbnail :deep(.image-preview-hint) { right: 3px; bottom: 3px; padding: 4px; font-size: 0; gap: 0; }
+.invitation-thumbnail :deep(.image-preview-hint svg) { width: 13px; height: 13px; }
+.invitation-price { display: flex; flex-direction: column; justify-content: center; padding: 12px; background: #fff0bd; border: 1px dashed #d7b972; border-radius: 9px; color: #74502d; box-shadow: 2px 3px 0 #eddfba70; }
+.invitation-price > span { font-size: 8px; letter-spacing: .6px; line-height: 1.7; font-weight: 600; }
+.invitation-price p { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 7px; margin-top: 5px; }
+.invitation-price strong { font-family: 'Lora', Georgia, serif; font-size: clamp(27px, 2.7vw, 38px); font-weight: 700; line-height: 1.4; white-space: nowrap; }
+.invitation-price small { font-size: 18px; }
+.invitation-price p > span { font-size: 12px; }
+.invitation-product-footer { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 18px; margin-top: auto; padding-top: 20px; }
+.invitation-includes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px 12px; margin: 0; padding: 0; list-style: none; align-content: start; }
+.invitation-includes li { display: flex; align-items: flex-start; gap: 6px; font-size: 11px; line-height: 1.8; color: #735b43; }
+.invitation-includes svg { width: 16px; height: 16px; margin-top: 2px; padding: 2px; border-radius: 50%; background: #e2ebd6; color: #587540; flex-shrink: 0; }
+.invitation-price-note { padding-left: 15px; border-left: 1px dashed #d8c6a9; font-family: 'Lora', Georgia, serif; font-size: 11px; font-style: italic; line-height: 1.9; color: #7d674e; }
+.invitation-bottom-note { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 16px 30px; width: min(1150px, 100%); margin: 28px auto 0; padding: 15px 24px; border: 0; border-radius: 1px; background: #fffaf0; box-shadow: 0 3px 0 #e9ddc8, 0 6px 15px #7653340b; }
+.invitation-bottom-note p { display: flex; align-items: center; gap: 10px; font-size: 12px; line-height: 1.8; }
+.invitation-bottom-note p + p { border-left: 1px solid #dac6a8; padding-left: 30px; }
+.invitation-bottom-note svg { width: 24px; height: 24px; color: #487ca0; flex-shrink: 0; stroke-width: 1.5; }
+.invitation-bottom-note p:last-child svg { color: #c87a97; }
+@media (max-width: 1150px) {
+  .invitation-section { width: calc(100% - 56px); }
+  .invitation-sheet { gap: 26px; }
+  .invitation-copy { padding: 30px 24px 26px; gap: 22px; }
+  .invitation-audiences > span { flex-direction: column; gap: 6px; padding: 10px 5px; }
+  .invitation-details-row { grid-template-columns: 1fr; }
+  .invitation-price { flex-direction: row; align-items: center; justify-content: space-between; gap: 10px; }
+  .invitation-price p { margin-top: 0; }
+  .invitation-product-footer { grid-template-columns: 1fr; gap: 12px; }
+  .invitation-price-note { padding: 10px 0 0; border-left: 0; border-top: 1px dashed #d8c6a9; font-family: var(--font-sans); font-style: normal; font-size: 10px; }
+}
+@media (max-width: 800px) {
+  .invitation-section { max-width: 680px; }
+  .invitation-sheet { grid-template-columns: 1fr; gap: 34px; }
+  .invitation-copy { gap: 24px; }
+  .invitation-contact { margin-top: 0; }
+  .invitation-audiences > span { flex-direction: row; }
+  .invitation-details-row { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); }
+  .invitation-price { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; }
+  .invitation-product-footer { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }
+  .invitation-price-note { padding: 0 0 0 15px; border-top: 0; border-left: 1px dashed #d8c6a9; }
+  .invitation-bottom-note { gap: 12px; }
+  .invitation-bottom-note p + p { border-left: 0; padding-left: 0; }
+}
+@media (max-width: 500px) {
+  .invitation-section { width: calc(100% - 36px); padding-top: 20px; margin-bottom: 38px; }
+  .invitation-heading { margin-bottom: 29px; }
+  .invitation-heading h2 { font-size: 29px; letter-spacing: -.6px; }
+  .invitation-eyebrow { font-size: 9px; letter-spacing: 1.3px; }
+  .invitation-copy { padding: 30px 19px 24px; box-shadow: -5px 6px 0 #c8dfed; }
+  .invitation-copy h3 { font-size: 27px; }
+  .invitation-intro { font-size: 13px; }
+  .invitation-audiences { gap: 7px; }
+  .invitation-audiences > span { flex-direction: column; font-size: 10px; }
+  .invitation-school-logo { width: 66px; height: 66px; }
+  .invitation-letter { gap: 12px; }
+  .invitation-letter h4 { font-size: 20px; }
+  .invitation-letter > div > p { font-size: 8px; }
+  .invitation-letter > div > span { font-size: 10px; }
+  .invitation-email-button { font-size: 13px; padding-inline: 13px; }
+  .invitation-secondary-actions { gap: 8px; }
+  .invitation-email-address { font-size: 11px; }
+  .invitation-handnote { font-size: 13px; }
+  .invitation-product { padding: 16px 12px; }
+  .invitation-product-heading h3 { font-size: 13px; }
+  .invitation-product-heading > span { font-size: 9px; }
+  .invitation-details-row { grid-template-columns: 1fr; }
+  .invitation-thumbnail img { height: 75px; }
+  .invitation-price { flex-direction: row; align-items: center; justify-content: space-between; }
+  .invitation-price strong { font-size: 32px; }
+  .invitation-product-footer { grid-template-columns: 1fr; }
+  .invitation-price-note { padding: 11px 0 0; border-left: 0; border-top: 1px dashed #d8c6a9; }
+  .invitation-bottom-note { padding: 14px; }
+  .invitation-bottom-note p { font-size: 10px; gap: 8px; }
+  .invitation-bottom-note svg { width: 20px; height: 20px; }
+}
+.invitation-margin-note { position: absolute; top: 14px; left: 20px; width: 165px; font-family: 'Lora', Georgia, serif; font-style: italic; font-size: 17px; line-height: 1.65; color: #39769d; text-align: left; transform: rotate(-8deg); }
+.invitation-margin-note > span { display: block; padding-left: 115px; font-size: 28px; line-height: 1; }
+.invitation-pink-note { position: absolute; right: 15px; top: 4px; width: 165px; padding: 24px 18px 18px; background-color: #f8dfe3; background-image: linear-gradient(#bb829619 1px, transparent 1px), linear-gradient(90deg, #bb829619 1px, transparent 1px); background-size: 18px 18px; box-shadow: 3px 6px 10px #6749321c; transform: rotate(-8deg); }
+.invitation-pink-note p { font-family: 'Lora', Georgia, serif; font-size: 16px; font-style: italic; line-height: 1.65; color: #705c76; text-align: left; }
+.invitation-pink-note svg { display: inline-block; vertical-align: middle; width: 19px; height: 19px; color: #c76b8d; }
+.invitation-note-tape { position: absolute; width: 50px; height: 20px; right: -11px; top: -5px; transform: rotate(30deg); background: repeating-linear-gradient(90deg, #f8db86b3 0 6px, #ffebb4cc 6px 12px); }
+.invitation-copy::after, .invitation-product::after { content: ''; position: absolute; left: 0; right: 0; bottom: -8px; height: 12px; background: #fffbf2; clip-path: polygon(0 0, 100% 0, 100% 55%, 97% 80%, 94% 40%, 90% 75%, 87% 50%, 84% 95%, 80% 60%, 76% 85%, 72% 45%, 68% 80%, 64% 55%, 60% 90%, 56% 50%, 52% 80%, 48% 45%, 44% 90%, 40% 60%, 36% 80%, 32% 45%, 28% 95%, 24% 60%, 20% 85%, 16% 50%, 12% 80%, 8% 45%, 4% 85%, 0 55%); pointer-events: none; }
+.invitation-product::after { background: #fffdf7; }
+.invitation-letter-tape { z-index: 1; }
+@media (min-width: 801px) { .invitation-copy { margin-top: 6px; } }
+@media (max-width: 1150px) { .invitation-heading { padding-inline: 175px; } .invitation-margin-note { left: 0; width: 145px; font-size: 15px; } .invitation-pink-note { right: 0; width: 145px; padding-inline: 14px; } .invitation-pink-note p { font-size: 14px; } }
+@media (max-width: 800px) { .invitation-heading { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; min-height: 0; padding: 0; align-items: center; } .invitation-heading > .invitation-eyebrow, .invitation-heading > h2 { grid-column: 1 / -1; } .invitation-margin-note { position: relative; inset: auto; grid-row: 3; justify-self: center; width: auto; margin-top: 10px; } .invitation-pink-note { position: relative; inset: auto; grid-row: 3; justify-self: center; margin-top: 10px; } }
+@media (max-width: 500px) { .invitation-margin-note { font-size: 13px; } .invitation-margin-note > span { padding-left: 75px; font-size: 24px; } .invitation-pink-note { width: 132px; padding: 17px 12px 13px; } .invitation-pink-note p { font-size: 13px; } }
 </style>
