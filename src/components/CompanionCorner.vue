@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { motion } from 'motion-v'
-import { ArrowUpRight, Backpack, BookOpen, Heart, Mail, Minus, Plus, Sprout, Users } from '@lucide/vue'
+import { ArrowUpRight, Backpack, BookOpen, Heart, Minus, Plus, Sprout, Users } from '@lucide/vue'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 
@@ -111,3 +111,4 @@ const audiences = [
 @media (max-width: 1000px) { .companion-scrapbook { width: calc(100% - 64px); } .companion-section { gap: 25px; } .quote-paper { padding: 32px 24px 39px; } .audience-note { grid-template-columns: 35px 1fr 48px; padding: 18px 15px; gap: 11px; } .audience-illustration > svg:first-child { width: 44px; height: 51px; } .audience-note h3 { font-size: 21px; } .audience-note p { font-size: 12px; } .note-number { font-size: 20px; } .mailbox-section { gap: 27px; } }
 @media (max-width: 760px) { .companion-scrapbook { width: calc(100% - 40px); margin-block: 22px 45px; } .companion-section, .mailbox-section { grid-template-columns: 1fr; gap: 28px; } .quote-paper h2 { font-size: clamp(30px, 6.5vw, 43px); } .quote-message p { font-size: 13px; } .audience-note { grid-template-columns: 40px 1fr 57px; min-height: 125px; } .audience-note h3 { font-size: 22px; } .audience-note p { font-size: 13px; } .companion-divider { margin-block: 28px; } .mailbox-intro { text-align: center; } .mailbox-intro h2 { font-size: 36px; } .mailbox-envelope { width: 175px; } .mailbox-envelope span { font-size: 13px; } .question-paper summary { gap: 11px; padding: 15px 12px; } .question-paper h3 { font-size: 16px; } .question-number { font-size: 19px; padding: 5px 7px; } .question-paper > p { margin-inline: 12px; padding: 14px; font-size: 12px; } .companion-botanical { width: 42px; left: -15px; opacity: .6; } }
 </style>
+
