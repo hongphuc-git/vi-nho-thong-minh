@@ -6,12 +6,6 @@ import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import ImagePreview from '@/components/ImagePreview.vue'
 
-const learningMaterials = [
-  { title: 'Ví 4 ngăn', image: '/images/learning-kit/wallet-photo.png', alt: 'Ví vải của bộ công cụ Ví nhỏ thông minh', color: 'pink' },
-  { title: 'Sổ thu chi', image: '/images/learning-kit/journal-cover.png', alt: 'Sổ theo dõi thu chi', color: 'blue' },
-  { title: 'Thẻ tình huống', image: '/images/learning-kit/situation-card.png', alt: 'Thẻ tình huống thực hành quản lý tiền', color: 'yellow' },
-  { title: 'Bảng mục tiêu', image: '/images/learning-kit/personal-goal.png', alt: 'Bảng mục tiêu cá nhân', color: 'sage' },
-]
 </script>
 
 <template>
@@ -61,16 +55,6 @@ const learningMaterials = [
             </figcaption>
           </figure>
         </div>
-        <div class="summary-materials">
-            <p>BẤM ĐỂ XEM TỪNG HỌC LIỆU</p>
-            <ul aria-label="Các thành phần của bộ công cụ">
-              <li v-for="item in learningMaterials" :key="item.title" :class="`material-${item.color}`">
-                <ImagePreview :src="publicAsset(item.image)" :alt="item.alt">
-                  <span class="material-link"><span class="material-dot" aria-hidden="true"></span>{{ item.title }}<ArrowUpRight aria-hidden="true" /></span>
-                </ImagePreview>
-              </li>
-            </ul>
-        </div>
       </Card>
     </motion.div>
   </section>
@@ -108,22 +92,8 @@ const learningMaterials = [
 .summary-idea-image figcaption > div { display: grid; gap: 4px; min-width: 0; }
 .summary-idea-image figcaption strong { font-family: 'Lora', Georgia, serif; font-size: 15px; line-height: 1.5; font-weight: 600; }
 .summary-idea-image figcaption div > span { font-size: 14px; line-height: 1.7; color: #5c4633; }
-.summary-materials { grid-column: 1 / -1; padding-top: 23px; border-top: 1px solid #e3b8c9; }
-.summary-materials > p { margin-bottom: 13px; color: #5c4633; font-size: 14px; letter-spacing: .6px; font-weight: 600; line-height: 1.7; }
-.summary-materials ul { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 0; padding: 0; list-style: none; }
-.summary-materials li { --material-color: #a34f73; --material-background: #f7dce7; --material-border: #cb8fa8; --material-hover: #f6d7e4; min-width: 0; }
-.summary-materials .material-blue { --material-color: #386f96; --material-background: #d5e9f8; --material-border: #8fb5d0; --material-hover: #cde5f6; }
-.summary-materials .material-yellow { --material-color: #936c21; --material-background: #fce9b4; --material-border: #c5a65a; --material-hover: #f9e7ae; }
-.summary-materials .material-sage { --material-color: #557b3c; --material-background: #dcebc9; --material-border: #9ab77d; --material-hover: #d9e9c9; }
-.summary-materials :deep(.image-preview-trigger) { min-height: 50px; padding: 12px; border: 1px solid var(--material-border); border-radius: 9px; background: var(--material-background); color: #5c4633; text-align: left; }
-.summary-materials :deep(.image-preview-trigger:hover) { background: var(--material-hover); border-color: var(--material-color); }
-.summary-materials :deep(.image-preview-trigger:focus-visible) { outline: 3px solid #376e95; outline-offset: 3px; }
-.summary-materials :deep(.image-preview-hint) { display: none; }
-.material-link { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; line-height: 1.6; white-space: normal; }
-.material-dot { width: 7px; height: 7px; flex-shrink: 0; border-radius: 50%; background: var(--material-color); }
-.material-link > svg { width: 13px; height: 13px; flex-shrink: 0; margin-left: auto; color: #526777; }
-@media (hover: hover) and (prefers-reduced-motion: no-preference) { .summary-primary-action { transition: background-color .2s, transform .2s; } .summary-primary-action:hover { background: #704333; transform: translateY(-2px); } .summary-materials :deep(.image-preview-trigger) { transition: background-color .2s, border-color .2s; } }
-@media (max-width: 1000px) { .project-summary { width: calc(100% - 48px); } .summary-idea { gap: 27px; padding: 28px; } .summary-idea-copy h3 { font-size: 29px; } .summary-materials ul { grid-template-columns: repeat(2, minmax(0, 1fr)); } .idea-highlights { gap: 10px 13px; } }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) { .summary-primary-action { transition: background-color .2s, transform .2s; } .summary-primary-action:hover { background: #704333; transform: translateY(-2px); } }
+@media (max-width: 1000px) { .project-summary { width: calc(100% - 48px); } .summary-idea { gap: 27px; padding: 28px; } .summary-idea-copy h3 { font-size: 29px; } .idea-highlights { gap: 10px 13px; } }
 @media (max-width: 760px) { .project-summary { width: calc(100% - 32px); padding-block: 32px 42px; } .summary-heading { margin-bottom: 25px; padding-inline: 8px; } .summary-heading h2 { font-size: clamp(27px, 5vw, 35px); } .summary-mobile-break { display: block; } .summary-idea { grid-template-columns: 1fr; gap: 28px; padding: 25px; border-radius: 20px; } .summary-idea-copy h3 { max-width: 540px; font-size: clamp(28px, 5vw, 35px); } .idea-description { max-width: none; } .summary-next-actions { margin-top: 22px; } .summary-idea-image { transform: none; margin-inline: 0; } }
-@media (max-width: 400px) { .summary-idea { padding: 21px 17px; } .idea-eyebrow { letter-spacing: .3px; } .summary-idea-copy h3 { font-size: 27px; } .summary-primary-action { width: 100%; } .summary-idea-image figcaption { padding-inline: 3px; gap: 9px; } .summary-idea-image { padding: 13px 13px 0; } .summary-idea-image figcaption { align-items: flex-start; } .summary-materials ul { grid-template-columns: 1fr; } }
+@media (max-width: 400px) { .summary-idea { padding: 21px 17px; } .idea-eyebrow { letter-spacing: .3px; } .summary-idea-copy h3 { font-size: 27px; } .summary-primary-action { width: 100%; } .summary-idea-image figcaption { padding-inline: 3px; gap: 9px; } .summary-idea-image { padding: 13px 13px 0; } .summary-idea-image figcaption { align-items: flex-start; } }
 </style>
