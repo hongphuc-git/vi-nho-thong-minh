@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { motion } from 'motion-v'
-import { ArrowLeft, ArrowRight, CirclePlay, Film, Heart, Play, RotateCcw, Star } from '@lucide/vue'
+import { ArrowLeft, ArrowRight, CirclePlay, Heart, Play, RotateCcw } from '@lucide/vue'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { projectVideos } from '@/data/projectVideos'
 
-const selectedId = ref('gioi-thieu-tu-lop-hoc')
+const selectedId = ref(projectVideos[0]?.id ?? '')
 const selectedVideo = computed(() => projectVideos.find(video => video.id === selectedId.value))
 const selectedIndex = computed(() => projectVideos.findIndex(video => video.id === selectedId.value))
 const player = ref<HTMLVideoElement | null>(null)
@@ -14,17 +14,82 @@ const playing = ref(false)
 const waiting = ref(false)
 const failed = ref(false)
 const started = ref(false)
+const turnPhase = ref<'idle' | 'closing' | 'opening'>('idle')
+const turningVideo = computed(() => turnPhase.value !== 'idle')
+const pendingVideoId = ref<string | null>(null)
+const turnDirection = ref(1)
+const pageTurnSequence = ref(0)
+const pageStartRotation = ref(0)
+const pageEndRotation = ref(0)
+const pageStartOpacity = ref(1)
+const pageEndOpacity = ref(1)
+const reducedMotion = ref(true)
+let motionPreference: MediaQueryList | undefined
 const status = computed(() => failed.value ? 'Chưa tải được phim' : waiting.value ? 'Đang tải video…' : playing.value ? 'Đang phát' : started.value ? 'Đã tạm dừng' : 'Sẵn sàng để xem')
 
 function selectVideo(id: string) {
-  if (id === selectedId.value || !projectVideos.some(video => video.id === id)) return
+  if (turningVideo.value || id === selectedId.value) return
+  const nextIndex = projectVideos.findIndex(video => video.id === id)
+  const nextVideo = projectVideos[nextIndex]
+  const previousVideo = selectedVideo.value
+  if (!nextVideo || !previousVideo) return
+  turnDirection.value = nextIndex > selectedIndex.value ? 1 : -1
   player.value?.pause()
   playing.value = false
   waiting.value = false
-  failed.value = false
-  started.value = false
-  selectedId.value = id
+  pendingVideoId.value = id
+  pageStartRotation.value = 0
+  pageEndRotation.value = reducedMotion.value ? 0 : turnDirection.value * 180
+  pageStartOpacity.value = 1
+  pageEndOpacity.value = reducedMotion.value ? 0 : 1
+  pageTurnSequence.value += 1
+  turnPhase.value = 'closing'
 }
+
+function finishPageTurn() {
+  if (turnPhase.value === 'closing' && pendingVideoId.value) {
+    pageStartRotation.value = reducedMotion.value ? 0 : turnDirection.value * 180
+    pageEndRotation.value = reducedMotion.value ? 0 : turnDirection.value * 360
+    pageStartOpacity.value = reducedMotion.value ? 0 : 1
+    pageEndOpacity.value = 1
+    selectedId.value = pendingVideoId.value
+    pendingVideoId.value = null
+    failed.value = false
+    started.value = false
+    turnPhase.value = 'opening'
+  } else if (turnPhase.value === 'opening') {
+    turnPhase.value = 'idle'
+  }
+}
+
+function updateMotionPreference() {
+  reducedMotion.value = motionPreference?.matches ?? true
+  if (turningVideo.value) {
+    pageStartRotation.value = 0
+    pageEndRotation.value = 0
+    pageStartOpacity.value = 1
+    pageEndOpacity.value = 1
+    pageTurnSequence.value += 1
+  }
+  if (pendingVideoId.value) {
+    selectedId.value = pendingVideoId.value
+    failed.value = false
+    started.value = false
+  }
+  pendingVideoId.value = null
+  turnPhase.value = 'idle'
+}
+
+onMounted(() => {
+  motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
+  updateMotionPreference()
+  motionPreference.addEventListener('change', updateMotionPreference)
+})
+
+onUnmounted(() => {
+  motionPreference?.removeEventListener('change', updateMotionPreference)
+  player.value?.pause()
+})
 
 function selectAdjacent(offset: number) {
   const video = projectVideos[selectedIndex.value + offset]
@@ -39,127 +104,154 @@ function retryVideo() {
 </script>
 
 <template>
-  <section id="video-du-an" class="film-section" aria-labelledby="project-videos-title">
-    <header class="film-section-heading">
-      <span class="film-heading-icon" aria-hidden="true"><Film /><Star /></span>
-      <div><p class="film-eyebrow">GÓC LƯU NIỆM CỦA CHÚNG MÌNH</p><h2 id="project-videos-title">Chuyện nhỏ, <em>kỷ niệm lớn.</em></h2><p>Gặp gỡ nhóm thực hiện và những khoảnh khắc của “Ví nhỏ thông minh”.</p></div>
-      <span class="film-heading-sticker"><Heart aria-hidden="true" /> Cùng làm, cùng lớn lên.</span>
+  <section id="video-du-an" class="video-album" aria-labelledby="project-videos-title">
+    <header class="album-heading">
+      <p class="album-eyebrow">ALBUM KỶ NIỆM</p>
+      <h2 id="project-videos-title">Chuyện nhỏ, <em>kỷ niệm lớn.</em></h2>
+      <p>Lật từng trang, gặp những câu chuyện của chúng mình.</p>
     </header>
 
-    <motion.div v-if="selectedVideo" class="film-gallery" :initial="{ opacity: 0, y: 14 }" :while-in-view="{ opacity: 1, y: 0 }" :in-view-options="{ once: true }" :transition="{ duration: 0.45 }">
-      <div class="film-main-column">
-        <Card class="film-featured">
-          <span class="film-tape" aria-hidden="true"></span>
-          <div class="film-player-heading"><span><CirclePlay aria-hidden="true" /> VÍ NHỎ CINEMA</span><span class="film-status" :class="{ 'film-status-playing': playing }" role="status"><i aria-hidden="true"></i>{{ status }}</span></div>
-          <div class="film-screen">
-            <video :key="selectedVideo.id" ref="player" :poster="selectedVideo.poster" :aria-label="selectedVideo.title" aria-describedby="selected-video-description" controls playsinline preload="none" @play="playing = true; started = true" @playing="waiting = false" @waiting="waiting = true" @canplay="waiting = false" @pause="playing = false; waiting = false" @ended="playing = false; waiting = false; started = false" @error="failed = true; playing = false; waiting = false">
-              <source :src="selectedVideo.source" type="video/mp4" @error="failed = true; playing = false; waiting = false" />
-              <track v-if="selectedVideo.captions" kind="captions" :src="selectedVideo.captions" srclang="vi" label="Tiếng Việt" default />
-              Trình duyệt chưa hỗ trợ xem video. <a :href="selectedVideo.source">Mở video trực tiếp</a>.
-            </video>
+    <motion.div v-if="selectedVideo" :initial="{ opacity: 0, y: 14 }" :while-in-view="{ opacity: 1, y: 0 }" :in-view-options="{ once: true }" :transition="{ duration: 0.45 }">
+      <Card class="video-book">
+        <div class="book-spread">
+          <div class="book-page book-player-page">
+            <motion.div
+              :key="`${selectedVideo.id}-${pageTurnSequence}`"
+              class="book-player-content"
+              :inert="turningVideo"
+              :initial="{ rotateY: pageStartRotation, opacity: pageStartOpacity }"
+              :animate="{ rotateY: pageEndRotation, opacity: pageEndOpacity }"
+              :transition="{ duration: reducedMotion ? 0.1 : 0.55, ease: turnPhase === 'closing' ? 'easeIn' : 'easeOut' }"
+              @animation-complete="finishPageTurn"
+            >
+            <div class="book-page-face">
+            <div class="book-page-heading"><span>THƯỚC PHIM {{ String(selectedIndex + 1).padStart(2, '0') }}</span><span class="book-heading-rule" aria-hidden="true"></span></div>
+            <div class="book-screen">
+              <video :key="selectedVideo.id" ref="player" :poster="selectedVideo.poster" :aria-label="selectedVideo.title" aria-describedby="selected-video-description" controls playsinline preload="none" @play="playing = true; started = true" @playing="waiting = false" @waiting="waiting = true" @canplay="waiting = false" @pause="playing = false; waiting = false" @ended="playing = false; waiting = false; started = false" @error="failed = true; playing = false; waiting = false">
+                <source :src="selectedVideo.source" type="video/mp4" @error="failed = true; playing = false; waiting = false" />
+                <track v-if="selectedVideo.captions" kind="captions" :src="selectedVideo.captions" srclang="vi" label="Tiếng Việt" default />
+                Trình duyệt chưa hỗ trợ xem video. <a :href="selectedVideo.source">Mở video trực tiếp</a>.
+              </video>
+            </div>
+            <div v-if="failed" class="book-error" role="status">
+              <p>Chưa tải được video. Bạn có thể thử lại hoặc mở file trực tiếp.</p>
+              <div><Button type="button" variant="outline" @click="retryVideo"><RotateCcw aria-hidden="true" /> Thử lại</Button><a :href="selectedVideo.source">Mở video trực tiếp ↗</a></div>
+            </div>
+            <div class="book-video-copy">
+              <div class="book-title-row"><h3>{{ selectedVideo.title }}</h3><span class="book-time">{{ selectedVideo.duration }}</span></div>
+              <p id="selected-video-description">{{ selectedVideo.description }}</p>
+            </div>
+            <footer class="book-page-footer"><span aria-hidden="true">{{ String(selectedIndex + 1).padStart(2, '0') }}</span><span class="book-footer-rule" aria-hidden="true"></span><span class="book-player-status" role="status">{{ status }}</span></footer>
+            </div>
+            <span class="book-page-back" aria-hidden="true"></span>
+            </motion.div>
           </div>
-          <div v-if="failed" class="film-error" role="status"><p>Chưa tải được video. Bạn có thể thử lại hoặc mở file trực tiếp.</p><div><Button type="button" variant="outline" @click="retryVideo"><RotateCcw aria-hidden="true" /> Thử lại</Button><a :href="selectedVideo.source">Mở video trực tiếp ↗</a></div></div>
-          <div class="film-featured-copy">
-            <div class="film-title-row"><span class="film-large-number" aria-hidden="true">{{ String(selectedIndex + 1).padStart(2, '0') }}</span><div><p class="film-eyebrow">MỘT KHOẢNH KHẮC CỦA DỰ ÁN</p><h3>{{ selectedVideo.title }}</h3></div><span class="film-time">{{ selectedVideo.duration }}</span></div>
-            <p id="selected-video-description">{{ selectedVideo.description }}</p>
-            <div class="film-featured-footer"><span><Film aria-hidden="true" /> Tư liệu do nhóm cung cấp</span><span>Ví nhỏ · Thói quen lớn</span></div>
-          </div>
-        </Card>
-        <div class="film-controls" aria-label="Chuyển video"><Button variant="outline" type="button" :disabled="selectedIndex <= 0" @click="selectAdjacent(-1)"><ArrowLeft aria-hidden="true" /> Phim trước</Button><span>Đoạn <strong>{{ selectedIndex + 1 }}</strong> / {{ projectVideos.length }}</span><Button variant="outline" type="button" :disabled="selectedIndex >= projectVideos.length - 1" @click="selectAdjacent(1)">Phim tiếp <ArrowRight aria-hidden="true" /></Button></div>
-      </div>
 
-      <aside class="film-playlist" aria-labelledby="film-playlist-title">
-        <header class="film-playlist-heading"><p class="film-eyebrow">LẬT TỪNG KHOẢNH KHẮC</p><div><h3 id="film-playlist-title">Album thước phim</h3><span>{{ projectVideos.length }} đoạn</span></div><p>Chọn một tấm thẻ để đổi phim.</p></header>
-        <ol class="film-playlist-items">
-          <motion.li v-for="(video, index) in projectVideos" :key="video.id" :while-hover="{ x: -4 }" :transition="{ type: 'spring', stiffness: 300, damping: 25 }">
-            <Button type="button" variant="ghost" class="film-choice" :class="{ 'film-choice-selected': video.id === selectedId }" :aria-pressed="video.id === selectedId" :aria-label="`Chọn video ${index + 1}: ${video.title}`" @click="selectVideo(video.id)">
-              <span class="film-choice-index" aria-hidden="true">{{ String(index + 1).padStart(2, '0') }}</span>
-              <span class="film-thumbnail"><img :src="video.poster" alt="" width="1024" height="576" loading="lazy" /><span class="film-thumbnail-play"><Play aria-hidden="true" /></span><span class="film-duration">{{ video.duration }}</span></span>
-              <span class="film-choice-copy"><span class="film-choice-title">{{ video.title }}</span><span class="film-choice-status"><span v-if="video.id === selectedId" class="film-choice-dot" aria-hidden="true"></span>{{ video.id === selectedId ? (playing ? 'Đang phát' : 'Đang chọn xem') : 'Khám phá đoạn phim' }}</span></span>
-            </Button>
-          </motion.li>
-        </ol>
-        <p class="film-album-note"><Heart aria-hidden="true" /> Những điều nhỏ, được lưu lại cùng nhau.</p>
-      </aside>
+          <aside class="book-page book-contents-page" aria-labelledby="book-contents-title">
+            <span class="book-ribbon" aria-hidden="true"><Heart /></span>
+            <header class="book-contents-heading"><p class="album-eyebrow">NHỮNG TRANG CHUYỆN NHỎ</p><h3 id="book-contents-title">Mục lục thước phim</h3></header>
+            <ol class="book-contents-list">
+              <li v-for="(video, index) in projectVideos" :key="video.id">
+                <Button type="button" variant="ghost" class="book-choice" :class="{ 'book-choice-selected': video.id === selectedId }" :aria-pressed="video.id === selectedId" :aria-disabled="Boolean(turningVideo)" :aria-label="`Chọn video ${index + 1}: ${video.title}`" @click="selectVideo(video.id)">
+                  <span class="book-choice-number" aria-hidden="true">{{ String(index + 1).padStart(2, '0') }}</span>
+                  <span class="book-thumbnail"><img :src="video.poster" alt="" width="1024" height="576" loading="lazy" /><span class="book-thumbnail-play" aria-hidden="true"><Play /></span><span class="book-duration">{{ video.duration }}</span></span>
+                  <span class="book-choice-copy"><span class="book-choice-title">{{ video.title }}</span><span class="book-choice-status"><span v-if="video.id === selectedId" class="book-choice-dot" aria-hidden="true"></span>{{ video.id === selectedId ? (playing ? 'Đang phát' : 'Đang chọn') : 'Khám phá đoạn phim' }}</span></span>
+                </Button>
+              </li>
+            </ol>
+            <footer class="book-page-footer book-contents-footer"><span>{{ String(projectVideos.length).padStart(2, '0') }} thước phim · Những điều nhỏ, được lưu lại.</span><Heart aria-hidden="true" /></footer>
+          </aside>
+        </div>
+      </Card>
+      <div class="album-controls" role="group" aria-label="Chuyển video trong album">
+        <Button variant="outline" type="button" :disabled="selectedIndex <= 0" :aria-disabled="Boolean(turningVideo) || selectedIndex <= 0" @click="selectAdjacent(-1)"><ArrowLeft aria-hidden="true" /> Trang trước</Button>
+        <span aria-live="polite" aria-atomic="true"><span class="sr-only">Video </span>{{ String(selectedIndex + 1).padStart(2, '0') }} / {{ String(projectVideos.length).padStart(2, '0') }}</span>
+        <Button type="button" class="album-next" :disabled="selectedIndex >= projectVideos.length - 1" :aria-disabled="Boolean(turningVideo) || selectedIndex >= projectVideos.length - 1" @click="selectAdjacent(1)">Trang tiếp <ArrowRight aria-hidden="true" /></Button>
+      </div>
     </motion.div>
-    <p v-else class="film-empty" role="status">Chưa có video để hiển thị.</p>
-    <p class="film-section-note"><CirclePlay aria-hidden="true" /><span>Chủ động bấm phát để xem. Bạn có thể bật âm thanh, tua và xem toàn màn hình bằng các nút trong video.</span></p>
+    <p v-else class="album-empty" role="status">Chưa có video để hiển thị.</p>
+    <p class="album-play-note"><CirclePlay aria-hidden="true" /><span>Chọn một video rồi bấm phát để xem. Dùng các nút trong video để bật âm thanh, tua hoặc xem toàn màn hình.</span></p>
   </section>
 </template>
 
 <style scoped>
-.film-section { width: min(1360px, calc(100% - 80px)); margin: 0 auto; padding: 38px 0 65px; color: #55382a; }
-.film-section-heading { display: flex; align-items: center; gap: 24px; margin-bottom: 38px; }
-.film-heading-icon { position: relative; display: grid; place-items: center; width: 80px; height: 84px; flex-shrink: 0; border: 5px solid #fffdf6; border-radius: 20px; background: #dcecf8; box-shadow: 3px 5px 0 #aecadb33; transform: rotate(-8deg); color: #527c9d; }
-.film-heading-icon > svg:first-child { width: 43px; height: 43px; stroke-width: 1.4; }
-.film-heading-icon > svg:last-child { position: absolute; top: -12px; right: -12px; width: 25px; height: 25px; fill: #ffe499; color: #b48c45; }
-.film-eyebrow { color: #3773a2; font-size: 10px; letter-spacing: 1.3px; font-weight: 600; line-height: 1.8; }
-.film-section-heading h2 { margin-top: 9px; font-family: 'Lora', Georgia, serif; font-size: clamp(29px, 3vw, 43px); font-weight: 700; line-height: 1.4; letter-spacing: -.8px; }
-.film-section-heading h2 em { color: #3475a5; font-weight: 500; }
-.film-section-heading > div > p:last-child { margin-top: 12px; font-size: 14px; line-height: 1.8; color: #7a624e; }
-.film-heading-sticker { display: inline-flex; align-items: center; gap: 9px; flex-shrink: 0; margin-left: auto; padding: 15px 20px; background: #f8dae5; border: 1px solid #edc8d6; font-family: 'Lora', Georgia, serif; font-style: italic; font-size: 14px; transform: rotate(4deg); }
-.film-heading-sticker svg { width: 19px; height: 19px; color: #c27999; }
-.film-gallery { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(330px, 1fr); gap: 30px; align-items: start; }
-.film-main-column { min-width: 0; }
-.film-featured { position: relative; min-width: 0; padding: 12px 12px 0; background: #fffdf7; border: 1px solid #e3d7c4; border-radius: 5px 12px 6px 9px; box-shadow: -7px 7px 0 #d9e8f2, 0 14px 28px #5e412918; }
-.film-tape { position: absolute; z-index: 2; top: -12px; left: 36%; width: 110px; height: 28px; background: repeating-linear-gradient(135deg, #f0b8ccbb 0 8px, #fff5e9bb 8px 16px); transform: rotate(-5deg); pointer-events: none; }
-.film-player-heading { display: flex; justify-content: space-between; align-items: center; gap: 15px; padding: 18px 13px 14px; }
-.film-player-heading > span:first-child { display: inline-flex; align-items: center; gap: 8px; font-size: 10px; font-weight: 700; letter-spacing: 1.3px; color: #735743; }
-.film-player-heading svg { width: 18px; height: 18px; color: #a9843f; }
-.film-status { display: inline-flex; align-items: center; gap: 7px; padding: 4px 9px; border-radius: 20px; border: 1px solid #d3dfd1; background: #f0f5ec; color: #5e7456; font-size: 10px; line-height: 1.7; }
-.film-status i { width: 6px; height: 6px; background: #9eaf8b; border-radius: 50%; }
-.film-status-playing i { background: #478248; }
-.film-screen { padding: 12px 0; background: #342d29; background-image: repeating-linear-gradient(90deg, #a39782 0 11px, transparent 11px 23px), repeating-linear-gradient(90deg, #a39782 0 11px, transparent 11px 23px); background-size: auto 5px; background-position: left 4px, left bottom 4px; background-repeat: repeat-x; border-radius: 5px; }
-.film-screen video { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: contain; background: #191511; }
-.film-screen video:focus-visible { outline: 3px solid #edc46c; outline-offset: -4px; }
-.film-featured-copy { padding: 23px 14px 18px; }
-.film-title-row { display: flex; align-items: center; gap: 14px; }
-.film-large-number { font-family: 'Lora', Georgia, serif; font-size: 46px; font-style: italic; color: #bacfdd; line-height: 1; }
-.film-title-row > div { min-width: 0; }
-.film-title-row h3 { margin-top: 4px; font-family: 'Lora', Georgia, serif; font-size: clamp(21px, 2vw, 28px); font-weight: 700; line-height: 1.5; }
-.film-time { margin-left: auto; padding: 5px 9px; color: #866b45; background: #fbf0d6; border: 1px solid #ecdfc0; border-radius: 5px; font-size: 12px; flex-shrink: 0; }
-.film-featured-copy > p { margin-top: 14px; font-size: 14px; line-height: 1.85; color: #785d47; }
-.film-featured-footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 18px; padding-top: 13px; border-top: 1px dashed #e0d4c2; color: #8b745e; font-size: 11px; line-height: 1.7; }
-.film-featured-footer > span:first-child { display: inline-flex; align-items: center; gap: 7px; }
-.film-featured-footer svg { width: 15px; height: 15px; color: #6d95b0; }
-.film-controls { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 19px 0 0; }
-.film-controls button { min-height: 44px; height: auto; border-radius: 24px; gap: 7px; padding: 10px 16px; font-size: 12px; background: #fffdf7; color: #75523b; }
-.film-controls > span { font-size: 12px; color: #89735e; }
-.film-controls strong { color: #31698f; }
-.film-playlist { position: relative; min-width: 0; padding: 25px 20px 20px 30px; background: #edf4f8; border: 1px solid #d6e4ee; border-radius: 6px 18px 18px 6px; box-shadow: 4px 5px 0 #d8e7f04d; }
-.film-playlist::before { content: ''; position: absolute; top: 23px; bottom: 23px; left: 9px; width: 6px; background: radial-gradient(circle, #becfda 2px, transparent 3px) center top / 6px 23px repeat-y; pointer-events: none; }
-.film-playlist-heading { margin-bottom: 20px; padding-bottom: 17px; border-bottom: 1px dashed #c2d5e3; }
-.film-playlist-heading > div { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 6px; }
-.film-playlist-heading h3 { font-family: 'Lora', Georgia, serif; font-size: 23px; font-weight: 700; }
-.film-playlist-heading > div > span { padding: 4px 10px; border-radius: 20px; background: #fffdf7; border: 1px solid #cddde8; font-size: 11px; color: #547b99; flex-shrink: 0; }
-.film-playlist-heading > p:last-child { margin-top: 9px; font-size: 12px; color: #7990a1; line-height: 1.7; }
-.film-playlist-items { display: grid; gap: 13px; list-style: none; padding: 0; margin: 0; }
-.film-playlist-items li { min-width: 0; }
-.film-choice { position: relative; display: grid; grid-template-columns: 104px minmax(0, 1fr); align-items: center; gap: 13px; width: 100%; min-height: 112px; height: auto; padding: 16px 12px 12px; border: 1px solid #e3d7c6; border-radius: 5px 11px 5px 9px; background: #fffdf7; color: #593c2b; box-shadow: 2px 3px 0 #d9cbb733; white-space: normal; text-align: left; }
-.film-choice:hover { background: #fff8e9; }
-.film-choice-selected { background: #fff4d5; border-color: #d2b778; box-shadow: 3px 4px 0 #d7c0883d; }
-.film-choice-index { position: absolute; top: -5px; right: 13px; padding: 2px 8px; background: #f3d0de; font-size: 9px; letter-spacing: 1px; font-weight: 600; line-height: 1.5; color: #9e6c7a; transform: rotate(4deg); }
-.film-playlist-items li:nth-child(even) .film-choice-index { background: #dbe8c9; color: #778b5d; transform: rotate(-5deg); }
-.film-thumbnail { position: relative; display: block; width: 100%; padding: 4px 4px 10px; background: #fff; border: 1px solid #e3dbc9; box-shadow: 0 3px 5px #63492a14; transform: rotate(-3deg); }
-.film-thumbnail img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
-.film-thumbnail-play { position: absolute; inset: 4px 4px 10px; display: grid; place-items: center; background: #20140d26; }
-.film-thumbnail-play svg { width: 23px; height: 23px; padding: 4px; border-radius: 50%; background: #4b342bb3; color: #fffdf5; }
-.film-duration { position: absolute; bottom: 13px; right: 6px; padding: 1px 4px; border-radius: 3px; color: #fffaf0; background: #3a2b24d9; font-size: 9px; line-height: 1.6; }
-.film-choice-copy { display: grid; gap: 8px; min-width: 0; }
-.film-choice-title { font-size: 13px; font-weight: 600; line-height: 1.7; }
-.film-choice-status { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 400; color: #8d7963; line-height: 1.7; }
-.film-choice-selected .film-choice-status { color: #8a6934; font-weight: 600; }
-.film-choice-dot { width: 6px; height: 6px; border-radius: 50%; background: #ab8c4d; flex-shrink: 0; }
-.film-album-note { display: flex; align-items: center; justify-content: center; gap: 7px; margin-top: 22px; color: #7890a2; font-family: 'Lora', Georgia, serif; font-style: italic; font-size: 12px; line-height: 1.7; text-align: center; }
-.film-album-note svg { width: 16px; height: 16px; color: #c38ca6; }
-.film-error { margin-top: 12px; padding: 16px; background: #fff0d9; border: 1px solid #e7cfa8; border-radius: 8px; color: #806039; font-size: 13px; line-height: 1.8; }
-.film-error > div { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 12px; }
-.film-error button { min-height: 44px; }
-.film-error a { text-decoration: underline; text-underline-offset: 3px; }
-.film-empty { padding: 28px; border: 1px dashed #d6c7b1; border-radius: 15px; color: #7e6954; }
-.film-section-note { display: flex; align-items: flex-start; justify-content: center; gap: 9px; margin: 24px auto 0; max-width: 920px; font-size: 12px; line-height: 1.8; color: #8b755e; }
-.film-section-note svg { width: 17px; height: 17px; color: #7e9eb5; margin-top: 3px; }
-@media (max-width: 1150px) { .film-heading-sticker { display: none; } .film-gallery { gap: 22px; grid-template-columns: minmax(0, 1.4fr) minmax(310px, 1fr); } .film-choice { grid-template-columns: 88px minmax(0, 1fr); gap: 10px; padding-inline: 10px; } .film-playlist { padding-right: 15px; padding-left: 25px; } }
-@media (max-width: 950px) { .film-gallery { grid-template-columns: 1fr; gap: 28px; } .film-playlist-items { grid-template-columns: repeat(2, minmax(0, 1fr)); } .film-choice { grid-template-columns: 100px minmax(0, 1fr); } }
-@media (max-width: 600px) { .film-section { width: calc(100% - 36px); padding-block: 30px 45px; } .film-section-heading { gap: 16px; margin-bottom: 30px; align-items: flex-start; } .film-heading-icon { width: 54px; height: 62px; border-width: 4px; border-radius: 14px; } .film-heading-icon > svg:first-child { width: 30px; height: 30px; } .film-section-heading h2 { font-size: 29px; } .film-section-heading > div > p:last-child { font-size: 12px; } .film-eyebrow { font-size: 8px; letter-spacing: .8px; } .film-featured { padding: 8px 8px 0; } .film-player-heading { gap: 8px; padding: 17px 5px 12px; } .film-player-heading > span:first-child { font-size: 8px; letter-spacing: .8px; } .film-status { font-size: 9px; padding: 3px 6px; } .film-featured-copy { padding: 18px 8px 14px; } .film-title-row { gap: 10px; } .film-large-number { font-size: 34px; } .film-title-row h3 { font-size: 21px; } .film-time { display: none; } .film-featured-copy > p { font-size: 13px; } .film-featured-footer { font-size: 10px; } .film-controls { gap: 8px; } .film-controls button { font-size: 11px; padding: 10px 12px; } .film-controls > span { font-size: 11px; } .film-playlist-items { grid-template-columns: 1fr; } .film-playlist { padding: 20px 15px 18px 25px; } .film-choice { grid-template-columns: 100px minmax(0, 1fr); } .film-choice-title { font-size: 14px; } .film-album-note { font-size: 11px; } }
+.video-album { width: min(1360px, calc(100% - 64px)); margin-inline: auto; padding-block: 44px 52px; color: #583023; scroll-margin-top: 110px; }
+.album-heading { margin-bottom: 32px; text-align: center; padding-inline: 12px; }
+.album-eyebrow { color: #945164; font-size: 12px; line-height: 1.8; font-weight: 600; letter-spacing: 2px; }
+.album-heading h2 { margin-top: 9px; font-family: 'Lora', Georgia, serif; font-size: clamp(31px, 3.6vw, 49px); font-weight: 600; line-height: 1.4; letter-spacing: -.8px; text-wrap: balance; }
+.album-heading h2 em { color: #a64f68; font-weight: 500; }
+.album-heading > p:last-child { margin-top: 12px; color: #5c4633; font-size: 15px; line-height: 1.8; }
+.video-book { position: relative; isolation: isolate; padding: 9px 10px 17px; border: 1px solid #a86d76; border-radius: 24px 24px 28px 28px; background: linear-gradient(90deg, #be858c, #d5a1a6 47%, #a46870 50%, #d5a1a6 53%, #be858c); box-shadow: 0 5px 0 #a16b7566, 0 17px 30px #75424e1c; color: #583023; }
+.video-book::before { content: ''; position: absolute; z-index: -1; inset: 13px 14px 9px; border: 1px solid #d6bfa8; border-radius: 21px 21px 23px 23px; background: repeating-linear-gradient(0deg, #ead7bf 0 1px, #fff3e2 1px 3px); pointer-events: none; }
+.book-spread { position: relative; display: grid; grid-template-columns: minmax(0, 1.18fr) minmax(0, 1fr); align-items: stretch; border: 1px solid #ead7bf; border-radius: 18px 18px 21px 21px; background: #fff7ed; box-shadow: 0 3px 0 #e5ceb5, 0 6px 0 #faead6, 0 8px 0 #d9bfa8; }
+.book-page { position: relative; min-width: 0; display: flex; flex-direction: column; padding: clamp(23px, 2.6vw, 37px); background-color: #fff7ed; }
+.book-page.book-player-page { padding: 0; perspective: 2600px; isolation: isolate; z-index: 2; background-color: #f7ead8; }
+.book-player-content { position: relative; display: flex; flex-direction: column; flex: 1; min-width: 0; border-radius: inherit; transform-origin: right center; transform-style: preserve-3d; }
+.book-page-face { position: relative; display: flex; flex-direction: column; flex: 1; min-width: 0; padding: clamp(23px, 2.6vw, 37px); border-radius: inherit; backface-visibility: hidden; background-color: #fff7ed; background-image: linear-gradient(90deg, #e7d3bb22, transparent 10%, transparent 93%, #9b735b1f); box-shadow: -1px 0 0 #dac1a6; }
+.book-page-back { position: absolute; inset: 0; border: 1px solid #e0c7ac; border-radius: inherit; background-color: #fff7ed; background-image: linear-gradient(90deg, #aa806033, #fff7ed 15%, #fff2e2 85%, #aa806026); transform: rotateY(180deg); backface-visibility: hidden; box-shadow: 9px 4px 20px #58302314; pointer-events: none; }
+.book-page-face::after { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; background: linear-gradient(90deg, #9b735b0a, transparent 20%, #704b2929 85%, #704b2940); opacity: 0; }
+@media (prefers-reduced-motion: no-preference) { .book-page-face::after { transition: opacity .3s ease; } .book-player-content[inert] .book-page-face::after { opacity: 1; } }
+@media (max-width: 1100px) { .book-page-face { padding: 25px; } }
+@media (max-width: 500px) { .book-page-face { padding: 23px 17px; } }
+.book-player-content[inert] { pointer-events: none; will-change: transform; }
+.book-choice[aria-disabled='true'], .album-controls button[aria-disabled='true'] { cursor: wait; }
+.book-player-page { border-radius: 18px 0 0 21px; background-image: linear-gradient(90deg, #e7d3bb22, transparent 10%, transparent 93%, #9b735b1f); }
+.book-contents-page { padding-left: clamp(28px, 3vw, 44px); border-radius: 0 18px 21px 0; border-left: 1px solid #d9bfa8; background-image: linear-gradient(90deg, #9b735b24, transparent 9%, transparent 94%, #e7d3bb22); }
+.book-page-heading { display: flex; align-items: center; gap: 17px; min-height: 26px; margin-bottom: 20px; color: #945164; font-size: 12px; font-weight: 600; line-height: 1.8; letter-spacing: 1.7px; }
+.book-heading-rule, .book-footer-rule { flex: 1; min-width: 18px; border-top: 1px solid #dbb4b2; }
+.book-screen { border-radius: 9px; background: #281d18; }
+.book-screen video { display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: inherit; object-fit: contain; background: #281d18; }
+.book-screen video:focus-visible { outline: 3px solid #92516c; outline-offset: 4px; }
+.book-video-copy { padding-block: 20px 24px; }
+.book-title-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+.book-title-row h3 { font-family: 'Lora', Georgia, serif; font-size: clamp(23px, 2.1vw, 29px); font-weight: 600; line-height: 1.5; }
+.book-time { padding: 3px 11px; border: 1px solid #e5c3bc; border-radius: 20px; background: #f9e6dd; color: #6c4538; font-size: 13px; line-height: 1.7; }
+.book-video-copy > p { margin-top: 12px; font-size: 15px; line-height: 1.85; color: #5c4633; }
+.book-page-footer { display: flex; align-items: center; gap: 16px; min-height: 36px; margin-top: auto; padding-top: 16px; color: #78503e; font-size: 13px; line-height: 1.8; }
+.book-player-status { max-width: 55%; font-size: 12px; color: #685440; }
+.book-ribbon { position: absolute; z-index: 1; top: -10px; right: 25px; display: flex; align-items: flex-end; justify-content: center; width: 31px; height: 72px; padding-bottom: 15px; background: linear-gradient(90deg, #c87d91, #e8aabb 18%, #e2a1b4 82%, #ba7185); clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 85%, 0 100%); pointer-events: none; }
+.book-ribbon svg { width: 15px; height: 15px; color: #894354; }
+.book-contents-heading { padding-right: 27px; margin-bottom: 18px; }
+.book-contents-heading .album-eyebrow { font-size: 11px; letter-spacing: 1.5px; }
+.book-contents-heading h3 { margin-top: 10px; font-family: 'Lora', Georgia, serif; font-size: clamp(23px, 2.2vw, 30px); line-height: 1.5; font-weight: 600; }
+.book-contents-list { display: grid; gap: 6px; list-style: none; padding: 0; margin: 0 0 20px; }
+.book-contents-list li { min-width: 0; }
+.book-contents-list li + li { border-top: 1px solid #e7c8bf; padding-top: 6px; }
+.book-choice { display: grid; grid-template-columns: 24px minmax(78px, 104px) minmax(0, 1fr); align-items: center; gap: 12px; width: 100%; height: auto; min-height: 96px; padding: 12px 10px; white-space: normal; text-align: left; color: #583023; border: 1px solid transparent; border-left: 3px solid transparent; border-radius: 9px; background: transparent; box-shadow: none; }
+.book-choice:hover { background: #f8e7df; color: #583023; }
+.book-choice-selected { border-color: #edccd3; border-left-color: #a44d67; background: #f6dfe6; }
+.book-choice-selected:hover { background: #f0d3de; }
+.book-choice:focus-visible, .album-controls button:focus-visible, .book-error a:focus-visible, .book-error button:focus-visible { outline: 3px solid #92516c; outline-offset: 3px; }
+.book-choice-number { font-family: 'Lora', Georgia, serif; font-size: 20px; font-style: italic; color: #a8556b; font-weight: 500; }
+.book-thumbnail { position: relative; display: block; min-width: 0; padding: 3px; background: #fffaf3; border: 1px solid #e0cbbb; border-radius: 4px; }
+.book-thumbnail img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 2px; }
+.book-thumbnail-play { position: absolute; inset: 3px; display: grid; place-items: center; background: #2f1c1610; }
+.book-thumbnail-play svg { width: 23px; height: 23px; padding: 4px; border-radius: 50%; background: #583023b3; color: #fff7ed; }
+.book-duration { position: absolute; right: 5px; bottom: 5px; padding: 1px 4px; border-radius: 3px; background: #35241ee6; color: #fff7ed; font-size: 11px; font-weight: 500; line-height: 1.5; }
+.book-choice-copy { display: grid; gap: 6px; min-width: 0; }
+.book-choice-title { font-size: 14px; line-height: 1.65; font-weight: 600; }
+.book-choice-status { display: flex; align-items: center; gap: 6px; font-size: 13px; line-height: 1.7; font-weight: 400; color: #715644; }
+.book-choice-selected .book-choice-status { color: #86405b; font-weight: 500; }
+.book-choice-dot { width: 6px; height: 6px; flex-shrink: 0; border-radius: 50%; background: #a44d67; }
+.book-contents-footer { border-top: 1px solid #dbb4b2; justify-content: space-between; }
+.book-contents-footer > svg { width: 17px; height: 17px; flex-shrink: 0; color: #a8556b; }
+.album-controls { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 16px 28px; margin-top: 29px; }
+.album-controls button { min-height: 46px; height: auto; padding: 11px 20px; gap: 10px; border: 1px solid #d3a8a4; border-radius: 26px; background: #fff7ed; color: #583023; font-size: 14px; line-height: 1.6; }
+.album-controls button:hover { background: #f6dfe6; color: #583023; }
+.album-controls button.album-next { background: #583023; color: #fff7ed; border-color: #583023; }
+.album-controls button.album-next:hover { background: #734333; }
+.album-controls > span { font-size: 14px; color: #674434; font-variant-numeric: tabular-nums; }
+.album-controls svg { width: 17px; height: 17px; }
+.album-play-note { display: flex; align-items: flex-start; justify-content: center; gap: 8px; max-width: 900px; margin: 22px auto 0; text-align: center; color: #5c4633; font-size: 14px; line-height: 1.8; }
+.album-play-note svg { width: 18px; height: 18px; margin-top: 3px; flex-shrink: 0; color: #a04f69; }
+.book-error, .album-empty { padding: 16px; border: 1px solid #d8bba0; border-radius: 8px; background: #fff0d9; color: #6d492d; font-size: 14px; line-height: 1.8; }
+.book-error { margin-top: 14px; }
+.book-error > div { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 12px; }
+.book-error button { min-height: 44px; height: auto; white-space: normal; }
+.book-error a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: underline; text-underline-offset: 4px; }
+@media (prefers-reduced-motion: no-preference) { .book-choice { transition: background-color .2s, border-color .2s; } }
+@media (max-width: 1100px) { .book-page { padding: 25px; } .book-contents-page { padding-left: 30px; } .book-choice { grid-template-columns: 20px 82px minmax(0, 1fr); gap: 8px; padding-inline: 7px; } .book-choice-title { font-size: 14px; } .book-ribbon { right: 17px; } }
+@media (max-width: 900px) { .video-album { width: calc(100% - 40px); } .book-spread { grid-template-columns: 1fr; } .book-player-page { border-radius: 18px 18px 0 0; background-image: linear-gradient(90deg, #e7d3bb22, transparent 10%); } .book-contents-page { border-left: 0; border-top: 1px solid #dcc3af; border-radius: 0 0 21px 21px; background-image: linear-gradient(180deg, #9b735b14, transparent 20px); padding: 29px 25px 25px; } .book-ribbon { top: -1px; height: 61px; } .book-choice { grid-template-columns: 28px 112px minmax(0, 1fr); gap: 15px; } .book-page-footer { margin-top: 8px; } }
+@media (max-width: 500px) { .video-album { width: calc(100% - 24px); padding-block: 32px 40px; } .album-heading { padding-inline: 4px; margin-bottom: 25px; } .album-heading h2 { font-size: 31px; letter-spacing: -.6px; } .album-heading > p:last-child { font-size: 14px; } .album-eyebrow { font-size: 11px; letter-spacing: 1.5px; } .video-book { padding: 6px 6px 13px; border-radius: 18px; } .book-page { padding: 23px 17px; } .book-page-heading { font-size: 11px; letter-spacing: 1px; gap: 10px; } .book-contents-page { padding-top: 26px; } .book-contents-heading h3 { font-size: 24px; } .book-contents-heading .album-eyebrow { font-size: 10px; letter-spacing: .7px; } .book-choice { grid-template-columns: 21px 82px minmax(0, 1fr); gap: 8px; padding: 10px 6px; min-height: 92px; } .book-choice-number { font-size: 18px; } .book-choice-status { font-size: 12px; } .book-page-footer { gap: 10px; font-size: 12px; } .album-controls { gap: 12px; } .album-controls button { padding-inline: 13px; font-size: 13px; } .album-controls > span { font-size: 13px; } .album-play-note { padding-inline: 6px; text-align: left; } }
+@media (max-width: 350px) { .book-choice { grid-template-columns: 18px 68px minmax(0, 1fr); gap: 6px; } .book-contents-heading h3 { font-size: 22px; } .album-controls > span { order: -1; width: 100%; text-align: center; } }
 </style>
