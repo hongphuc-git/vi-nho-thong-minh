@@ -274,11 +274,12 @@ details[open] > summary .canvas-arrow svg { transform: rotate(180deg); }
 .canvas-piece:nth-child(7) ul { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 28px; }
 .canvas-piece:nth-last-child(-n + 2) { grid-column: span 3; }
 .canvas-piece-highlighted { background: #e5f0f5; border-color: #bdd4de; }
-.canvas-block-head { display: flex; justify-content: space-between; gap: 12px; padding-bottom: 12px; margin-bottom: 12px; border-bottom: 1px dashed #d5c9b4; }
-.canvas-piece h3 { font: 600 17px/1.6 'Lora', Georgia, serif; }
-.canvas-block-num { color: #6b7c87; font-size: 13px; }
-.canvas-piece ul { margin: 0; padding-left: 18px; display: grid; gap: 9px; }
-.canvas-piece li { font-size: 15px; line-height: 1.8; }
+.canvas-block-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding-bottom: 12px; margin-bottom: 12px; border-bottom: 1px dashed #d5c9b4; }
+.canvas-piece h3 { min-width: 0; font: 600 17px/1.6 'Lora', Georgia, serif; }
+.canvas-block-num { flex-shrink: 0; color: #6b7c87; font-size: 13px; }
+.canvas-piece ul { margin: 0; padding-left: 19px; display: grid; align-content: start; align-items: start; gap: 8px; list-style: disc outside; }
+.canvas-piece li { display: list-item; min-width: 0; padding-left: 3px; font-size: 15px; line-height: 1.8; overflow-wrap: break-word; }
+.canvas-piece li::marker { color: #947751; font-size: .8em; }
 .canvas-note { margin-top: 20px; font-size: 13px; line-height: 1.8; color: #526571; }
 .folder-layout { margin-top: 30px; }
 .chapter-papers { display: grid; gap: 28px; }

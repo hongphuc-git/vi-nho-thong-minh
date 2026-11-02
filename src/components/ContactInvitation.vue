@@ -74,7 +74,8 @@ const trialLink = composeEmail('Hỏi về dùng thử', 'Tôi muốn hỏi về
         </div>
         <figure class="invitation-teacher-poster">
           <span class="teacher-poster-tape" aria-hidden="true"></span>
-          <ImagePreview :src="publicAsset('/images/nguyen-thu-ha-portrait.png')" alt="Ảnh cô Nguyễn Thu Hà với thông điệp Đổi mới tư duy"><img :src="publicAsset('/images/nguyen-thu-ha-portrait.png')" alt="Cô Nguyễn Thu Hà cùng thông điệp Đổi mới tư duy" width="1122" height="1402" loading="lazy" /></ImagePreview>
+          <ImagePreview :src="publicAsset('/images/team-activities/gioi-thieu-so-thu-chi-enhanced.png')" alt="Giới thiệu sổ theo dõi thu–chi trước lớp"><img :src="publicAsset('/images/team-activities/gioi-thieu-so-thu-chi-enhanced.png')" alt="Một thành viên giới thiệu sổ thu–chi với các bạn trong lớp" width="1672" height="941" loading="lazy" /></ImagePreview>
+          <figcaption>Cùng chia sẻ, cùng học cách dùng tiền.</figcaption>
         </figure>
         <aside class="invitation-conversation" aria-labelledby="conversation-title">
           <span class="conversation-tape" aria-hidden="true"></span>
@@ -350,4 +351,7 @@ const trialLink = composeEmail('Hỏi về dùng thử', 'Tôi muốn hỏi về
 @media (max-width: 1000px) { .invitation-start-guide { gap: 24px; } .invitation-step-list { gap: 16px; } .invitation-kit-checklist { padding-left: 24px; } }
 @media (max-width: 800px) { .invitation-start-guide { width: 100%; grid-template-columns: 1fr; padding-top: 23px; } .invitation-kit-checklist { padding: 22px 0 0; border-left: 0; border-top: 1px dashed #d5c3a7; } .invitation-kit-checklist ul { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 500px) { .invitation-start-guide h4 { font-size: 23px; } .invitation-step-list { grid-template-columns: 1fr; gap: 20px; } .invitation-step-list li { display: flex; align-items: flex-start; gap: 13px; } .invitation-step-number { flex-shrink: 0; margin-bottom: 0; } .invitation-step-list li:not(:last-child)::after { top: 45px; left: 18px; right: auto; height: calc(100% - 25px); border-top: 0; border-left: 1px dashed #d7c9b4; } .invitation-step-list p { margin-top: 3px; } .invitation-kit-checklist ul { grid-template-columns: 1fr; gap: 10px; } .invitation-guide-reassurance { flex-direction: column; gap: 12px; } .invitation-guide-reassurance p { font-size: 12px; } }
+.invitation-teacher-poster figcaption { padding: 13px 8px 7px; text-align: center; font: italic 500 17px/1.7 'Lora', Georgia, serif; color: #57788e; }
+.invitation-teacher-poster img { aspect-ratio: 1672 / 941; object-fit: contain; }
+@media (max-width: 800px) { .invitation-teacher-poster { width: 100%; max-width: 650px; } }
 </style>

@@ -12,10 +12,10 @@ const props = withDefaults(defineProps<{ photoSrc?: string }>(), {
 const photoFailed = ref(false)
 watch(() => props.photoSrc, () => { photoFailed.value = false })
 const members = [
-  { initials: 'TP', name: 'Hoàng Thu Phượng', nameLines: ['Hoàng Thu', 'Phượng'], role: 'Kế hoạch & điều phối', detail: 'Trưởng nhóm · Thiết kế tổng thể', icon: Compass, color: 'blue' },
-  { initials: 'DL', name: 'Hoàng Diệu Linh', nameLines: ['Hoàng Diệu', 'Linh'], role: 'Nội dung & truyền thông', detail: 'Thẻ tình huống · Đánh giá trước–sau', icon: Megaphone, color: 'pink' },
-  { initials: 'NH', name: 'Triệu Ngọc Hà', nameLines: ['Triệu Ngọc', 'Hà'], role: 'Dự toán & phản hồi', detail: 'Khảo giá và tổng hợp ý kiến', icon: Calculator, color: 'yellow' },
-  { initials: 'HN', name: 'Hoàng Thị Hồng Nhung', nameLines: ['Hoàng Thị', 'Hồng Nhung'], role: 'Sản phẩm & trải nghiệm', detail: 'Hoàn thiện mẫu và chất lượng', icon: Lightbulb, color: 'sage' },
+  { initials: 'TP', photo: publicAsset('/images/team/hoang-thu-phuong-v2.png'), name: 'Hoàng Thu Phượng', nameLines: ['Hoàng Thu', 'Phượng'], role: 'Kế hoạch & điều phối', detail: 'Trưởng nhóm · Thiết kế tổng thể', icon: Compass, color: 'blue' },
+  { initials: 'DL', photo: publicAsset('/images/team/hoang-dieu-linh.png'), name: 'Hoàng Diệu Linh', nameLines: ['Hoàng Diệu', 'Linh'], role: 'Nội dung & truyền thông', detail: 'Thẻ tình huống · Đánh giá trước–sau', icon: Megaphone, color: 'pink' },
+  { initials: 'NH', photo: publicAsset('/images/team/trieu-ngoc-ha.png'), name: 'Triệu Ngọc Hà', nameLines: ['Triệu Ngọc', 'Hà'], role: 'Dự toán & phản hồi', detail: 'Khảo giá và tổng hợp ý kiến', icon: Calculator, color: 'yellow' },
+  { initials: 'HN', photo: publicAsset('/images/team/hoang-thi-hong-nhung.png'), name: 'Hoàng Thị Hồng Nhung', nameLines: ['Hoàng Thị', 'Hồng Nhung'], role: 'Sản phẩm & trải nghiệm', detail: 'Hoàn thiện mẫu và chất lượng', icon: Lightbulb, color: 'sage' },
 ]
 </script>
 
@@ -65,7 +65,8 @@ const members = [
           <Card class="crew-card" :class="`crew-${member.color}`">
             <span class="crew-card-tape" aria-hidden="true"></span>
             <span class="crew-corner-stitches" aria-hidden="true"></span>
-            <div class="crew-card-heading"><span class="crew-avatar" aria-hidden="true">{{ member.initials }}</span><div class="crew-member-label"><strong>VÍ NHỎ THÔNG MINH</strong><span>Thành viên dự án</span></div></div>
+            <div class="crew-member-photo"><img :src="member.photo" :alt="`Ảnh ${member.name}`" width="1122" height="1402" loading="lazy" decoding="async" /></div>
+            <div class="crew-card-heading"><div class="crew-member-label"><strong>VÍ NHỎ THÔNG MINH</strong><span>Thành viên dự án</span></div></div>
             <h4 :aria-label="member.name"><span v-for="line in member.nameLines" :key="line" aria-hidden="true">{{ line }}</span></h4>
             <span class="crew-name-stroke" aria-hidden="true"></span>
             <div class="crew-task"><span class="crew-task-icon"><component :is="member.icon" aria-hidden="true" /></span><div><span>{{ member.role }}</span><p>{{ member.detail }}</p></div></div>
@@ -339,6 +340,14 @@ const members = [
 .team-workflow strong { display: block; font-size: 14px; line-height: 1.65; font-weight: 600; color: #5c4430; }
 .team-workflow li p { margin-top: 6px; font-size: 13px; line-height: 1.75; color: #6e583f; }
 @media (max-width: 1100px) and (min-width: 801px), (max-width: 500px) { .team-workflow ol { grid-template-columns: 1fr; gap: 15px; margin-top: 19px; } .team-workflow li { display: grid; grid-template-columns: 31px minmax(0, 1fr); column-gap: 10px; min-height: 0; padding: 16px 14px; } .team-step-top { grid-column: 1; grid-row: 1 / span 2; flex-direction: column; justify-content: flex-start; margin: 0; gap: 5px; } .team-workflow strong, .team-workflow li p { grid-column: 2; } .team-workflow li p { margin-top: 3px; } .team-step-tape { left: auto; right: 17px; width: 30px; } }
+/* Member portraits share the same paper frame and crop. */
+.crew-member-photo { position: relative; width: 100%; aspect-ratio: 4 / 5; padding: 7px 7px 15px; margin: 0 0 20px; background: #fffef9; border: 1px solid #e1d2bd; border-radius: 3px; box-shadow: 2px 4px 0 #cfbfa733; transform: rotate(-1.5deg); }
+.crew-member-photo::after { content: ''; position: absolute; top: -8px; left: calc(50% - 23px); width: 46px; height: 17px; background: repeating-linear-gradient(45deg, #fff9e7bb 0 5px, var(--crew-tab) 5px 10px); opacity: .8; transform: rotate(4deg); pointer-events: none; }
+.crew-member-photo img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 35%; border-radius: 1px; }
+.crew-grid-item:nth-child(even) .crew-member-photo { transform: rotate(1.5deg); }
+.crew-card-heading { margin-bottom: 13px; }
+.crew-member-label { text-align: left; }
+@media (max-width: 650px) { .crew-member-photo { margin-bottom: 17px; } }
 </style>
 
 

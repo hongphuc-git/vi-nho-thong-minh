@@ -5,6 +5,7 @@ import MoneyPlayground from '@/components/MoneyPlayground.vue'
 import ProjectDossier from '@/components/ProjectDossier.vue'
 import HeroCover from '@/components/HeroCover.vue'
 import TeamInformation from '@/components/TeamInformation.vue'
+import TeamActivityWall from '@/components/TeamActivityWall.vue'
 import ProjectSummary from '@/components/ProjectSummary.vue'
 import SiteNavigation from '@/components/SiteNavigation.vue'
 import FloatingContact from '@/components/FloatingContact.vue'
@@ -42,6 +43,7 @@ const questions = [
       <ProjectHighlights />
 
       <TeamInformation />
+      <TeamActivityWall />
 
       <div id="bo-cong-cu" class="tools-destination">
         <KitDiscovery />
