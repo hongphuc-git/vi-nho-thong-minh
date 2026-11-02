@@ -14,7 +14,7 @@ import { Heart, Send, Sprout } from '@lucide/vue'
 
 <style scoped>
 .scrapbook-flight { position: absolute; right: 6px; top: -5px; width: 260px; height: 112px; pointer-events: none; color: #7694ad; transform: rotate(-6deg); }
-.scrapbook-flight p { font-family: 'Lora', Georgia, serif; font-size: 14px; font-style: italic; line-height: 1.7; padding: 5px 45px 0 12px; text-align: center; }
+.scrapbook-flight p { font-family: 'Lora', Georgia, serif; font-size: var(--text-body); font-style: italic; line-height: 1.7; padding: 5px 45px 0 12px; text-align: center; }
 .paper-plane { position: absolute; right: 0; top: 0; width: 43px; height: 43px; stroke-width: 1; transform: rotate(-8deg); }
 .flight-path { position: absolute; width: 180px; height: 57px; right: 10px; bottom: 0; }
 .flight-path path { stroke: currentColor; stroke-width: 1.5; stroke-dasharray: 5 7; stroke-linecap: round; }

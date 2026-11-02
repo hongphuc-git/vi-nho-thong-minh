@@ -225,3 +225,12 @@ Các bản sao phục vụ web trong public/images/learning-kit giữ nguyên n�
 Phần Liên hệ thay ảnh ví lặp lại bằng ba lựa chọn xem trước: mục tiêu chi tiêu, tổng kết tháng, tiền mô phỏng; bấm ảnh để phóng to. Không dùng các trang nhật ký có bố cục giống nhau như những ảnh khác biệt chỉ vì khác số tệp. Ảnh bìa và ảnh sản phẩm ở các phần trước được giữ nguyên.
 
 Chủ dự án tự kiểm tra chuyển ba ảnh, phóng to ảnh, thẻ QR sổ và hướng dẫn ví. Agent không chạy ứng dụng, build, kiểm thử, lint hoặc format.
+
+
+## Cỡ chữ và khả năng đọc trên toàn trang
+
+Thang chữ dùng chung trong `src/scrapbook.css`: chú thích 14px, nhãn/nút nhỏ 16px, nội dung chính 18px (giá trị tương đương khi cỡ chữ mặc định trình duyệt là 16px). Các giá trị dùng rem để theo tùy chọn cỡ chữ của người đọc. Các quy tắc màn hình nhỏ dùng cùng thang, không thu về 8–12px. Giữ tiêu đề lớn và font Be Vietnam Pro/Lora hiện có.
+
+Tham khảo: https://design-system.service.gov.uk/styles/paragraphs/ và https://design.homeoffice.gov.uk/design-system/styles/typography . Đây là thang điều chỉnh cho website, không phải tuyên bố đã đạt chuẩn truy cập.
+
+Chủ dự án tự tải lại và xem trên màn hình 360px, 390px, 768px và máy tính; phóng to trình duyệt 200%; kiểm tra menu cuộn ngang, các nút, chú thích ảnh, nhãn trong minh họa, bảng hồ sơ, mục lục video và hộp thoại hướng dẫn. Agent không chạy ứng dụng, build, lint, format hoặc kiểm thử.

@@ -186,9 +186,9 @@ function retryVideo() {
 <template>
   <section id="video-du-an" class="video-album" aria-labelledby="project-videos-title">
     <header class="album-heading">
-      <p class="album-eyebrow">ALBUM KỶ NIỆM</p>
-      <h2 id="project-videos-title">Chuyện nhỏ, <em>kỷ niệm lớn.</em></h2>
-      <p>Lật từng trang, gặp những câu chuyện của chúng mình.</p>
+      <p class="album-eyebrow">VIDEO DỰ ÁN</p>
+      <h2 id="project-videos-title">Gặp nhóm, <em>xem những đoạn phim.</em></h2>
+      <p>Các đoạn phim ngắn do nhóm cung cấp; chưa thay thế video hướng dẫn hoàn chỉnh dự kiến trong hồ sơ.</p>
     </header>
 
     <motion.div v-if="selectedVideo" :initial="{ opacity: 0, y: 14 }" :while-in-view="{ opacity: 1, y: 0 }" :in-view-options="{ once: true }" :transition="{ duration: 0.45 }">
@@ -216,7 +216,7 @@ function retryVideo() {
               <div class="book-title-row"><h3>{{ selectedVideo.title }}</h3><span class="book-time">{{ selectedVideo.duration }}</span></div>
               <p id="selected-video-description">{{ selectedVideo.description }}</p>
             </div>
-            <footer class="book-page-footer"><span aria-hidden="true">{{ String(selectedIndex + 1).padStart(2, '0') }}</span><span class="book-footer-rule" aria-hidden="true"></span><span class="book-player-status" role="status">{{ status }}</span></footer>
+            <footer class="book-page-footer"><span class="book-footer-number" aria-hidden="true">{{ String(selectedIndex + 1).padStart(2, '0') }}</span><span class="book-footer-copy book-player-status" role="status">{{ status }}</span><CirclePlay aria-hidden="true" /></footer>
             </div>
             </motion.div>
 
@@ -234,7 +234,7 @@ function retryVideo() {
                 </Button>
               </li>
             </ol>
-            <footer class="book-page-footer book-contents-footer"><span>{{ String(projectVideos.length).padStart(2, '0') }} thước phim · Những điều nhỏ, được lưu lại.</span><Heart aria-hidden="true" /></footer>
+            <footer class="book-page-footer"><span class="book-footer-number">{{ String(projectVideos.length).padStart(2, '0') }}</span><span class="book-footer-copy">thước phim · Những điều nhỏ, được lưu lại.</span><Heart aria-hidden="true" /></footer>
           </aside>
           <div ref="flipLayer" class="album-flip-layer" :class="{ 'album-flip-visible': showPageTurn }" aria-hidden="true" inert></div>
         </div>
@@ -253,10 +253,10 @@ function retryVideo() {
 <style scoped>
 .video-album { width: min(1360px, calc(100% - 64px)); margin-inline: auto; padding-block: 44px 52px; color: #583023; scroll-margin-top: 110px; }
 .album-heading { margin-bottom: 32px; text-align: center; padding-inline: 12px; }
-.album-eyebrow { color: #945164; font-size: 12px; line-height: 1.8; font-weight: 600; letter-spacing: 2px; }
+.album-eyebrow { color: #945164; font-size: var(--text-small); line-height: 1.8; font-weight: 600; letter-spacing: 2px; }
 .album-heading h2 { margin-top: 9px; font-family: 'Lora', Georgia, serif; font-size: clamp(31px, 3.6vw, 49px); font-weight: 600; line-height: 1.4; letter-spacing: -.8px; text-wrap: balance; }
 .album-heading h2 em { color: #a64f68; font-weight: 500; }
-.album-heading > p:last-child { margin-top: 12px; color: #5c4633; font-size: 15px; line-height: 1.8; }
+.album-heading > p:last-child { margin-top: 12px; color: #5c4633; font-size: var(--text-body); line-height: 1.8; }
 .video-book { position: relative; isolation: isolate; padding: 9px 10px 17px; border: 1px solid #a86d76; border-radius: 24px 24px 28px 28px; background: linear-gradient(90deg, #be858c, #d5a1a6 47%, #a46870 50%, #d5a1a6 53%, #be858c); box-shadow: 0 5px 0 #a16b7566, 0 17px 30px #75424e1c; color: #583023; }
 .video-book::before { content: ''; position: absolute; z-index: -1; inset: 13px 14px 9px; border: 1px solid #d6bfa8; border-radius: 21px 21px 23px 23px; background: repeating-linear-gradient(0deg, #ead7bf 0 1px, #fff3e2 1px 3px); pointer-events: none; }
 .book-spread { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; border: 1px solid #ead7bf; border-radius: 18px 18px 21px 21px; background: #fff7ed; box-shadow: 0 3px 0 #e5ceb5, 0 6px 0 #faead6, 0 8px 0 #d9bfa8; }
@@ -279,22 +279,24 @@ function retryVideo() {
 .book-choice[aria-disabled='true'], .album-controls button[aria-disabled='true'] { cursor: wait; }
 .book-player-page { border-radius: 18px 0 0 21px; background-image: linear-gradient(90deg, #e7d3bb22, transparent 10%, transparent 93%, #9b735b1f); }
 .book-contents-page { border-radius: 0 18px 21px 0; border-left: 1px solid #d9bfa8; background-image: linear-gradient(90deg, #9b735b24, transparent 9%, transparent 94%, #e7d3bb22); }
-.book-page-heading { display: flex; align-items: center; gap: 17px; min-height: 26px; margin-bottom: 20px; color: #945164; font-size: 12px; font-weight: 600; line-height: 1.8; letter-spacing: 1.7px; }
-.book-heading-rule, .book-footer-rule { flex: 1; min-width: 18px; border-top: 1px solid #dbb4b2; }
+.book-page-heading { display: flex; align-items: center; gap: 17px; min-height: 26px; margin-bottom: 20px; color: #945164; font-size: var(--text-small); font-weight: 600; line-height: 1.8; letter-spacing: 1.7px; }
+.book-heading-rule { flex: 1; min-width: 18px; border-top: 1px solid #dbb4b2; }
 .book-screen { border-radius: 9px; background: #281d18; }
 .book-screen video { display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: inherit; object-fit: contain; background: #281d18; }
 .book-screen video:focus-visible { outline: 3px solid #92516c; outline-offset: 4px; }
 .book-video-copy { padding-block: 20px 24px; }
 .book-title-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
 .book-title-row h3 { font-family: 'Lora', Georgia, serif; font-size: clamp(23px, 2.1vw, 29px); font-weight: 600; line-height: 1.5; }
-.book-time { padding: 3px 11px; border: 1px solid #e5c3bc; border-radius: 20px; background: #f9e6dd; color: #6c4538; font-size: 13px; line-height: 1.7; }
-.book-video-copy > p { margin-top: 12px; font-size: 15px; line-height: 1.85; color: #5c4633; }
-.book-page-footer { display: flex; align-items: center; gap: 16px; min-height: 36px; margin-top: auto; padding-top: 16px; color: #78503e; font-size: 13px; line-height: 1.8; }
-.book-player-status { max-width: 55%; font-size: 12px; color: #685440; }
+.book-time { padding: 3px 11px; border: 1px solid #e5c3bc; border-radius: 20px; background: #f9e6dd; color: #6c4538; font-size: var(--text-small); line-height: 1.7; }
+.book-video-copy > p { margin-top: 12px; font-size: var(--text-body); line-height: 1.85; color: #5c4633; }
+.book-page-footer { display: flex; align-items: center; gap: 14px; min-height: 52px; margin-top: auto; padding-top: 16px; border-top: 1px solid #dbb4b2; color: #78503e; font-size: var(--text-small); line-height: 1.8; }
+.book-footer-number { flex-shrink: 0; font-family: 'Lora', Georgia, serif; font-size: 19px; font-style: italic; font-variant-numeric: tabular-nums; color: #a8556b; }
+.book-footer-copy { flex: 1; min-width: 0; }
+.book-page-footer > svg { width: 18px; height: 18px; flex-shrink: 0; color: #a8556b; }
 .book-ribbon { position: absolute; z-index: 1; top: -10px; right: 25px; display: flex; align-items: flex-end; justify-content: center; width: 31px; height: 72px; padding-bottom: 15px; background: linear-gradient(90deg, #c87d91, #e8aabb 18%, #e2a1b4 82%, #ba7185); clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 85%, 0 100%); pointer-events: none; }
 .book-ribbon svg { width: 15px; height: 15px; color: #894354; }
 .book-contents-heading { padding-right: 27px; margin-bottom: 18px; }
-.book-contents-heading .album-eyebrow { font-size: 11px; letter-spacing: 1.5px; }
+.book-contents-heading .album-eyebrow { font-size: var(--text-caption); letter-spacing: 1.5px; }
 .book-contents-heading h3 { margin-top: 10px; font-family: 'Lora', Georgia, serif; font-size: clamp(23px, 2.2vw, 30px); line-height: 1.5; font-weight: 600; }
 .book-contents-list { display: grid; gap: 6px; list-style: none; padding: 0; margin: 0 0 20px; }
 .book-contents-list li { min-width: 0; }
@@ -309,31 +311,29 @@ function retryVideo() {
 .book-thumbnail img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 2px; }
 .book-thumbnail-play { position: absolute; inset: 3px; display: grid; place-items: center; background: #2f1c1610; }
 .book-thumbnail-play svg { width: 23px; height: 23px; padding: 4px; border-radius: 50%; background: #583023b3; color: #fff7ed; }
-.book-duration { position: absolute; right: 5px; bottom: 5px; padding: 1px 4px; border-radius: 3px; background: #35241ee6; color: #fff7ed; font-size: 11px; font-weight: 500; line-height: 1.5; }
+.book-duration { position: absolute; right: 5px; bottom: 5px; padding: 1px 4px; border-radius: 3px; background: #35241ee6; color: #fff7ed; font-size: var(--text-caption); font-weight: 500; line-height: 1.5; }
 .book-choice-copy { display: grid; gap: 6px; min-width: 0; }
-.book-choice-title { font-size: 14px; line-height: 1.65; font-weight: 600; }
-.book-choice-status { display: flex; align-items: center; gap: 6px; font-size: 13px; line-height: 1.7; font-weight: 400; color: #715644; }
+.book-choice-title { font-size: var(--text-body); line-height: 1.65; font-weight: 600; }
+.book-choice-status { display: flex; align-items: center; gap: 6px; font-size: var(--text-small); line-height: 1.7; font-weight: 400; color: #715644; }
 .book-choice-selected .book-choice-status { color: #86405b; font-weight: 500; }
 .book-choice-dot { width: 6px; height: 6px; flex-shrink: 0; border-radius: 50%; background: #a44d67; }
-.book-contents-footer { border-top: 1px solid #dbb4b2; justify-content: space-between; }
-.book-contents-footer > svg { width: 17px; height: 17px; flex-shrink: 0; color: #a8556b; }
 .album-controls { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 16px 28px; margin-top: 29px; }
-.album-controls button { min-height: 46px; height: auto; padding: 11px 20px; gap: 10px; border: 1px solid #d3a8a4; border-radius: 26px; background: #fff7ed; color: #583023; font-size: 14px; line-height: 1.6; }
+.album-controls button { min-height: 46px; height: auto; padding: 11px 20px; gap: 10px; border: 1px solid #d3a8a4; border-radius: 26px; background: #fff7ed; color: #583023; font-size: var(--text-body); line-height: 1.6; }
 .album-controls button:hover { background: #f6dfe6; color: #583023; }
 .album-controls button.album-next { background: #583023; color: #fff7ed; border-color: #583023; }
 .album-controls button.album-next:hover { background: #734333; }
-.album-controls > span { font-size: 14px; color: #674434; font-variant-numeric: tabular-nums; }
+.album-controls > span { font-size: var(--text-body); color: #674434; font-variant-numeric: tabular-nums; }
 .album-controls svg { width: 17px; height: 17px; }
-.album-play-note { display: flex; align-items: flex-start; justify-content: center; gap: 8px; max-width: 900px; margin: 22px auto 0; text-align: center; color: #5c4633; font-size: 14px; line-height: 1.8; }
+.album-play-note { display: flex; align-items: flex-start; justify-content: center; gap: 8px; max-width: 900px; margin: 22px auto 0; text-align: center; color: #5c4633; font-size: var(--text-body); line-height: 1.8; }
 .album-play-note svg { width: 18px; height: 18px; margin-top: 3px; flex-shrink: 0; color: #a04f69; }
-.book-error, .album-empty { padding: 16px; border: 1px solid #d8bba0; border-radius: 8px; background: #fff0d9; color: #6d492d; font-size: 14px; line-height: 1.8; }
+.book-error, .album-empty { padding: 16px; border: 1px solid #d8bba0; border-radius: 8px; background: #fff0d9; color: #6d492d; font-size: var(--text-body); line-height: 1.8; }
 .book-error { margin-top: 14px; }
 .book-error > div { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 12px; }
 .book-error button { min-height: 44px; height: auto; white-space: normal; }
 .book-error a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: underline; text-underline-offset: 4px; }
 @media (prefers-reduced-motion: no-preference) { .book-choice { transition: background-color .2s, border-color .2s; } }
-@media (max-width: 1100px) { .book-page { padding: 25px; }  .book-choice { grid-template-columns: 20px 82px minmax(0, 1fr); gap: 8px; padding-inline: 7px; } .book-choice-title { font-size: 14px; } .book-ribbon { right: 17px; } }
+@media (max-width: 1100px) { .book-page { padding: 25px; }  .book-choice { grid-template-columns: 20px 82px minmax(0, 1fr); gap: 8px; padding-inline: 7px; } .book-choice-title { font-size: var(--text-body); } .book-ribbon { right: 17px; } }
 @media (max-width: 900px) { .video-album { width: calc(100% - 40px); } .book-spread { grid-template-columns: 1fr; } .book-player-page { border-radius: 18px 18px 0 0; background-image: linear-gradient(90deg, #e7d3bb22, transparent 10%); } .book-contents-page { border-left: 0; border-top: 1px solid #dcc3af; border-radius: 0 0 21px 21px; background-image: linear-gradient(180deg, #9b735b14, transparent 20px); padding: 29px 25px 25px; } .book-ribbon { top: -1px; height: 61px; } .book-choice { grid-template-columns: 28px 112px minmax(0, 1fr); gap: 15px; } .book-page-footer { margin-top: 8px; } }
-@media (max-width: 500px) { .video-album { width: calc(100% - 24px); padding-block: 32px 40px; } .album-heading { padding-inline: 4px; margin-bottom: 25px; } .album-heading h2 { font-size: 31px; letter-spacing: -.6px; } .album-heading > p:last-child { font-size: 14px; } .album-eyebrow { font-size: 11px; letter-spacing: 1.5px; } .video-book { padding: 6px 6px 13px; border-radius: 18px; } .book-page { padding: 23px 17px; } .book-page-heading { font-size: 11px; letter-spacing: 1px; gap: 10px; } .book-contents-page { padding-top: 26px; } .book-contents-heading h3 { font-size: 24px; } .book-contents-heading .album-eyebrow { font-size: 10px; letter-spacing: .7px; } .book-choice { grid-template-columns: 21px 82px minmax(0, 1fr); gap: 8px; padding: 10px 6px; min-height: 92px; } .book-choice-number { font-size: 18px; } .book-choice-status { font-size: 12px; } .book-page-footer { gap: 10px; font-size: 12px; } .album-controls { gap: 12px; } .album-controls button { padding-inline: 13px; font-size: 13px; } .album-controls > span { font-size: 13px; } .album-play-note { padding-inline: 6px; text-align: left; } }
+@media (max-width: 500px) { .video-album { width: calc(100% - 24px); padding-block: 32px 40px; } .album-heading { padding-inline: 4px; margin-bottom: 25px; } .album-heading h2 { font-size: 31px; letter-spacing: -.6px; } .album-heading > p:last-child { font-size: var(--text-body); } .album-eyebrow { font-size: var(--text-caption); letter-spacing: 1.5px; } .video-book { padding: 6px 6px 13px; border-radius: 18px; } .book-page { padding: 23px 17px; } .book-page-heading { font-size: var(--text-caption); letter-spacing: 1px; gap: 10px; } .book-contents-page { padding-top: 26px; } .book-contents-heading h3 { font-size: 24px; } .book-contents-heading .album-eyebrow { font-size: var(--text-caption); letter-spacing: .7px; } .book-choice { grid-template-columns: 21px 82px minmax(0, 1fr); gap: 8px; padding: 10px 6px; min-height: 92px; } .book-choice-number { font-size: var(--text-body); } .book-choice-status { font-size: var(--text-small); } .book-page-footer { gap: 10px; font-size: var(--text-small); } .album-controls { gap: 12px; } .album-controls button { padding-inline: 13px; font-size: var(--text-small); } .album-controls > span { font-size: var(--text-small); } .album-play-note { padding-inline: 6px; text-align: left; } }
 @media (max-width: 350px) { .book-choice { grid-template-columns: 18px 68px minmax(0, 1fr); gap: 6px; } .book-contents-heading h3 { font-size: 22px; } .album-controls > span { order: -1; width: 100%; text-align: center; } }
 </style>

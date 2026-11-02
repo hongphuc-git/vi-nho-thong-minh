@@ -113,15 +113,15 @@ const learningTopics = [
 .highlights-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; width: min(1120px, calc(100% - 96px)); margin-inline: auto; padding-block: 31px 30px; }
 .highlight-item { display: flex; flex-direction: column; align-items: center; text-align: center; min-width: 0; }
 .highlight-number { order: -1; font-family: 'Lora', Georgia, serif; font-size: 39px; font-weight: 700; line-height: 1.35; letter-spacing: -.7px; color: #604027; }
-.highlight-item dt { font-size: 13px; line-height: 1.8; font-weight: 500; }
-.highlight-note { max-width: 240px; margin-top: 5px; font-size: 10px; line-height: 1.8; color: #7b7d73; }
+.highlight-item dt { font-size: var(--text-small); line-height: 1.8; font-weight: 500; }
+.highlight-note { max-width: 240px; margin-top: 5px; font-size: var(--text-caption); line-height: 1.8; color: #7b7d73; }
 .learning-ticker { display: flex; align-items: stretch; min-height: 42px; border-top: 1px solid #a6c1d34d; background: #cedfe94d; }
 .ticker-window { position: relative; min-width: 0; flex: 1; overflow: hidden; }
 .ticker-track { display: flex; width: max-content; }
 .ticker-group { display: flex; align-items: center; flex-shrink: 0; }
 .ticker-sequence { display: flex; align-items: center; flex-shrink: 0; gap: 35px; width: max-content; padding: 10px 35px 10px 0; }
 .ticker-measure { position: absolute; top: 0; left: 0; visibility: hidden; pointer-events: none; }
-.ticker-sequence > span, .ticker-static > span, .ticker-reduced > span { display: inline-flex; align-items: center; gap: 9px; flex-shrink: 0; font-size: 12px; font-weight: 500; line-height: 1.8; color: #5c7180; white-space: nowrap; }
+.ticker-sequence > span, .ticker-static > span, .ticker-reduced > span { display: inline-flex; align-items: center; gap: 9px; flex-shrink: 0; font-size: var(--text-small); font-weight: 500; line-height: 1.8; color: #5c7180; white-space: nowrap; }
 .learning-ticker svg { width: 15px; height: 15px; color: #789cb0; }
 .ticker-static { display: flex; flex-wrap: wrap; gap: 12px 28px; padding: 11px 20px; }
 .ticker-reduced { display: none; }
@@ -130,16 +130,16 @@ const learningTopics = [
 .ticker-toggle:focus-visible { outline: 2px solid #789db5; outline-offset: -5px; }
 @media (max-width: 900px) {
   .highlights-grid { width: calc(100% - 64px); gap: 20px; }
-  .highlight-item dt { font-size: 12px; }
-  .highlight-note { font-size: 9px; }
+  .highlight-item dt { font-size: var(--text-small); }
+  .highlight-note { font-size: var(--text-caption); }
 }
 @media (max-width: 600px) {
   .highlights-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); width: calc(100% - 40px); gap: 25px 18px; padding-block: 27px; }
   .highlight-number { font-size: 34px; }
-  .highlight-item dt { font-size: 12px; }
-  .highlight-note { font-size: 10px; }
+  .highlight-item dt { font-size: var(--text-small); }
+  .highlight-note { font-size: var(--text-caption); }
   .ticker-sequence { gap: 25px; padding-right: 25px; }
-  .ticker-sequence > span { font-size: 11px; }
+  .ticker-sequence > span { font-size: var(--text-caption); }
   .ticker-toggle { width: 44px; min-height: 44px; }
 }
 @media (prefers-reduced-motion: reduce) {

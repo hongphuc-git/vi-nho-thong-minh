@@ -81,29 +81,62 @@ export const projectTopics: ProjectTopic[] = [
   },
   {
     id: 'doi-tuong',
-    title: '1.3 Đối tượng sử dụng và lý do lựa chọn sản phẩm',
+    title: '1.3 Đối tượng được hưởng giá trị',
     paragraphs: [
       'Học sinh THCS là người sử dụng và hưởng lợi trực tiếp. Phụ huynh, giáo viên, lớp học, câu lạc bộ và nhà trường là các nhóm khách hàng hoặc đơn vị đồng hành tiềm năng.',
-      'Bộ sản phẩm kết hợp ví bốn ngăn, sổ 30 ngày, thẻ tình huống và bảng mục tiêu thành một quy trình thực hành thống nhất. Nội dung gắn với việc mua đồ dùng học tập, tiết kiệm mua sách, hoạt động tập thể và các lựa chọn quen thuộc của học sinh.',
-      'Sản phẩm dễ tiếp cận, không yêu cầu điện thoại, Internet hoặc tiền thật, có thể dùng ở nhà và ở lớp. Hình thức, học liệu và hướng dẫn sẽ được điều chỉnh dựa trên phản hồi thực tế.',
+      'Gia đình có học liệu để cùng con trao đổi về tiền; nhà trường và câu lạc bộ có thể tổ chức hoạt động thực hành. Nhóm thực hiện được rèn kỹ năng khảo sát, thiết kế, làm mẫu và làm việc nhóm.',
     ],
   },
   {
+    id: 'doi-tuong-uu-tien',
+    title: '1.4 Đối tượng quan trọng nhất',
+    paragraphs: [
+      'Học sinh THCS là người sử dụng và hưởng lợi trực tiếp, được ưu tiên khi thiết kế ngôn ngữ, tình huống và thao tác của bộ công cụ.',
+      'Phụ huynh, giáo viên, lớp học và nhà trường có thể là người mua hoặc tổ chức sử dụng. Vì vậy, khảo sát nhu cầu học sinh và khảo sát khả năng mua được thực hiện riêng, không coi học sinh là người phải trả tiền.',
+    ],
+  },
+  {
+    id: 'ly-do-lua-chon',
+    title: '1.5.1–1.5.2 Khách hàng và lý do lựa chọn',
+    paragraphs: [
+      'Khách hàng dự kiến gồm phụ huynh muốn hướng dẫn con quản lý tiền, giáo viên bổ sung học liệu, lớp học và câu lạc bộ tổ chức trải nghiệm. Việc sử dụng trong nhà trường tùy nhu cầu và điều kiện triển khai.',
+      'Lý do lựa chọn được định hướng từ một quy trình thống nhất: phân bổ tiền vào ví, ghi chép thu–chi, xử lý tình huống, đặt mục tiêu và tự nhìn lại. Có thể thực hành bằng tiền mô phỏng, không bắt buộc tiền tiêu vặt, điện thoại hoặc Internet.',
+      'Tính dễ hiểu, dễ sử dụng và khả năng hỗ trợ học sinh cần tiếp tục được kiểm chứng qua trải nghiệm và phản hồi.',
+    ],
+  },
+  {
+    id: 'so-sanh-giai-phap',
+    title: '1.5.3 So sánh với giải pháp hiện có',
+    paragraphs: [
+      'Hồ sơ đối chiếu với sổ thu–chi giấy, ứng dụng Money Lover và nền tảng giáo dục tài chính Rùa Vàng. Bảng dưới tóm lược nhận định của nhóm từ lần tra cứu 27–28/10/2026, không xác nhận tính năng hoặc giá hiện tại của các dịch vụ.',
+    ],
+    table: {
+      caption: 'Đối chiếu định hướng thiết kế theo hồ sơ',
+      headers: ['Giải pháp', 'Cách sử dụng được đối chiếu', 'Hướng khác biệt của Ví nhỏ thông minh'],
+      rows: [
+        ['Sổ thu–chi giấy', 'Chủ yếu ghi chép và theo dõi khoản tiền.', 'Gắn sổ với ví bốn ngăn, thẻ tình huống và bảng mục tiêu.'],
+        ['Ứng dụng quản lý chi tiêu', 'Thao tác qua thiết bị số; cách dùng phụ thuộc ứng dụng.', 'Thực hành trực tiếp bằng học liệu giấy và tiền mô phỏng.'],
+        ['Nền tảng học tài chính', 'Bài học và trò chơi theo nội dung của nền tảng.', 'Quy trình thực hành bằng bộ vật lý tại gia đình và lớp học.'],
+      ],
+      note: 'Đây là nhận định định hướng của nhóm, không phải kết quả thử nghiệm so sánh. Không khẳng định bộ công cụ vượt trội hơn các giải pháp khác khi chưa có minh chứng.',
+    },
+  },
+  {
     id: 'khao-sat',
-    title: '1.4 Khảo sát nhu cầu khách hàng',
+    title: '1.5.4 Khảo sát nhu cầu khách hàng',
     paragraphs: [
       'Hồ sơ tổng hợp 55 phiếu hợp lệ thuộc bốn nhóm. Phiếu KS01 dành cho học sinh tìm hiểu nhu cầu sử dụng; KS02 dành cho người mua tiềm năng tìm hiểu mức độ phù hợp của sản phẩm và giá dự kiến.',
     ],
     table: {
       caption: 'Kết quả khảo sát ban đầu theo hồ sơ dự án',
-      headers: ['Nhóm đối tượng', 'Phiếu hợp lệ', 'Có nhu cầu sử dụng', 'Chấp nhận giá 55.000đ/bộ'],
+      headers: ['Nhóm đối tượng', 'Phiếu hợp lệ', 'Có nhu cầu sử dụng', 'Chấp nhận giá 55.000đ/bộ', 'Muốn trải nghiệm / có ý định mua'],
       rows: [
-        ['Học sinh THCS', '30', '24/30', 'Không áp dụng'],
-        ['Phụ huynh', '15', '11/15', '9/15'],
-        ['Giáo viên', '8', '6/8', '5/8'],
-        ['Đơn vị giáo dục', '2', '1/2', '1/2'],
+        ['Học sinh THCS (KS01)', '30', '24/30', 'Không áp dụng', '22/30 muốn trải nghiệm'],
+        ['Phụ huynh (KS02)', '15', '11/15', '9/15', '7/15 có ý định mua'],
+        ['Giáo viên (KS02)', '8', '6/8', '5/8', '5/8 có ý định mua'],
+        ['Đơn vị giáo dục (KS02)', '2', '1/2', '1/2', '1/2 có ý định mua'],
       ],
-      note: '22/30 học sinh muốn trải nghiệm; 15/25 người mua tiềm năng chấp nhận mức giá dự kiến. Đây là khảo sát nhỏ, chưa đại diện toàn bộ thị trường; quan tâm hoặc ý định mua chưa phải đơn đặt mua đã xác nhận và chưa chứng minh hiệu quả giáo dục. Số liệu được dẫn theo hồ sơ, chưa được kiểm chứng độc lập.',
+      note: 'Tổng cộng 55 phiếu; 42/55 có nhu cầu sử dụng. Trong 25 người mua tiềm năng (KS02), 15/25 chấp nhận giá và 13/25 quan tâm/có ý định mua. Hồ sơ chưa ghi nhận đơn đặt mua xác nhận. Nhu cầu sử dụng, mong muốn trải nghiệm và ý định mua là ba chỉ số khác nhau; quy mô khảo sát chưa đại diện toàn bộ thị trường.',
     },
   },
   {
@@ -117,7 +150,7 @@ export const projectTopics: ProjectTopic[] = [
   },
   {
     id: 'gia-thanh',
-    title: '2.2 Dự toán chi phí cho 01 bộ cá nhân',
+    title: '2.2 Cơ cấu chi phí và giá thành',
     paragraphs: ['Các khoản dưới đây là dự toán trong hồ sơ, chưa phải báo giá đã xác nhận hoặc giá vốn đầy đủ.'],
     table: {
       caption: 'Chi phí trực tiếp tạm tính cho một bộ cá nhân',
@@ -132,7 +165,7 @@ export const projectTopics: ProjectTopic[] = [
         ['Kiểm tra và đóng gói', '1.000đ'],
         ['Tổng các khoản đã định giá', '36.000đ'],
       ],
-      note: 'Chưa định giá đầy đủ việc xử lý vải jean, tiền mô phỏng, bảng mục tiêu nếu in riêng và vận chuyển liên quan. Giá bán thử nghiệm dự kiến 55.000đ/bộ có thể thay đổi sau khảo giá và hoàn thiện sản phẩm. Theo hồ sơ, khoản chi cho bộ mẫu số 1 là 33.000đ nhưng chưa tính giá trị vải tận dụng và công làm của nhóm.',
+      note: 'Chưa định giá đầy đủ việc xử lý vải jean, tiền mô phỏng, bảng mục tiêu nếu in riêng và vận chuyển liên quan. Giá bán thử nghiệm dự kiến 55.000đ/bộ có thể thay đổi sau khảo giá. Hồ sơ kê khai bộ mẫu số 1 đã chi 33.000đ, chưa tính vải tận dụng và công làm của nhóm; ước tính thuê sản xuất bộ mẫu là 37.000đ. Ba mức 33.000đ, 36.000đ và 37.000đ có cơ sở tính khác nhau, không dùng thay thế nhau.',
     },
   },
   {
@@ -142,6 +175,15 @@ export const projectTopics: ProjectTopic[] = [
       'Thuận lợi: cấu tạo sản phẩm đơn giản, vật liệu dễ tiếp cận, có thể sản xuất từng đợt nhỏ; học sinh tham gia được nhiều công đoạn và có sự đồng hành của giáo viên, phụ huynh.',
       'Khó khăn: cần bảo đảm độ bền và sự chính xác của học liệu; giá vật tư, số lượng in và gia công ảnh hưởng đến chi phí; sự quan tâm của khách hàng chưa đồng nghĩa với nhu cầu mua thực tế.',
       'Phương án là làm mẫu, kiểm tra chất lượng, ghi nhận phản hồi, khảo giá và điều chỉnh trước khi mở rộng. Các khoản chi được ghi chép, lưu chứng từ; việc giới thiệu và bán thử tại trường phải được cho phép, bảo đảm tự nguyện.',
+    ],
+  },
+  {
+    id: 'canh-tranh',
+    title: '2.4 Tính cạnh tranh của sản phẩm',
+    paragraphs: [
+      'Nhóm hướng tới khả năng cạnh tranh nhờ bộ học liệu gắn với đời sống học sinh THCS, sử dụng linh hoạt trong gia đình và lớp học, có thể thực hành không cần thiết bị số.',
+      'Tận dụng vải jean cũ là định hướng vật liệu; vẫn cần tính chi phí thu gom, làm sạch, gia công và hao hụt. Giá 55.000đ/bộ là mức thử nghiệm dự kiến, chưa phải lợi thế giá đã được xác nhận bằng giá vốn đầy đủ.',
+      'Cần kiểm tra độ bền, tính tiện dụng, mức độ dễ hiểu và phản hồi thực tế trước khi khẳng định lợi thế cạnh tranh hoặc mở rộng sản xuất.',
     ],
   },
   {
@@ -155,26 +197,47 @@ export const projectTopics: ProjectTopic[] = [
   },
   {
     id: 'kiem-chung',
-    title: '3.1 Kế hoạch trải nghiệm và đánh giá',
+    title: '3. Kế hoạch kiểm chứng tính sáng tạo và hiệu quả',
     paragraphs: [
       'Giai đoạn đầu dự kiến tổ chức trải nghiệm ngắn, tự nguyện với khoảng 20–30 học sinh khi có đủ sự đồng ý cần thiết. Giáo viên rà soát hai bài DGA, DGB và rubric trước khi triển khai; điều kiện tổ chức được giữ tương đương.',
-      'Năm kỹ năng được xem xét gồm ưu tiên nhu cầu, phân bổ tiền, tính mục tiêu tiết kiệm, xử lý khoản chi phát sinh và điều chỉnh kế hoạch. Nhóm đồng thời thu phiếu phản hồi về tính dễ hiểu, dễ sử dụng và những điểm cần cải tiến.',
+      'DGA và DGB cùng đánh giá 5 kỹ năng, mỗi kỹ năng 0–2 điểm, tổng tối đa 10 điểm và thời lượng 10 phút. Hai bài thay đổi bối cảnh, số liệu nhưng dùng cùng rubric: ưu tiên nhu cầu, phân bổ tiền, tính toán mục tiêu, xử lý chi phát sinh và điều chỉnh kế hoạch. Phiếu PH01 ghi nhận phản hồi sử dụng; kết quả hiện chưa có.',
       'Theo dõi thói quen trong 30 ngày là một giai đoạn riêng. Chỉ báo cáo kết quả sau khi có dữ liệu và minh chứng thực tế; không dùng trải nghiệm ngắn để kết luận đã hình thành thói quen lâu dài. Dữ liệu được tổng hợp bằng mã số, không thu thập tiền tiêu vặt thực tế hay thông tin tài chính nhạy cảm.',
+      'Chỉ số dự kiến gồm số bài hợp lệ, điểm trước–sau, số học sinh tăng/không đổi/giảm điểm và phản hồi sử dụng. Thử nghiệm nhỏ, chưa có nhóm đối chứng nên chưa thể quy sự thay đổi hoàn toàn cho sản phẩm.',
     ],
   },
   {
     id: 'nguon-thu',
-    title: '4.1 Nguồn thu và định hướng kinh doanh',
+    title: '4.1 Các nguồn vốn và nguồn thu',
     paragraphs: [
       'Bộ cá nhân là sản phẩm chủ lực trong giai đoạn đầu, với giá thử nghiệm dự kiến 55.000đ/bộ. Nhóm ưu tiên hoàn thiện mẫu, kiểm chứng tính hữu ích và khảo sát khả năng chấp nhận giá.',
       'Bộ lớp học, bộ thẻ bổ sung, sổ bán riêng và tài liệu số hợp pháp là các hướng mở rộng dự kiến. Hoạt động trải nghiệm trả phí chỉ được xem xét khi có đơn vị đặt tổ chức và phương án triển khai phù hợp.',
       'Các giả định sản lượng trong hồ sơ dùng để lập phương án tài chính, chưa phải đơn đặt mua hoặc doanh thu đã đạt được.',
+      'Bảng nguồn vốn trong hồ sơ ghi nhận thực thu 200.000đ từ bốn thành viên ngày 20/09/2026, theo sổ thu–chi nhóm. Hỗ trợ của phụ huynh, nhà trường và doanh thu tái đầu tư chưa được ghi nhận là đã nhận. Với dự toán 36.000đ/bộ, 10 bộ cần 360.000đ, vượt vốn góp 160.000đ; nhóm dự kiến làm từng đợt nhỏ và chỉ bổ sung nguồn hỗ trợ khi có xác nhận.',
     ],
   },
   {
+    id: 'doanh-thu',
+    title: '4.2 Dự kiến doanh thu',
+    paragraphs: [
+      'Phương án cơ sở giả định bán 50 bộ cá nhân với giá 55.000đ/bộ, tương ứng doanh thu 2.750.000đ. Đây là sản lượng lập kế hoạch, chưa phải đơn mua đã xác nhận.',
+    ],
+    table: {
+      caption: 'Nguồn doanh thu trong kịch bản mở rộng của hồ sơ',
+      headers: ['Dòng sản phẩm / hoạt động', 'Giả định', 'Doanh thu dự kiến'],
+      rows: [
+        ['Bộ cá nhân', '50 bộ × 55.000đ', '2.750.000đ'],
+        ['Bộ dùng cho lớp học', '5 bộ × 200.000đ', '1.000.000đ'],
+        ['Sổ hoặc thẻ bổ sung', '50 sản phẩm × 20.000đ', '1.000.000đ'],
+        ['Hoạt động trải nghiệm', '5 buổi × 300.000đ', '1.500.000đ'],
+        ['Tổng kịch bản mở rộng', 'Cộng bốn dòng trên', '6.250.000đ'],
+      ],
+      note: 'Bộ lớp học, sản phẩm bổ sung và trải nghiệm trả phí là hướng phát triển. Chỉ triển khai khi có nhu cầu xác nhận, nguồn lực và sự cho phép cần thiết; không cộng doanh thu mở rộng vào phương án cơ sở chỉ bán bộ cá nhân.',
+    },
+  },
+  {
     id: 'tai-chinh',
-    title: '4.2 Phương án tài chính — giả định bán 50 bộ',
-    paragraphs: ['Kịch bản dưới đây chỉ xét 50 bộ cá nhân, với đơn giá và chi phí giả định trong hồ sơ.'],
+    title: '4.3 Dự kiến chi phí và hiệu quả tài chính',
+    paragraphs: ['Kịch bản cơ sở dưới đây chỉ xét 50 bộ cá nhân. Chi phí chung giả định 1.300.000đ gồm thiết kế 300.000đ, vận chuyển 200.000đ, truyền thông 300.000đ và dự phòng chung 500.000đ. Bao bì và hao hụt vật tư đã nằm trong chi phí trực tiếp, không cộng lại.'],
     table: {
       caption: 'Phương án dự kiến, chưa phải kết quả kinh doanh',
       headers: ['Chỉ tiêu', 'Cách tính', 'Giá trị dự kiến'],
@@ -185,34 +248,38 @@ export const projectTopics: ProjectTopic[] = [
         ['Tổng chi phí', '1.800.000đ + 1.300.000đ', '3.100.000đ'],
         ['Chênh lệch thu – chi', '2.750.000đ − 3.100.000đ', '−350.000đ'],
       ],
-      note: '50 bộ cá nhân chưa đủ bù đắp chi phí chung. Theo giả định giá bán và chi phí trực tiếp không đổi, cần khoảng 69 bộ để chênh lệch 19.000đ/bộ bù đắp 1.300.000đ chi phí chung. Đây chưa phải điểm hòa vốn toàn dự án và chưa đủ dữ liệu xác định thời điểm hoàn vốn.',
+      note: 'Kịch bản cơ sở âm 350.000đ. Kịch bản mở rộng trong hồ sơ cộng thêm 5 bộ lớp học, 50 sản phẩm bổ sung và 5 buổi trải nghiệm: tổng doanh thu 6.250.000đ, tổng chi phí 5.450.000đ, chênh lệch 800.000đ. Nếu giữ các dòng sản phẩm mở rộng nhưng không có buổi trải nghiệm trả phí, chênh lệch là 300.000đ. Các kịch bản này có phạm vi khác nhau; đều là giả định, chưa phải lợi nhuận ròng hay kết quả kinh doanh.',
     },
   },
   {
     id: 'trien-khai',
-    title: '4.3 Kế hoạch triển khai và nguồn lực',
+    title: '4.4 Khả năng hoàn vốn và thời điểm hoàn vốn',
     paragraphs: [
-      'Ưu tiên hoàn thiện bộ mẫu, rà soát thiết kế, kiểm tra chất lượng, khảo giá và chuẩn bị học liệu. Sau khi đủ điều kiện, tổ chức trải nghiệm ngắn có đánh giá trước – sau; dùng phản hồi để cải tiến.',
-      'Giai đoạn theo dõi 30 ngày bắt đầu sau khi mẫu hoàn thiện và có đủ điều kiện triển khai. Kế hoạch được cập nhật theo tiến độ thực tế, không sử dụng chỉ tiêu dự kiến thay cho kết quả đã đạt được.',
-      'Theo hồ sơ, nhóm góp vốn 200.000đ. Với chi phí trực tiếp tạm tính 36.000đ/bộ, 10 bộ cần khoảng 360.000đ, vượt vốn góp 160.000đ. Nhóm dự kiến sản xuất từng đợt nhỏ, tận dụng vật liệu được tặng và tìm hỗ trợ tự nguyện khi cần; chỉ đặt in lớn khi có căn cứ nhu cầu.',
-    ],
-  },
-  {
-    id: 'hieu-qua',
-    title: '4.4 Hiệu quả dự kiến và nguyên tắc công bố kết quả',
-    paragraphs: [
-      'Dự án hướng tới khả năng hỗ trợ học sinh cân nhắc chi tiêu, ghi chép và lập mục tiêu; tạo công cụ đồng hành cho phụ huynh và giáo viên, đồng thời rèn năng lực khởi nghiệp cho nhóm thực hiện.',
-      'Chỉ số theo dõi gồm số bài đánh giá hợp lệ, điểm trước – sau, số học sinh có điểm tăng/không đổi/giảm, mức độ dễ hiểu và phản hồi sử dụng. Kết quả trải nghiệm ngắn và kết quả theo dõi 30 ngày được báo cáo riêng.',
-      'Hồ sơ chưa có dữ liệu đánh giá hiệu quả hoàn chỉnh. Với thử nghiệm nhỏ, chưa có nhóm đối chứng, kết quả ghi nhận sau này cũng không đủ để khẳng định sản phẩm là nguyên nhân duy nhất của sự thay đổi.',
+      'Theo giả định giá bán 55.000đ và chi phí trực tiếp 36.000đ, mỗi bộ còn chênh lệch 19.000đ trước chi phí chung. Để bù 1.300.000đ chi phí chung cần 1.300.000 ÷ 19.000 ≈ 68,42, tức tối thiểu 69 bộ cá nhân.',
+      'Đây là phép tính riêng cho dòng bộ cá nhân, chưa phải điểm hòa vốn của toàn dự án. Khả năng hoàn vốn phụ thuộc giá vốn đầy đủ, sản lượng, các dòng sản phẩm và thời điểm thực thu, thực chi.',
+      'Hồ sơ chưa đủ dữ liệu xác định thời điểm hoàn vốn. Nhóm dự kiến ghi nhận dòng tiền theo tháng: làm mẫu và khảo giá, thử nghiệm và điều chỉnh, sau đó bán thử nếu đủ điều kiện. Chỉ ghi nhận doanh thu, khoản hỗ trợ và đơn mua khi thực tế phát sinh.',
     ],
   },
   {
     id: 'truyen-thong',
-    title: '5. Kênh truyền thông và giới thiệu sản phẩm',
+    title: '5.1–5.4 Kế hoạch, công cụ và kênh truyền thông',
     paragraphs: [
       'Dự kiến xây dựng poster, video giới thiệu và hướng dẫn sử dụng tối đa 3 phút; tổ chức hoạt động trải nghiệm tự nguyện và giới thiệu qua các kênh của nhà trường khi được kiểm duyệt.',
       'Bộ nhận diện thống nhất tên Ví nhỏ thông minh và khẩu hiệu “Ví nhỏ – Thói quen lớn”. Nội dung giới thiệu nêu đúng cấu phần, công dụng, tình trạng mẫu và giá dự kiến; ưu tiên ảnh sản phẩm thực tế khi có ảnh được phép sử dụng.',
       'Nhóm theo dõi lượt tiếp cận, đăng ký tìm hiểu, phản hồi, số đơn xác nhận và điều chỉnh sản phẩm. Lượt xem hoặc lượt thích không được coi là bằng chứng trực tiếp về nhu cầu mua; hoạt động tại trường cần được cho phép và bảo đảm tự nguyện.',
+      'Theo mục 5.3, hướng truyền thông gồm thử thách 30 ngày, hoạt động “Một tình huống – Nhiều lựa chọn”, nội dung do học sinh thực hiện và minh chứng từ sản phẩm, hoạt động thực tế. Chỉ công bố hình ảnh, phản hồi và dữ liệu khi được phép.',
     ],
+    table: {
+      caption: 'Tóm lược mục 5.1, 5.2 và 5.4: kênh, công cụ và cách theo dõi',
+      headers: ['Kênh / công cụ dự kiến', 'Nội dung', 'Chỉ số ghi nhận khi triển khai'],
+      rows: [
+        ['Poster, bảng tin', 'Giới thiệu thành phần, công dụng, giá dự kiến và QR.', 'Số poster sử dụng, chi phí, lượt quét và phản hồi.'],
+        ['Video của nhóm', 'Giới thiệu, hướng dẫn và minh họa tình huống.', 'Lượt xem, câu hỏi, người đăng ký trải nghiệm.'],
+        ['Hoạt động tại trường, lớp, CLB', 'Trải nghiệm tự nguyện và ghi phản hồi.', 'Người thực tế tham gia, phiếu hợp lệ, góp ý cải tiến.'],
+        ['Kênh trường, phụ huynh và giáo viên', 'Thông tin được duyệt, trao đổi nhu cầu.', 'Lượt tiếp cận, người hỏi thêm, đơn xác nhận nếu có.'],
+        ['QR và tài liệu số', 'Dẫn đến học liệu, video hoặc phiếu phù hợp.', 'Lượt truy cập, lượt quét, phản hồi tự nguyện.'],
+      ],
+      note: 'Các kênh trong bảng là kế hoạch của hồ sơ, không khẳng định website đã tích hợp bộ đếm, khảo sát trực tuyến hay hệ thống nhận đơn. Website hiện mở hướng dẫn qua QR và mở email để liên hệ.',
+    },
   },
 ]

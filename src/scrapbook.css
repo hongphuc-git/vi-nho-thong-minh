@@ -1,5 +1,9 @@
 /* Shared paper, ink and stationery details for the scrapbook direction. */
 :root {
+  --text-caption: .875rem;
+  --text-small: 1rem;
+  --text-body: 1.125rem;
+  --text-lead: 1.25rem;
   --background: #f8e8e4;
   --surface-paper: #fff7ed;
   --paper-grid: #a46b7010;
@@ -85,7 +89,7 @@ body {
 }
 @media (max-width: 600px) {
   #app .kit-image-preview img, #app .kit-wallet .kit-image-preview img { max-height: 135px; }
-  #app .kit-image-preview .image-preview-hint { padding: 4px 6px; font-size: 9px; bottom: 5px; right: 5px; }
+  #app .kit-image-preview .image-preview-hint { padding: 4px 6px; font-size: var(--text-caption); bottom: 5px; right: 5px; }
 }
 #app .pocket-card { border-radius: 8px 8px 30px 8px; border: 1px solid #a0a0a020; }
 #app .playground-section { background: #f8eaf0; }
@@ -118,83 +122,83 @@ body {
 
 /* Unified 1240px shell & readable typography scale across all sections */
 #app .shell { width: min(1240px, calc(100% - 96px)); }
-#app .eyebrow { font-size: 12px; letter-spacing: 1.6px; margin-bottom: 16px; }
-#app .text-link { font-size: 14px; }
+#app .eyebrow { font-size: var(--text-small); letter-spacing: 1.6px; margin-bottom: 16px; }
+#app .text-link { font-size: var(--text-body); }
 #app .promise-strip { background: #f3f8fc; border-block: 1px dashed #c5d9e8; }
-#app .promise-inner > span { font-size: 14.5px; font-weight: 600; color: #473120; }
+#app .promise-inner > span { font-size: var(--text-body); font-weight: 600; color: #473120; }
 #app .promise-inner > span svg { color: #2b6291; width: 20px; height: 20px; }
 #app .section-heading > p,
 #app .section-heading > div > p:not(.eyebrow),
-#app .center-heading > p:last-child { font-size: 15px; line-height: 1.8; color: #5f4936; }
+#app .center-heading > p:last-child { font-size: var(--text-body); line-height: 1.8; color: #5f4936; }
 
 /* Bộ công cụ */
 #app .kit-card { border-radius: 14px; background: var(--surface-paper); box-shadow: 0 4px 0 #dce7f0, 0 12px 24px #54392c0a; }
-#app .item-number { font-family: 'Lora', Georgia, serif; font-style: italic; font-weight: 700; font-size: 16px; color: #4d3726; }
+#app .item-number { font-family: 'Lora', Georgia, serif; font-style: italic; font-weight: 700; font-size: var(--text-body); color: #4d3726; }
 #app .kit-card-copy { padding: 18px 20px 24px; }
 #app .kit-card-copy h3 { font-family: 'Lora', Georgia, serif; font-size: 18.5px; font-weight: 700; color: #3f2818; }
-#app .kit-card-copy p { font-size: 14px; line-height: 1.75; color: #634d3a; margin-top: 8px; }
-#app .image-note { font-size: 13px; color: #6e5945; margin-top: 24px; }
+#app .kit-card-copy p { font-size: var(--text-body); line-height: 1.75; color: #634d3a; margin-top: 8px; }
+#app .image-note { font-size: var(--text-small); color: #6e5945; margin-top: 24px; }
 
 /* Bốn ngăn ví */
 #app .pocket-card { padding: 26px 24px 38px; box-shadow: 0 4px 0 #0000000a, 0 10px 20px #54392c0a; }
-#app .pocket-card-top > span { font-family: 'Lora', Georgia, serif; font-style: italic; font-weight: 700; font-size: 18px; opacity: .75; }
+#app .pocket-card-top > span { font-family: 'Lora', Georgia, serif; font-style: italic; font-weight: 700; font-size: var(--text-body); opacity: .75; }
 #app .pocket-card h3 { font-family: 'Lora', Georgia, serif; font-size: 19.5px; font-weight: 700; color: #3d2717; }
-#app .pocket-card > p { font-size: 14.5px; line-height: 1.75; color: #4e3827; }
+#app .pocket-card > p { font-size: var(--text-body); line-height: 1.75; color: #4e3827; }
 
 /* Trải nghiệm tương tác */
 #app .allocation-panel,
 #app .scenario-panel { padding: 32px; border-radius: 18px; box-shadow: 0 4px 0 #e9d8de, 0 12px 24px #54392c0a; }
 #app .panel-title h3 { font-family: 'Lora', Georgia, serif; font-size: 21px; font-weight: 700; color: #3f2818; }
-#app .panel-description { font-size: 14px; color: #67523f; }
-#app .allocation-row > div { font-size: 14.5px; font-weight: 500; color: #46301f; }
-#app .allocation-total { font-size: 14px; padding: 16px 18px; border-radius: 12px; background: #eef5fa; border: 1px solid #d1e2ef; color: #3f2818; }
-#app .allocation-total > strong { font-size: 17px; color: #286299; }
+#app .panel-description { font-size: var(--text-body); color: #67523f; }
+#app .allocation-row > div { font-size: var(--text-body); font-weight: 500; color: #46301f; }
+#app .allocation-total { font-size: var(--text-body); padding: 16px 18px; border-radius: 12px; background: #eef5fa; border: 1px solid #d1e2ef; color: #3f2818; }
+#app .allocation-total > strong { font-size: var(--text-body); color: #286299; }
 #app .allocation-total.over-budget { background: #f8e2d7; border-color: #e9c2b0; color: #853e25; }
 #app .allocation-total.over-budget > strong { color: #853e25; }
 #app .activity-note,
-#app .playground-privacy { font-size: 13px; color: #6c5743; }
-#app .scenario-label { font-size: 11.5px; color: #2c6293; }
+#app .playground-privacy { font-size: var(--text-small); color: #6c5743; }
+#app .scenario-label { font-size: var(--text-small); color: #2c6293; }
 #app .scenario-panel > h3 { font-family: 'Lora', Georgia, serif; font-size: 27px; font-weight: 700; color: #3f2818; }
-#app .scenario-panel > p:not(.activity-note) { font-size: 14.5px; line-height: 1.8; color: #5c4633; }
-#app .answer-button { font-size: 14px; font-weight: 500; padding: 14px 16px; min-height: 52px; border-radius: 12px; color: #452e1d; }
+#app .scenario-panel > p:not(.activity-note) { font-size: var(--text-body); line-height: 1.8; color: #5c4633; }
+#app .answer-button { font-size: var(--text-body); font-weight: 500; padding: 14px 16px; min-height: 52px; border-radius: 12px; color: #452e1d; }
 #app .answer-button.selected { background: #eaf3fb; border-color: #6b9ec7; font-weight: 600; }
-#app .scenario-feedback { font-size: 14px; line-height: 1.75; padding: 12px 16px; background: #fcf7eb; border-radius: 0 10px 10px 0; color: #4f3927; }
+#app .scenario-feedback { font-size: var(--text-body); line-height: 1.75; padding: 12px 16px; background: #fcf7eb; border-radius: 0 10px 10px 0; color: #4f3927; }
 
 /* Hành trình 30 ngày */
-#app .small-label { font-size: 12.5px; font-weight: 600; padding: 6px 13px; background: #eef5fa; border-color: #c9dced; color: #2b5f8c; }
+#app .small-label { font-size: var(--text-small); font-weight: 600; padding: 6px 13px; background: #eef5fa; border-color: #c9dced; color: #2b5f8c; }
 #app .journey-grid { gap: 20px; }
 #app .journey-grid > li { display: flex; flex-direction: column; padding: 22px 20px; background: var(--surface-paper); border: 1px solid #dfd3c0; border-radius: 18px; box-shadow: 0 4px 0 #e9dfd0, 0 10px 20px #54392c0a; }
 #app .journey-marker { margin-bottom: 18px; }
-#app .journey-marker > span:first-child { font-family: 'Lora', Georgia, serif; font-weight: 700; font-size: 15px; }
-#app .journey-grid .eyebrow { font-size: 11.5px; margin-bottom: 8px; }
+#app .journey-marker > span:first-child { font-family: 'Lora', Georgia, serif; font-weight: 700; font-size: var(--text-body); }
+#app .journey-grid .eyebrow { font-size: var(--text-small); margin-bottom: 8px; }
 #app .journey-grid h3 { font-family: 'Lora', Georgia, serif; font-size: 19.5px; font-weight: 700; color: #3f2818; }
-#app .journey-grid h3 + p { font-size: 14.5px; line-height: 1.75; color: #5e4835; margin-top: 10px; }
-#app .journey-days { align-self: flex-start; font-size: 12px; font-weight: 600; color: #2c6293; background: #eef5fa; padding: 4px 11px; border-radius: 999px; margin-top: auto; }
+#app .journey-grid h3 + p { font-size: var(--text-body); line-height: 1.75; color: #5e4835; margin-top: 10px; }
+#app .journey-days { align-self: flex-start; font-size: var(--text-small); font-weight: 600; color: #2c6293; background: #eef5fa; padding: 4px 11px; border-radius: 999px; margin-top: auto; }
 #app .journey-footnote { padding: 20px 26px; border-radius: 14px; }
-#app .journey-footnote p { font-size: 14px; line-height: 1.75; color: #5a4431; }
+#app .journey-footnote p { font-size: var(--text-body); line-height: 1.75; color: #5a4431; }
 
 /* Cùng đồng hành, FAQ, Liên hệ & Footer */
-#app .together-quote > p { font-size: 15px; max-width: 420px; }
+#app .together-quote > p { font-size: var(--text-body); max-width: 420px; }
 #app .audience-symbol { font-size: 21px; font-weight: 700; }
 #app .audience-grid h3 { font-family: 'Lora', Georgia, serif; font-size: 19px; font-weight: 700; }
-#app .audience-grid p { font-size: 14.5px; line-height: 1.8; }
+#app .audience-grid p { font-size: var(--text-body); line-height: 1.8; }
 #app .project-status { padding: 24px 28px; border-radius: 16px; }
-#app .project-status > div { font-size: 15px; color: #432c1b; }
-#app .project-status > p { font-size: 14px; line-height: 1.8; color: #5f4a37; }
-#app .project-status > span { font-size: 11.5px; font-weight: 700; color: #786049; }
-#app .faq-section > div > p:last-child { font-size: 15px; color: #634d3a; }
-#app .faq-list summary { font-size: 16px; font-weight: 600; color: #3f2818; }
-#app .faq-list details > p { font-size: 14.5px; line-height: 1.85; color: #5b4532; }
+#app .project-status > div { font-size: var(--text-body); color: #432c1b; }
+#app .project-status > p { font-size: var(--text-body); line-height: 1.8; color: #5f4a37; }
+#app .project-status > span { font-size: var(--text-small); font-weight: 700; color: #786049; }
+#app .faq-section > div > p:last-child { font-size: var(--text-body); color: #634d3a; }
+#app .faq-list summary { font-size: var(--text-body); font-weight: 600; color: #3f2818; }
+#app .faq-list details > p { font-size: var(--text-body); line-height: 1.85; color: #5b4532; }
 #app .contact-card { border-radius: 22px; padding: 52px 58px; }
-#app .contact-card .eyebrow { font-size: 12px; }
-#app .contact-card > div > p:not(.eyebrow) { font-size: 15px; line-height: 1.85; }
-#app .contact-phone { font-size: 15px; font-weight: 600; }
+#app .contact-card .eyebrow { font-size: var(--text-small); }
+#app .contact-card > div > p:not(.eyebrow) { font-size: var(--text-body); line-height: 1.85; }
+#app .contact-phone { font-size: var(--text-body); font-weight: 600; }
 #app .price-tag { width: 265px; border-radius: 12px; }
-#app .price-tag > span:first-child { font-size: 11.5px; font-weight: 700; }
-#app .price-tag > p { font-size: 13.5px; line-height: 1.8; }
-#app .price-tag .price-note { font-size: 12px; color: #6c5742; line-height: 1.65; }
-#app .footer-main > p { font-size: 14px; color: #624d3a; }
-#app .footer-bottom { font-size: 13px; color: #6e5946; }
+#app .price-tag > span:first-child { font-size: var(--text-small); font-weight: 700; }
+#app .price-tag > p { font-size: var(--text-body); line-height: 1.8; }
+#app .price-tag .price-note { font-size: var(--text-small); color: #6c5742; line-height: 1.65; }
+#app .footer-main > p { font-size: var(--text-body); color: #624d3a; }
+#app .footer-bottom { font-size: var(--text-small); color: #6e5946; }
 
 @media (max-width: 1100px) {
   #app .shell { width: calc(100% - 64px); }
@@ -229,4 +233,57 @@ body {
 #app .content-topic,
 #app .content-table-scroll {
   background-color: var(--surface-paper);
+}
+
+/* Shared reading scale; keep prose spacious and labels legible on every screen. */
+body { font-size: var(--text-body); line-height: 1.75; }
+#app .navigation-pill { font-size: var(--text-small); height: auto; min-height: 46px; }
+#app .summary-primary-action,
+#app .summary-secondary-action,
+#app .scrap-start,
+#app .scrap-primary,
+#app .scrap-secondary,
+#app .wallet-try-button,
+#app .discovery-link,
+#app .invitation-actions a,
+#app .album-controls button { font-size: var(--text-small); height: auto; min-height: 48px; }
+#app .footer-content { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.25fr); }
+#app .footer-identity { min-width: 0; }
+#app .footer-identity > span { min-width: 0; overflow-wrap: anywhere; }
+#app .footer-contact a { overflow-wrap: anywhere; }
+#app .book-choice { min-height: 108px; }
+#app .book-choice-copy { overflow-wrap: anywhere; }
+#app .practice-answer { font-size: var(--text-small); }
+#app .practice-allocation-label label { font-size: var(--text-small); }
+#app .practice-wallet-tab { font-size: var(--text-caption); }
+#app .guide-dialog-content li > span { min-width: 34px; min-height: 34px; flex-shrink: 0; }
+#app .scrap-note,
+#app .highlight-note,
+#app .summary-idea-image figcaption div > span,
+#app .practice-heading-note,
+#app .practice-instruction,
+#app .practice-footnote,
+#app .practice-privacy,
+#app .footer-colophon { color: #5c4633; }
+#app .practice-art-price { bottom: 15px; }
+#app .practice-art-need { max-width: 55%; }
+#app .practice-art-price > span { letter-spacing: .3px; }
+#app .practice-scenario-art { padding-bottom: 76px; }
+@media (max-width: 1050px) { #app .footer-content { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+@media (max-width: 760px) {
+  #app .scrap-school { min-width: 0; }
+  #app .scrap-school strong { font-size: var(--text-caption); }
+  #app .scrap-sticky { max-width: 42%; }
+  #app .scrap-sticky strong { white-space: normal; }
+  #app .crew-card h4 { min-height: 0; }
+}
+@media (max-width: 600px) {
+  #app .footer-content { grid-template-columns: minmax(0, 1fr); }
+  #app .footer-identity { flex-wrap: wrap; }
+  #app .practice-art-caption { position: static; display: block; padding: 0 12px; }
+  #app .practice-scenario-art { flex-wrap: wrap; padding-top: 14px; }
+  #app .practice-shop-drawing { flex-basis: 100%; }
+  #app .practice-art-need { position: static; margin: 8px 10px 0; max-width: 100%; }
+  #app .practice-art-price { position: static; margin: 8px 10px 0 auto; }
+  #app .practice-scenario-art { padding-bottom: 15px; }
 }

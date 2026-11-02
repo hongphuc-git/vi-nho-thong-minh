@@ -1,0 +1,5 @@
+[
+  { "id": "D01", "title": "Design contract for a student scrapbook dossier", "status": "done" },
+  { "id": "D02", "title": "Implement the chapter-based dossier", "status": "done" },
+  { "id": "D03", "title": "Refine source for responsive and accessible presentation", "status": "done" }
+]

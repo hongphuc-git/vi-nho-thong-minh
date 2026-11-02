@@ -12,7 +12,7 @@ import ImagePreview from '@/components/ImagePreview.vue'
   <section id="tom-tat" class="project-summary" aria-labelledby="project-summary-title">
     <header class="summary-heading">
       <p>DỰ ÁN TRONG MỘT PHÚT</p>
-      <h2 id="project-summary-title">Một chiếc ví nhỏ.<br class="summary-mobile-break" /> Một hành trình lớn.</h2>
+      <h2 id="project-summary-title">Từ phân chia tiền<br class="summary-mobile-break" /> đến tự nhìn lại lựa chọn.</h2>
     </header>
 
     <motion.div
@@ -29,7 +29,7 @@ import ImagePreview from '@/components/ImagePreview.vue'
         <div class="summary-idea-copy">
           <p class="idea-eyebrow"><span aria-hidden="true"></span> HỌC TỪ NHỮNG ĐIỀU NHỎ</p>
           <h3>Học cách quản lý tiền từ <em>những lựa chọn nhỏ</em> mỗi ngày.</h3>
-          <p class="idea-description">Một bộ công cụ trực quan giúp học sinh THCS tập chi tiêu, tiết kiệm, đặt mục tiêu và sẻ chia. Kết hợp ví bốn ngăn, sổ thu chi và các tình huống đời thường, với phụ huynh và thầy cô cùng đồng hành.</p>
+          <p class="idea-description">Bốn ngăn ví giúp phân bổ tiền theo mục đích; sổ thu–chi 30 ngày ghi lại việc sử dụng; thẻ tình huống và bảng mục tiêu giúp luyện lựa chọn, lập kế hoạch và tự đánh giá. Các thành phần được dùng cùng nhau trong một quy trình thực hành.</p>
           <ul class="idea-highlights" aria-label="Điểm nổi bật của ý tưởng">
             <li><Coins aria-hidden="true" />Tiền mô phỏng</li>
             <li><NotebookPen aria-hidden="true" />Tình huống đời thường</li>
@@ -54,7 +54,6 @@ import ImagePreview from '@/components/ImagePreview.vue'
               />
             </ImagePreview>
             <figcaption>
-              <span class="photo-caption-marker" aria-hidden="true">01</span>
               <div><strong>Mục tiêu chi tiêu của em</strong><span>Ghi điều muốn làm, lập kế hoạch ngắn hạn và dài hạn.</span></div>
             </figcaption>
           </figure>
@@ -67,37 +66,36 @@ import ImagePreview from '@/components/ImagePreview.vue'
 <style scoped>
 .project-summary { --ink: #543328; width: min(1240px, calc(100% - 80px)); margin-inline: auto; padding-block: 48px 64px; color: var(--ink); scroll-margin-top: 110px; }
 .summary-heading { text-align: center; margin-bottom: 34px; }
-.summary-heading > p { display: inline-block; padding: 7px 15px; border: 1px solid #bfd7e7; border-radius: 7px; background: #e4f1fa; color: #356381; font-size: 14px; letter-spacing: 1px; font-weight: 600; }
+.summary-heading > p { display: inline-block; padding: 7px 15px; border: 1px solid #bfd7e7; border-radius: 7px; background: #e4f1fa; color: #356381; font-size: var(--text-body); letter-spacing: 1px; font-weight: 600; }
 .summary-heading h2 { margin-top: 16px; font-family: 'Lora', Georgia, serif; font-size: clamp(29px, 3.3vw, 43px); line-height: 1.45; font-weight: 600; letter-spacing: -.9px; text-wrap: balance; }
 .summary-mobile-break { display: none; }
 .summary-idea { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 28px clamp(28px, 4vw, 48px); padding: clamp(26px, 3.5vw, 44px); background: linear-gradient(120deg, #fffaf0, #fffdf7 65%, #edf5f9); border: 1px solid #e1d5c2; border-radius: 24px; box-shadow: 0 5px 0 #e8ddcb66, 0 14px 30px #7963440c; color: var(--ink); }
 .summary-idea-copy, .summary-visual { min-width: 0; }
-.idea-eyebrow { display: flex; align-items: center; gap: 9px; font-size: 14px; font-weight: 600; letter-spacing: .7px; line-height: 1.7; color: #5c4633; }
+.idea-eyebrow { display: flex; align-items: center; gap: 9px; font-size: var(--text-body); font-weight: 600; letter-spacing: .7px; line-height: 1.7; color: #5c4633; }
 .idea-eyebrow > span { width: 7px; height: 7px; flex-shrink: 0; border-radius: 50%; background: #7f9eaf; }
 .summary-idea-copy h3 { max-width: 510px; margin-top: 19px; font-family: 'Lora', Georgia, serif; font-size: clamp(28px, 2.7vw, 37px); line-height: 1.45; font-weight: 600; letter-spacing: -.6px; text-wrap: balance; }
 .summary-idea-copy h3 em { color: #396f95; font-weight: 500; text-decoration: underline; text-decoration-color: #f1d58b; text-decoration-thickness: 3px; text-underline-offset: 7px; }
-.idea-description { margin-top: 20px; max-width: 490px; color: #5c4633; font-size: 15px; line-height: 1.9; }
+.idea-description { margin-top: 20px; max-width: 490px; color: #5c4633; font-size: var(--text-body); line-height: 1.9; }
 .idea-highlights { display: flex; flex-wrap: wrap; gap: 12px 18px; margin: 23px 0 0; padding: 0; list-style: none; }
-.idea-highlights li { display: flex; align-items: center; gap: 7px; padding: 8px 10px; border: 1px solid #d4e3ec; border-radius: 8px; background: #edf5fa; color: #5c4633; font-size: 14px; line-height: 1.6; }
+.idea-highlights li { display: flex; align-items: center; gap: 7px; padding: 8px 10px; border: 1px solid #d4e3ec; border-radius: 8px; background: #edf5fa; color: #5c4633; font-size: var(--text-body); line-height: 1.6; }
 .idea-highlights li:nth-child(2) { background: #fff3cf; border-color: #ecdfb6; }
 .idea-highlights li:nth-child(3) { background: #eaf1e1; border-color: #d6e2c7; }
 .idea-highlights svg { width: 17px; height: 17px; flex-shrink: 0; color: #527d98; stroke-width: 1.6; }
 .summary-next-actions { display: flex; flex-direction: column; align-items: flex-start; gap: 9px; margin-top: 28px; }
-.summary-primary-action { min-height: 46px; height: auto; max-width: 100%; gap: 12px; padding: 12px 19px; border-radius: 12px; background: #583023; color: #fffcf5; white-space: normal; text-align: center; font-size: 15px; line-height: 1.6; }
-.summary-secondary-action { min-height: 44px; height: auto; max-width: 100%; gap: 7px; padding: 8px 0; color: #356c91; font-size: 14px; white-space: normal; line-height: 1.6; text-align: left; text-decoration: underline; text-underline-offset: 4px; }
+.summary-primary-action { min-height: 46px; height: auto; max-width: 100%; gap: 12px; padding: 12px 19px; border-radius: 12px; background: #583023; color: #fffcf5; white-space: normal; text-align: center; font-size: var(--text-body); line-height: 1.6; }
+.summary-secondary-action { min-height: 44px; height: auto; max-width: 100%; gap: 7px; padding: 8px 0; color: #356c91; font-size: var(--text-body); white-space: normal; line-height: 1.6; text-align: left; text-decoration: underline; text-underline-offset: 4px; }
 .summary-next-actions svg { width: 16px; height: 16px; flex-shrink: 0; }
 .summary-next-actions a:focus-visible { outline: 3px solid #376e95; outline-offset: 4px; }
 .summary-idea-image { position: relative; margin: 5px 3px 0; padding: 17px 17px 0; background: #e4f0f8; border: 1px solid #c0d7e5; border-radius: 9px; box-shadow: 6px 7px 0 #c9dfea55, 0 7px 17px #5830230c; transform: rotate(-.7deg); }
 .summary-photo-tape { position: absolute; z-index: 1; top: -10px; left: calc(50% - 37px); width: 74px; height: 23px; background: repeating-linear-gradient(45deg, #eacb7eaa 0 6px, #fff7e5cc 6px 12px); transform: rotate(3deg); pointer-events: none; }
 .product-photo-link { border-radius: 4px; }
 .product-photo-link :deep(.image-preview-trigger:focus-visible) { outline: 3px solid #356c91; outline-offset: 4px; }
-.product-photo-link :deep(.image-preview-hint) { font-size: 14px; padding: 8px 11px; color: #5c4633; }
+.product-photo-link :deep(.image-preview-hint) { font-size: var(--text-body); padding: 8px 11px; color: #5c4633; }
 .product-photo-link img { display: block; width: 100%; height: auto; max-height: 420px; aspect-ratio: 1545 / 2000; object-fit: contain; background: #fffdf7; }
 .summary-idea-image figcaption { display: flex; align-items: center; gap: 12px; padding: 18px 0 20px; color: #4c5f6e; }
-.photo-caption-marker { display: grid; place-items: center; width: 34px; height: 39px; flex-shrink: 0; border: 1px solid #dfca91; border-radius: 7px; background: #ffedb7; color: #7b6031; font-family: 'Lora', Georgia, serif; font-size: 15px; }
 .summary-idea-image figcaption > div { display: grid; gap: 4px; min-width: 0; }
-.summary-idea-image figcaption strong { font-family: 'Lora', Georgia, serif; font-size: 15px; line-height: 1.5; font-weight: 600; }
-.summary-idea-image figcaption div > span { font-size: 14px; line-height: 1.7; color: #5c4633; }
+.summary-idea-image figcaption strong { font-family: 'Lora', Georgia, serif; font-size: var(--text-body); line-height: 1.5; font-weight: 600; }
+.summary-idea-image figcaption div > span { font-size: var(--text-body); line-height: 1.7; color: #5c4633; }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) { .summary-primary-action { transition: background-color .2s, transform .2s; } .summary-primary-action:hover { background: #704333; transform: translateY(-2px); } }
 @media (max-width: 1000px) { .project-summary { width: calc(100% - 48px); } .summary-idea { gap: 27px; padding: 28px; } .summary-idea-copy h3 { font-size: 29px; } .idea-highlights { gap: 10px 13px; } }
 @media (max-width: 760px) { .project-summary { width: calc(100% - 32px); padding-block: 32px 42px; } .summary-heading { margin-bottom: 25px; padding-inline: 8px; } .summary-heading h2 { font-size: clamp(27px, 5vw, 35px); } .summary-mobile-break { display: block; } .summary-idea { grid-template-columns: 1fr; gap: 28px; padding: 25px; border-radius: 20px; } .summary-idea-copy h3 { max-width: 540px; font-size: clamp(28px, 5vw, 35px); } .idea-description { max-width: none; } .summary-next-actions { margin-top: 22px; } .summary-idea-image { transform: none; margin-inline: 0; } }
@@ -111,7 +109,6 @@ import ImagePreview from '@/components/ImagePreview.vue'
 .summary-photo-tape { display: none; }
 .product-photo-link, .product-photo-link img { border-radius: 0; background: #fffdf5; }
 .summary-idea-image figcaption { padding: 17px 0 0; border-top: 1px dashed #d7c8b1; margin-top: 14px; }
-.photo-caption-marker { border-radius: 2px; background: #f7e9c5; border-color: #d9c9a7; }
 .idea-highlights li { border: 0; background: #e9f1f6; border-radius: 3px; }
 @media (max-width: 760px) { .summary-idea { padding: 30px 25px; border-radius: 0; } .summary-idea-image { padding: 0; } }
 @media (max-width: 400px) { .summary-idea { padding: 27px 20px; } .summary-idea-image { padding: 0; } }
@@ -126,4 +123,9 @@ import ImagePreview from '@/components/ImagePreview.vue'
 
 .summary-sheet-wrap::before { content: ''; position: absolute; z-index: -1; inset: -9px -11px -12px -11px; background-color: #bddbed; background-image: repeating-linear-gradient(15deg, #ffffff33 0 1px, transparent 1px 4px); mask: url('/images/scrapbook/team-torn-edge.svg') center / 100% 100% no-repeat; transform: rotate(.8deg); pointer-events: none; }
 @media (max-width: 760px) { .summary-sheet-wrap::before { inset: -7px -6px -9px; transform: rotate(.5deg); } }
+.summary-idea-image figcaption { display: block; margin-top: 13px; padding: 15px 3px 4px; border-top: 1px solid #e6dac7; color: #5c4030; }
+.summary-idea-image figcaption > div { gap: 5px; }
+.summary-idea-image figcaption strong { font-size: var(--text-body); font-weight: 600; line-height: 1.6; color: #5c4030; }
+.summary-idea-image figcaption div > span { max-width: 40ch; font-size: var(--text-small); line-height: 1.85; color: #826d56; }
+@media (max-width: 400px) { .summary-idea-image figcaption { padding: 13px 0 3px; } .summary-idea-image figcaption strong { font-size: var(--text-body); } }
 </style>

@@ -29,7 +29,7 @@ const failed = ref(false)
 .image-preview-trigger { position: relative; display: block; width: 100%; height: auto; min-height: 44px; padding: 0; border: 0; border-radius: inherit; background: transparent; white-space: normal; cursor: zoom-in; overflow: hidden; }
 .image-preview-trigger:hover { background: transparent; }
 .image-preview-trigger > img { display: block; width: 100%; height: auto; }
-.image-preview-hint { position: absolute; display: inline-flex; align-items: center; gap: 6px; bottom: 8px; right: 8px; padding: 6px 9px; border: 1px solid #e1d5c3; background: #fffaf1f2; color: #54392c; border-radius: 20px; font-size: 10px; line-height: 1.5; }
+.image-preview-hint { position: absolute; display: inline-flex; align-items: center; gap: 6px; bottom: 8px; right: 8px; padding: 6px 9px; border: 1px solid #e1d5c3; background: #fffaf1f2; color: #54392c; border-radius: 20px; font-size: var(--text-caption); line-height: 1.5; }
 .image-preview-hint svg { width: 14px; height: 14px; }
 .image-preview-full { display: block; width: 100%; max-height: 68svh; object-fit: contain; }
 </style>

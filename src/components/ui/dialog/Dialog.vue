@@ -36,8 +36,9 @@ const emit = defineEmits<{
 .dialog-content { position: fixed; z-index: 101; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(960px, calc(100% - 32px)); max-height: calc(100svh - 40px); display: flex; flex-direction: column; overflow: hidden; border: 1px solid #e5d5bf; border-radius: 22px; background: var(--surface-paper); color: #54392c; box-shadow: 0 24px 80px #1d120d55; }
 .dialog-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; padding: 22px 24px; border-bottom: 1px dashed #ddcfbb; flex-shrink: 0; }
 .dialog-title { font-family: 'Lora', Georgia, serif; font-size: clamp(20px, 3vw, 27px); line-height: 1.4; font-weight: 700; }
-.dialog-description { margin-top: 7px; font-size: 12px; line-height: 1.8; color: #79634d; }
+.dialog-description { margin-top: 7px; font-size: var(--text-small); line-height: 1.8; color: #79634d; }
 .dialog-close { width: 44px; height: 44px; flex-shrink: 0; border: 1px solid #ddcfbb; border-radius: 50%; }
 .dialog-body { min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 24px; }
 @media (max-width: 600px) { .dialog-heading { padding: 18px 16px; gap: 12px; } .dialog-body { padding: 16px; } .dialog-content { width: calc(100% - 20px); max-height: calc(100svh - 24px); border-radius: 17px; } }
+.dialog-description { font-size: var(--text-small); color: #5c4633; }
 </style>

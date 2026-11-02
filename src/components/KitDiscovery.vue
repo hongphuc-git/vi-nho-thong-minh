@@ -41,7 +41,6 @@ const tools = [
 ]
 
 const pageUrl = ref('')
-const localPreview = ref(false)
 const currentGuide = ref('')
 const guideLinks = computed(() => tools.map(item => ({ ...item, url: `${pageUrl.value}#${item.id}` })))
 
@@ -111,7 +110,6 @@ onMounted(() => {
   url.hash = ''
   url.search = ''
   pageUrl.value = url.href
-  localPreview.value = ['localhost', '127.0.0.1', '[::1]'].includes(url.hostname)
   syncGuide()
   window.addEventListener('hashchange', syncGuide)
 })
@@ -147,7 +145,7 @@ onUnmounted(() => window.removeEventListener('hashchange', syncGuide))
           </Card>
         </motion.div>
       </div>
-      <p v-if="localPreview" class="discovery-local-note">Bạn đang xem trên localhost. Mã QR hiện dùng địa chỉ này; để quét bằng điện thoại, hãy mở website bằng địa chỉ mạng truy cập được hoặc tên miền đã triển khai. Bạn vẫn có thể bấm từng thẻ để xem hướng dẫn ngay.</p>
+      <p class="discovery-local-note"><Wallet aria-hidden="true" /><span><strong>Chọn một công cụ, bắt đầu một điều nhỏ.</strong><br />Bấm “Mở hướng dẫn” để đọc ngay, hoặc quét mã QR bằng điện thoại để cùng thực hành.</span></p>
       <p class="discovery-footer"><Star aria-hidden="true" /><span>Tự tay thực hành. Từng bước trưởng thành.</span><Heart aria-hidden="true" /></p>
 
       <Dialog :open="Boolean(selectedGuide)" :title="selectedGuide?.title ?? 'Hướng dẫn sử dụng'" description="Thực hành từng bước cùng Ví nhỏ thông minh. Đóng cửa sổ để trở lại thẻ đang xem." @update:open="updateGuideOpen" @close-auto-focus="restoreGuideFocus">
@@ -163,13 +161,13 @@ onUnmounted(() => window.removeEventListener('hashchange', syncGuide))
 </template>
 
 <style scoped>
-.kit-discovery { position: relative; padding: 72px 0 30px; background-color: var(--paper); background-image: linear-gradient(var(--paper-grid) 1px, transparent 1px), linear-gradient(90deg, var(--paper-grid) 1px, transparent 1px); background-size: 28px 28px; color: #563528; border-top: 14px solid transparent; border-image: repeating-linear-gradient(90deg, #b4daee 0 24px, #fff6e7 24px 48px) 14; }
+.kit-discovery { position: relative; padding: 72px 0 30px; background-color: var(--paper); background-image: linear-gradient(var(--paper-grid) 1px, transparent 1px), linear-gradient(90deg, var(--paper-grid) 1px, transparent 1px); background-size: 28px 28px; color: #563528; border-top: 6px solid transparent; border-image: repeating-linear-gradient(90deg, #d3e5ee 0 24px, #fff6e7 24px 48px) 6; }
 .discovery-shell { width: min(1440px, calc(100% - 80px)); margin-inline: auto; }
 .discovery-heading { position: relative; text-align: center; margin-bottom: 48px; padding-inline: 85px; }
-.discovery-eyebrow { margin-bottom: 16px; color: #3972a0; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; }
+.discovery-eyebrow { margin-bottom: 16px; color: #3972a0; font-size: var(--text-caption); font-weight: 600; letter-spacing: 1.5px; }
 .discovery-heading h2 { font-family: 'Lora', Georgia, serif; font-weight: 700; font-size: clamp(30px, 3.6vw, 52px); line-height: 1.4; color: #532c20; }
 .discovery-heading h2 span { padding-inline: 18px; background: #c4e3f6; border-radius: 26% 8% 18% 6% / 25% 35% 18% 30%; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
-.discovery-heading > p:last-of-type { max-width: 940px; margin: 18px auto 0; font-size: 16px; line-height: 1.8; }
+.discovery-heading > p:last-of-type { max-width: 940px; margin: 18px auto 0; font-size: var(--text-body); line-height: 1.8; }
 .heading-wallet, .heading-calculator { position: absolute; top: 22px; width: 68px; height: 68px; stroke-width: 1.4; }
 .heading-wallet { left: 0; color: #947142; fill: #c4e2f3; transform: rotate(-12deg); }
 .heading-calculator { right: 0; color: #87a964; transform: rotate(18deg); }
@@ -181,7 +179,7 @@ onUnmounted(() => window.removeEventListener('hashchange', syncGuide))
 .discovery-green { --tool-color: #dcebc5; }
 .qr-link { display: grid; place-items: center; width: 192px; max-width: 100%; aspect-ratio: 1; padding: 8px; border-radius: 24px; background: #fff3dd; }
 .qr-link :deep(svg) { display: block; width: 100%; height: auto; }
-.qr-loading { font-size: 12px; color: #776858; }
+.qr-loading { font-size: var(--text-small); color: #776858; }
 .discovery-art { position: relative; isolation: isolate; display: grid; place-items: center; width: 100%; height: 218px; margin-top: 16px; }
 .discovery-blob { position: absolute; z-index: -1; inset: 17% 3% 9%; background: var(--tool-color); border-radius: 48% 40% 45% 35%; transform: rotate(-12deg); }
 .discovery-art img { display: block; max-width: 86%; width: auto; height: auto; max-height: 195px; object-fit: contain; transform: rotate(-5deg); filter: drop-shadow(2px 5px 3px #51332620); }
@@ -189,14 +187,14 @@ onUnmounted(() => window.removeEventListener('hashchange', syncGuide))
 .discovery-pink .discovery-art img { transform: rotate(6deg); }
 .card-doodle { position: absolute; top: 8px; right: 0; color: #e58aae; width: 27px; height: 27px; transform: rotate(14deg); }
 .discovery-blue .card-doodle, .discovery-pink .card-doodle { color: #337bb5; }
-.discovery-card h3 { font-family: 'Lora', Georgia, serif; font-size: clamp(18px, 1.5vw, 23px); font-weight: 700; line-height: 1.5; color: #573323; margin-top: 10px; }
+.discovery-card h3 { font-family: 'Lora', Georgia, serif; font-size: clamp(1.125rem, 1.5vw, 23px); font-weight: 700; line-height: 1.5; color: #573323; margin-top: 10px; }
 .discovery-card h3 span { padding: 3px 10px; background: var(--tool-color); border-radius: 12% 8% 20% 6%; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
-.discovery-description { margin: 15px 0 12px; font-size: 14px; line-height: 1.7; color: #684936; }
-.discovery-link { height: auto; min-height: 44px; margin-top: auto; white-space: normal; gap: 6px; color: #35673d; font-size: 13px; font-weight: 600; }
+.discovery-description { margin: 15px 0 12px; font-size: var(--text-body); line-height: 1.7; color: #684936; }
+.discovery-link { height: auto; min-height: 44px; margin-top: auto; white-space: normal; gap: 6px; color: #35673d; font-size: var(--text-small); font-weight: 600; }
 .discovery-link:hover { background: #edf4e8; color: #214c2d; }
 .discovery-link svg { width: 17px; height: 17px; }
-.discovery-local-note { max-width: 940px; margin: 24px auto 0; padding: 12px 18px; background: #fff3db; border: 1px dashed #d8c49e; border-radius: 12px; font-size: 12px; line-height: 1.8; color: #745c3c; }
-.discovery-footer { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: 32px; padding-top: 22px; border-top: 2px dashed #aacfe5; font-family: 'Lora', Georgia, serif; font-style: italic; color: #356c9a; font-size: 17px; text-align: center; }
+.discovery-local-note { display: flex; align-items: center; justify-content: center; gap: 14px; max-width: 940px; margin: 24px auto 0; padding: 12px 18px; background: #fff3db; border: 1px dashed #d8c49e; border-radius: 12px; font-size: var(--text-small); line-height: 1.8; color: #745c3c; }
+.discovery-footer { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: 32px; padding-top: 22px; border-top: 2px dashed #aacfe5; font-family: 'Lora', Georgia, serif; font-style: italic; color: #356c9a; font-size: var(--text-body); text-align: center; }
 .discovery-footer > svg:last-child { color: #dd91ae; }
 @media (max-width: 1150px) {
   .discovery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
@@ -209,26 +207,26 @@ onUnmounted(() => window.removeEventListener('hashchange', syncGuide))
   .discovery-shell { width: calc(100% - 32px); }
   .discovery-heading { padding-inline: 0; margin-bottom: 28px; }
   .heading-wallet, .heading-calculator { display: none; }
-  .discovery-eyebrow { font-size: 9px; line-height: 1.8; letter-spacing: .8px; }
+  .discovery-eyebrow { font-size: var(--text-caption); line-height: 1.8; letter-spacing: .8px; }
   .discovery-heading h2 { font-size: 30px; }
-  .discovery-heading > p:last-of-type { font-size: 14px; }
+  .discovery-heading > p:last-of-type { font-size: var(--text-body); }
   .discovery-grid { grid-template-columns: 1fr; gap: 20px; }
   .discovery-card { padding: 24px 20px 18px; }
   .discovery-art { height: 230px; }
   .discovery-art img { max-height: 210px; }
-  .discovery-description { font-size: 15px; }
-  .discovery-link { font-size: 14px; }
-  .discovery-footer { font-size: 15px; gap: 10px; }
+  .discovery-description { font-size: var(--text-body); }
+  .discovery-link { font-size: var(--text-body); }
+  .discovery-footer { font-size: var(--text-body); gap: 10px; }
 }
 .discovery-art .image-preview { width: 100%; min-width: 0; }
 .discovery-art :deep(.image-preview-trigger) { display: grid; place-items: center; overflow: visible; }
 .discovery-art :deep(.image-preview-hint) { bottom: 0; right: 5px; }
-.guide-dialog-content > p { color: #72543b; font-size: 15px; line-height: 1.9; }
+.guide-dialog-content > p { color: #72543b; font-size: var(--text-body); line-height: 1.9; }
 .guide-reference-page { max-width: 280px; margin: 0 auto 24px; }
 .guide-dialog-content ol { list-style: none; display: grid; gap: 14px; padding: 0; margin: 22px 0; }
 .guide-dialog-content li { display: flex; align-items: flex-start; gap: 14px; padding: 16px; background: #f0f5f8; border-radius: 14px; }
 .guide-dialog-content li > span { display: grid; place-items: center; width: 30px; height: 30px; flex-shrink: 0; background: #cce3f4; border-radius: 50%; color: #315f84; font-weight: 600; }
-.guide-dialog-content li > p { color: #624a36; font-size: 14px; line-height: 1.9; }
+.guide-dialog-content li > p { color: #624a36; font-size: var(--text-body); line-height: 1.9; }
 .guide-practice-link { min-height: 44px; height: auto; white-space: normal; padding: 12px 18px; }
 .discovery-card { cursor: pointer; transition: box-shadow .2s, border-color .2s; }
 .discovery-card:focus-within { border-color: #81aac6; box-shadow: 0 5px 0 #c4dcea55; }
@@ -239,4 +237,7 @@ onUnmounted(() => window.removeEventListener('hashchange', syncGuide))
   .discovery-art img { transition: transform .25s; }
   .discovery-card:hover .discovery-art img { transform: rotate(0deg) scale(1.03); }
 }
+
+.discovery-local-note > svg { width: 30px; height: 30px; flex-shrink: 0; color: #779266; stroke-width: 1.5; }
+.discovery-local-note strong { font-family: 'Lora', Georgia, serif; font-size: var(--text-body); font-weight: 500; }
 </style>

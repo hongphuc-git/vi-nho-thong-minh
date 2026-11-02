@@ -19,7 +19,7 @@ import { Send, Heart, Star, Pencil } from '@lucide/vue'
 .summary-art { position: absolute; inset: 0; pointer-events: none; z-index: -1; }
 .leaf-corner { position: absolute; left: -50px; top: 22px; width: 85px; height: 145px; transform: rotate(-12deg); }
 .plane-note { position: absolute; right: -15px; top: -20px; width: 168px; color: #8a8c9e; transform: rotate(7deg); }
-.plane-note p { font-family: 'Lora', Georgia, serif; font-style: italic; font-size: 11px; line-height: 1.7; text-align: right; padding-right: 36px; }
+.plane-note p { font-family: 'Lora', Georgia, serif; font-style: italic; font-size: var(--text-caption); line-height: 1.7; text-align: right; padding-right: 36px; }
 .plane-note > svg:first-of-type { position: absolute; right: -3px; top: 6px; width: 29px; height: 29px; color: #6991b4; stroke-width: 1; fill: #d9eafa; }
 .plane-note > svg:last-of-type { width: 105px; height: 35px; fill: none; stroke: #87a7c4; stroke-width: 1.2; stroke-dasharray: 4 5; margin-left: 25px; }
 .art-heart { position: absolute; left: -24px; top: 255px; width: 25px; height: 25px; color: #c47691; stroke-width: 1.4; transform: rotate(-20deg); }
