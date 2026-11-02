@@ -8,12 +8,14 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Dialog } from '@/components/ui/dialog'
 import ImagePreview from '@/components/ImagePreview.vue'
+import ChalkboardGuide from '@/components/ChalkboardGuide.vue'
 
 const tools = [
   {
     id: 'huong-dan-vi', title: 'Ví 4 ngăn', color: 'blue', image: publicAsset('/images/learning-kit/wallet-pastel.png?v=20261101'),
     description: 'Học cách phân bổ tiền hợp lý.',
     intro: 'Chuẩn bị một khoản tiền mô phỏng và thử phân chia theo nhu cầu của em.',
+    titles: ['Làm quen bốn ngăn ví', 'Nghĩ xem điều gì cần thiết', 'Thử chia khoản tiền', 'Linh hoạt điều chỉnh'],
     steps: ['Nhận biết bốn ngăn: chi tiêu cần thiết, tiết kiệm, mục tiêu cá nhân và chia sẻ.', 'Xác định các khoản cần thiết trước, sau đó cân nhắc khoản để dành, mục tiêu và chia sẻ.', 'Chia tiền vào các ngăn và kiểm tra tổng không vượt số tiền đang có.', 'Khi có khoản chi phát sinh, điều chỉnh và giải thích lý do. Không có một tỷ lệ chia cố định cho tất cả.'],
     link: '#trai-nghiem', action: 'Thử chia tiền mô phỏng',
   },
@@ -21,6 +23,7 @@ const tools = [
     id: 'huong-dan-so', title: 'Sổ thu–chi 30 ngày', color: 'yellow', image: publicAsset('/images/learning-kit/daily-journal.png'),
     description: 'Ghi chép và theo dõi chi tiêu mỗi ngày.',
     intro: 'Một vài dòng ghi chép giúp em nhìn lại những lựa chọn của mình.',
+    titles: ['Ghi lại một ngày', 'Tính khoản tiền còn lại', 'Nhìn lại mỗi tuần', 'Nuôi thói quen nhỏ'],
     steps: ['Ghi ngày, khoản nhận vào, khoản chi ra và lý do của từng khoản.', 'Tính số dư bằng số dư trước đó cộng khoản thu và trừ khoản chi.', 'Cuối tuần, xem lại khoản nào cần thiết và khoản nào có thể điều chỉnh.', 'Tiếp tục thực hành theo lộ trình 30 ngày đề xuất. Có thể ghi bằng tiền mô phỏng; không cần công khai thông tin tài chính cá nhân.'],
     link: '#hanh-trinh', action: 'Xem hành trình 30 ngày',
   },
@@ -28,6 +31,7 @@ const tools = [
     id: 'huong-dan-the', title: 'Thẻ tình huống', color: 'pink', image: publicAsset('/images/learning-kit/situation-card.png'),
     description: 'Luyện quyết định tài chính qua các tình huống.',
     intro: 'Có thể chơi cùng bạn bè, phụ huynh hoặc thầy cô.',
+    titles: ['Chọn một thẻ', 'Nghĩ xem điều gì cần thiết', 'Thử một cách giải quyết', 'Cùng nhau trao đổi'],
     steps: ['Chọn một thẻ, đọc tình huống và xác định số tiền mô phỏng đang có.', 'Phân biệt nhu cầu cần thiết với điều em mong muốn.', 'Đề xuất cách xử lý, tính toán số tiền và giải thích lựa chọn.', 'Cùng trao đổi những phương án khác hợp lý; cân nhắc lại khi có thông tin mới.'],
     link: '#trai-nghiem', action: 'Thử một tình huống',
   },
@@ -35,6 +39,7 @@ const tools = [
     id: 'huong-dan-muc-tieu', title: 'Bảng mục tiêu cá nhân', color: 'green', image: publicAsset('/images/learning-kit/personal-goal.png'),
     description: 'Lập kế hoạch tiết kiệm và theo dõi mục tiêu.',
     intro: 'Chọn một mục tiêu phù hợp với điều kiện của em và chia thành những bước nhỏ.',
+    titles: ['Chọn một mục tiêu', 'Tính xem cần bao nhiêu', 'Lên kế hoạch từng tuần', 'Theo dõi và điều chỉnh'],
     steps: ['Ghi mục tiêu, lý do lựa chọn và thời hạn em dự định hoàn thành.', 'Xác định số tiền cần có, số đã dành được và số còn thiếu.', 'Lập kế hoạch theo tuần bằng khoản để dành phù hợp; không bỏ qua nhu cầu thiết yếu.', 'Theo dõi tiến độ và điều chỉnh số tiền hoặc thời hạn nếu hoàn cảnh thay đổi.'],
     link: '#hanh-trinh', action: 'Khám phá lộ trình thực hành',
   },
@@ -150,13 +155,10 @@ onUnmounted(() => window.removeEventListener('hashchange', syncGuide))
       <p class="discovery-local-note"><Wallet aria-hidden="true" /><span><strong>Chọn một công cụ, bắt đầu một điều nhỏ.</strong><br />Bấm “Mở hướng dẫn” để đọc ngay, hoặc quét mã QR bằng điện thoại để cùng thực hành.</span></p>
       <p class="discovery-footer"><Star aria-hidden="true" /><span>Tự tay thực hành. Từng bước trưởng thành.</span><Heart aria-hidden="true" /></p>
 
-      <Dialog :open="Boolean(selectedGuide)" :title="selectedGuide?.title ?? 'Hướng dẫn sử dụng'" description="Thực hành từng bước cùng Ví nhỏ thông minh. Đóng cửa sổ để trở lại thẻ đang xem." @update:open="updateGuideOpen" @close-auto-focus="restoreGuideFocus">
-        <div v-if="selectedGuide" class="guide-dialog-content">
+      <Dialog :open="Boolean(selectedGuide)" appearance="chalkboard" :title="selectedGuide?.title ?? 'Hướng dẫn sử dụng'" :description="selectedGuide?.intro ?? 'Thực hành từng bước cùng Ví nhỏ thông minh.'" @update:open="updateGuideOpen" @close-auto-focus="restoreGuideFocus">
+        <ChalkboardGuide v-if="selectedGuide" :key="selectedGuide.id" :titles="selectedGuide.titles" :steps="selectedGuide.steps" :link="selectedGuide.link" :action="selectedGuide.action" @practice="followPracticeLink">
           <ImagePreview v-if="selectedGuide.id === 'huong-dan-vi'" class="guide-reference-page" :src="publicAsset('/images/learning-kit/pocket-guide.png')" alt="Trang học liệu giải thích ý nghĩa bốn ngăn ví" />
-          <p>{{ selectedGuide.intro }}</p>
-          <ol><li v-for="(step, index) in selectedGuide.steps" :key="step"><span aria-hidden="true">{{ index + 1 }}</span><p>{{ step }}</p></li></ol>
-          <Button as-child class="guide-practice-link"><a :href="selectedGuide.link" @click="followPracticeLink(selectedGuide.link)">{{ selectedGuide.action }} <ArrowRight aria-hidden="true" /></a></Button>
-        </div>
+        </ChalkboardGuide>
       </Dialog>
     </div>
   </section>
@@ -228,13 +230,7 @@ onUnmounted(() => window.removeEventListener('hashchange', syncGuide))
 .discovery-art .image-preview { width: 100%; min-width: 0; }
 .discovery-art :deep(.image-preview-trigger) { display: grid; place-items: center; overflow: visible; }
 .discovery-art :deep(.image-preview-hint) { bottom: 0; right: 5px; }
-.guide-dialog-content > p { color: #72543b; font-size: var(--text-body); line-height: 1.9; }
 .guide-reference-page { max-width: 280px; margin: 0 auto 24px; }
-.guide-dialog-content ol { list-style: none; display: grid; gap: 14px; padding: 0; margin: 22px 0; }
-.guide-dialog-content li { display: flex; align-items: flex-start; gap: 14px; padding: 16px; background: #f0f5f8; border-radius: 14px; }
-.guide-dialog-content li > span { display: grid; place-items: center; width: 30px; height: 30px; flex-shrink: 0; background: #cce3f4; border-radius: 50%; color: #315f84; font-weight: 600; }
-.guide-dialog-content li > p { color: #624a36; font-size: var(--text-body); line-height: 1.9; }
-.guide-practice-link { min-height: 44px; height: auto; white-space: normal; padding: 12px 18px; }
 .discovery-card { cursor: pointer; }
 .discovery-card:focus-within { outline: 3px solid #3972a0; outline-offset: 4px; }
 .qr-link:focus-visible { outline: 3px solid #3972a0; outline-offset: 3px; }
