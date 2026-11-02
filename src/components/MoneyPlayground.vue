@@ -5,6 +5,7 @@ import { ArrowRight, Check, Coins, Heart, Lightbulb, Minus, Plus, RotateCcw, Shi
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { walletPockets } from '@/data/walletPockets'
+import { firstScenario, practiceScenarios, type PracticeScenario } from '@/data/practiceScenarios'
 import { publicAsset } from '@/lib/publicAsset'
 
 const startingAmounts = [40, 25, 25, 10]
@@ -17,12 +18,14 @@ const enlargedPocket = ref<string | null>(null)
 const total = computed(() => allocations.value.reduce((sum, item) => sum + item.amount, 0))
 const remaining = computed(() => 100 - total.value)
 const currency = new Intl.NumberFormat('vi-VN')
-const answers = [
-  { id: 'want', text: 'Mua hộp bút mới vì mình rất thích.', feedback: 'Thích một món đồ là điều bình thường. Nhưng hộp bút cũ vẫn dùng tốt, còn vở và bút đang thiếu. Em thử cân nhắc điều cần trước nhé.', correct: false },
-  { id: 'need', text: 'Mua đủ vở, bút cần thiết; giữ lại phần còn dư.', feedback: 'Một lựa chọn có cân nhắc! Ưu tiên đồ dùng đang thiếu, tiếp tục dùng hộp bút cũ và để dành phần tiền còn lại cho mục tiêu khác.', correct: true },
-  { id: 'save', text: 'Giữ lại toàn bộ, chưa mua gì cả.', feedback: 'Tiết kiệm là tốt, nhưng cũng cần đáp ứng việc học. Em có thể mua những đồ dùng thực sự cần, rồi tiết kiệm phần còn lại.', correct: false },
-]
-const feedback = computed(() => answers.find(answer => answer.id === selectedAnswer.value))
+const scenario = ref(firstScenario)
+const answers = computed(() => scenario.value.answers)
+const feedback = computed(() => answers.value.find(answer => answer.id === selectedAnswer.value))
+
+function selectScenario(item: PracticeScenario) {
+  scenario.value = item
+  selectedAnswer.value = null
+}
 const allocationSummary = computed(() => allocations.value.map(item => `${item.label}: ${currency.format(item.amount * 1000)} đồng`).join(', '))
 
 function setAmount(id: string, amount: number) {
@@ -83,8 +86,10 @@ function focusPocket(id: string) {
 
         <div class="practice-scenario-stack">
           <Card class="practice-scenario">
-            <header class="practice-scenario-heading"><span><Sparkles aria-hidden="true" /> THẺ TÌNH HUỐNG</span><span>TH01</span></header>
-            <div class="practice-scenario-art" aria-hidden="true">
+            <header class="practice-scenario-heading"><span><Sparkles aria-hidden="true" /> THẺ TÌNH HUỐNG</span><span>{{ scenario.id }}</span></header>
+            <div class="scenario-picker" role="group" aria-label="Chọn một trong năm tình huống"><Button v-for="item in practiceScenarios" :key="item.id" variant="ghost" type="button" :aria-pressed="scenario.id === item.id" :aria-label="`${item.id}: ${item.title}`" :aria-controls="'practice-scenario-content'" @click="selectScenario(item)">{{ item.id }}</Button></div>
+            <div id="practice-scenario-content" :key="scenario.id">
+            <div v-if="scenario.id === 'TH01'" class="practice-scenario-art" aria-hidden="true">
               <span class="practice-art-caption">Một vòng qua cửa hàng nhỏ…</span>
               <svg class="practice-shop-drawing" viewBox="0 0 480 190" fill="none">
                 <ellipse cx="240" cy="160" rx="202" ry="15" fill="#ddcfb5" opacity=".3" />
@@ -99,23 +104,34 @@ function focusPocket(id: string) {
               <span class="practice-art-need">Ưu tiên đồ dùng cần thiết</span>
               <span class="practice-art-price">45.000đ<span>HỘP BÚT MỚI</span></span>
             </div>
-            <h3>Hộp bút mới<br /><em>hay đồ dùng cần thiết?</em></h3>
-            <p class="practice-scenario-story">Em có <strong>100.000đ</strong> để chuẩn bị đồ dùng học tập. Cửa hàng có hộp bút mới giá <strong>45.000đ</strong>, trong khi hộp bút cũ vẫn dùng tốt nhưng em còn thiếu vở, bút.</p>
-            <p class="practice-scenario-question">Em sẽ chi tiêu thế nào?</p>
+            <div v-else class="scenario-illustration" aria-hidden="true"><component :is="scenario.icon" /><span>{{ scenario.skill }}</span><div><span v-for="fact in scenario.facts" :key="fact">{{ fact }}</span></div></div>
+            <h3>{{ scenario.title }}<br /><em>{{ scenario.subtitle }}</em></h3>
+            <p class="practice-scenario-story">{{ scenario.story }}</p>
+            <p class="practice-scenario-question">{{ scenario.question }}</p>
             <div class="practice-answers" role="group" aria-label="Chọn cách xử lý tình huống">
               <motion.div v-for="(answer, index) in answers" :key="answer.id" :while-hover="{ x: 3 }" :transition="{ type: 'spring', stiffness: 300, damping: 24 }"><Button variant="outline" type="button" class="practice-answer" :class="{ 'practice-answer-selected': selectedAnswer === answer.id }" :aria-pressed="selectedAnswer === answer.id" @click="selectedAnswer = answer.id"><span class="practice-answer-letter" aria-hidden="true">{{ String.fromCharCode(65 + index) }}</span><span>{{ answer.text }}</span><Check v-if="selectedAnswer === answer.id" aria-hidden="true" /><ArrowRight v-else aria-hidden="true" /></Button></motion.div>
             </div>
-            <div class="practice-feedback-region" aria-live="polite" aria-atomic="true"><motion.div v-if="feedback" :key="feedback.id" class="practice-feedback" :class="{ 'practice-feedback-positive': feedback.correct }" :initial="{ opacity: 0, y: 6 }" :animate="{ opacity: 1, y: 0 }" :transition="{ duration: .2 }"><Lightbulb aria-hidden="true" /><div><strong>{{ feedback.correct ? 'Một lựa chọn có cân nhắc!' : 'Mình cùng nghĩ thêm nhé.' }}</strong><p>{{ feedback.feedback }}</p></div></motion.div><p v-else class="practice-answer-hint">Chọn một phương án để mở lời gợi ý từ chiếc ví nhỏ.</p></div>
+            <div class="practice-feedback-region" aria-live="polite" aria-atomic="true"><motion.div v-if="feedback" :key="`${scenario.id}-${feedback.id}`" class="practice-feedback" :class="{ 'practice-feedback-positive': feedback.correct }" :initial="{ opacity: 0, y: 6 }" :animate="{ opacity: 1, y: 0 }" :transition="{ duration: .2 }"><Lightbulb aria-hidden="true" /><div><strong>{{ feedback.correct ? 'Một lựa chọn có cân nhắc!' : 'Mình cùng nghĩ thêm nhé.' }}</strong><p>{{ feedback.feedback }}</p></div></motion.div><p v-else class="practice-answer-hint">Chọn một phương án để mở lời gợi ý từ chiếc ví nhỏ.</p></div>
+            </div>
             <p class="practice-handnote"><Heart aria-hidden="true" /> Học từ lựa chọn, lớn lên từng ngày.</p>
           </Card>
         </div>
       </div>
-      <p class="practice-privacy"><ShieldCheck aria-hidden="true" /><span>Minh họa từ tình huống TH01 · Tự do thử phân bổ tiền, không có tỷ lệ cố định · Không gửi hoặc lưu câu trả lời · Không thay thế bài đánh giá trước–sau DGA/DGB</span></p>
+      <p class="practice-privacy"><ShieldCheck aria-hidden="true" /><span>5 tình huống TH01–TH05 theo hồ sơ dự án · Lựa chọn và lời gợi ý được biên tập cho web · Tự do thử phân bổ tiền, không có tỷ lệ cố định · Không gửi hoặc lưu câu trả lời · Không thay thế bài đánh giá trước–sau DGA/DGB</span></p>
     </div>
   </section>
 </template>
 
 <style scoped>
+.scenario-picker { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 18px; }
+.scenario-picker button { flex: 1; min-width: 62px; min-height: 44px; height: auto; padding: 8px; border: 1px solid #d9cfbb; border-radius: 10px; background: #fffaf0; color: #6b5140; font-size: var(--text-small); }
+.scenario-picker button[aria-pressed='true'] { background: #e0e9d5; border-color: #91a47b; color: #384e2b; box-shadow: inset 0 -3px #91a47b44; }
+.scenario-picker button:focus-visible { outline: 3px solid #3972a0; outline-offset: 3px; }
+.scenario-illustration { display: grid; justify-items: center; gap: 14px; margin: 20px 0 24px; padding: 24px 16px; border: 1px solid #d5d9bd; border-radius: 16px; background: #edf1e2; color: #536845; text-align: center; }
+.scenario-illustration > svg { width: 64px; height: 64px; stroke-width: 1.3; }
+.scenario-illustration > span { font: 500 20px/1.5 'Lora', Georgia, serif; }
+.scenario-illustration > div { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.scenario-illustration > div > span { padding: 5px 10px; background: #fffcf3; border-radius: 8px; color: #66513a; font-size: var(--text-small); }
 .practice-section { position: relative; padding: 42px 0 38px; color: #56392b; background: transparent; }
 .practice-section-divider { display: flex; align-items: center; gap: 20px; width: min(1100px, calc(100% - 80px)); margin: 0 auto 40px; }
 .practice-section-divider > span:first-child, .practice-section-divider > span:last-child { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, #be859c80); }
