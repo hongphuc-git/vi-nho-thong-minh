@@ -1,17 +1,18 @@
 <script setup lang="ts">
-import type { Component } from 'vue'
 import { ref } from 'vue'
+import type { Component } from 'vue'
 import { motion } from 'motion-v'
-import { ChevronDown, Grid2X2, Users, Wrench, Lightbulb, Coins, Megaphone } from '@lucide/vue'
+import { ChevronDown, Handshake, Settings, Gem, Users, UserRound, Database, Truck, Receipt, ChartColumn, Lightbulb, Pencil, Ruler, Star, Sparkles, Coins, Send } from '@lucide/vue'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { collapseFromButton, returnToCollapsedHeading } from '@/lib/collapse'
 import { canvasBlocks, projectTopics } from '@/data/projectContent'
 
 interface Chapter {
+  decoration: Component
+  detailDecoration: Component
   title: string
   intro: string
-  icon: Component
   accent: string
   ink: string
   topics: { id: string; hint: string }[]
@@ -20,8 +21,9 @@ interface Chapter {
 const chapterDefinitions: Chapter[] = [
   {
     title: 'Tính cần thiết',
+    decoration: Lightbulb, detailDecoration: Sparkles,
     intro: 'Bắt đầu từ nhu cầu và người sẽ sử dụng.',
-    icon: Users, accent: 'var(--blue)', ink: '#305d83',
+    accent: 'var(--blue)', ink: '#305d83',
     topics: [
       { id: 'tinh-trang', hint: 'Mẫu hiện tại và những việc cần tiếp tục.' },
       { id: 'muc-tieu', hint: 'Kỹ năng muốn hỗ trợ và hướng phát triển.' },
@@ -34,8 +36,9 @@ const chapterDefinitions: Chapter[] = [
   },
   {
     title: 'Tính khả thi',
+    decoration: Pencil, detailDecoration: Ruler,
     intro: 'Tìm hiểu cách làm, chi phí và điều cần cải thiện.',
-    icon: Wrench, accent: 'var(--yellow)', ink: '#73551f',
+    accent: 'var(--yellow)', ink: '#73551f',
     topics: [
       { id: 'san-xuat', hint: 'Từ học liệu đến gia công và kiểm tra.' },
       { id: 'gia-thanh', hint: 'Các khoản dự toán và chi phí còn thiếu.' },
@@ -45,8 +48,9 @@ const chapterDefinitions: Chapter[] = [
   },
   {
     title: 'Tính độc đáo, sáng tạo',
+    decoration: Star, detailDecoration: Sparkles,
     intro: 'Xem điểm sáng tạo và kế hoạch đánh giá trải nghiệm.',
-    icon: Lightbulb, accent: 'var(--pink)', ink: '#80455e',
+    accent: 'var(--pink)', ink: '#80455e',
     topics: [
       { id: 'sang-tao', hint: 'Cách kết hợp ví, học liệu và hoạt động.' },
       { id: 'kiem-chung', hint: 'Kế hoạch trải nghiệm và đánh giá trước – sau.' },
@@ -54,8 +58,9 @@ const chapterDefinitions: Chapter[] = [
   },
   {
     title: 'Kết quả tiềm năng',
+    decoration: Coins, detailDecoration: ChartColumn,
     intro: 'Đọc các giả định tài chính và kế hoạch triển khai.',
-    icon: Coins, accent: 'var(--sage)', ink: '#49613b',
+    accent: 'var(--sage)', ink: '#49613b',
     topics: [
       { id: 'nguon-thu', hint: 'Vốn góp và các nguồn thu dự kiến.' },
       { id: 'doanh-thu', hint: 'Phân biệt phương án cơ sở và mở rộng.' },
@@ -65,8 +70,9 @@ const chapterDefinitions: Chapter[] = [
   },
   {
     title: 'Các kênh truyền thông',
+    decoration: Send, detailDecoration: Sparkles,
     intro: 'Tìm cách giới thiệu sản phẩm đến người quan tâm.',
-    icon: Megaphone, accent: 'var(--blue)', ink: '#305d83',
+    accent: 'var(--blue)', ink: '#305d83',
     topics: [{ id: 'truyen-thong', hint: 'Thông điệp, kênh giới thiệu và phản hồi.' }],
   },
 ]
@@ -81,7 +87,7 @@ const chapters = chapterDefinitions.map((chapter, index) => ({
   }),
 }))
 
-const openChapters = ref(chapters.map(chapter => chapter.id))
+const openChapters = ref<string[]>(['chuong-1'])
 
 function toggleChapter(id: string) {
   openChapters.value = openChapters.value.includes(id)
@@ -89,26 +95,25 @@ function toggleChapter(id: string) {
     : [...openChapters.value, id]
 }
 
-function openChapter(id: string) {
-  if (!openChapters.value.includes(id)) openChapters.value.push(id)
-}
+const canvasPreview = [
+  { title: 'Đối tác', icon: Handshake },
+  { title: 'Hoạt động', icon: Settings },
+  { title: 'Giá trị', icon: Gem },
+  { title: 'Quan hệ', icon: Users },
+  { title: 'Khách hàng', icon: UserRound },
+  { title: 'Nguồn lực', icon: Database },
+  { title: 'Phân phối', icon: Truck },
+  { title: 'Chi phí', icon: Receipt },
+  { title: 'Doanh thu', icon: ChartColumn },
+]
 </script>
 
 <template>
   <section id="ho-so" class="project-content" aria-labelledby="project-content-title">
     <header class="folder-heading">
-      <div class="folder-heading-copy">
-        <span class="folder-label">GÓC HỒ SƠ · VÍ NHỎ THÔNG MINH</span>
-        <h2 id="project-content-title">Một ý tưởng nhỏ.<br /><em>Một kế hoạch rõ ràng.</em></h2>
-        <p>Từ nhu cầu đến cách làm và nguồn lực. Cùng mở từng trang để hiểu thêm về dự án.</p>
-      </div>
-      <aside class="folder-reading-note" aria-label="Cách đọc hồ sơ">
-        <span class="reading-note-tape" aria-hidden="true"></span>
-        <Grid2X2 aria-hidden="true" />
-        <strong>Đọc theo điều bạn quan tâm</strong>
-        <p>Chọn chương để đến nhanh.<br />Bấm dấu + để mở nội dung.</p>
-        <span>Tóm lược Phần III · Hồ sơ 01.11.2026</span>
-      </aside>
+      <span class="folder-label">HỒ SƠ DỰ ÁN</span>
+      <h2 id="project-content-title">Từ ý tưởng đến <em>kế hoạch.</em></h2>
+      <p>Cùng mở từng trang để hiểu thêm về dự án.</p>
     </header>
 
     <motion.div class="folder-reveal"
@@ -116,17 +121,21 @@ function openChapter(id: string) {
       :in-view-options="{ once: true }" :transition="{ duration: 0.4 }"
     >
       <Card class="canvas-folder">
+        <span class="paper-pin pin-left" aria-hidden="true"></span>
+        <span class="paper-pin pin-right" aria-hidden="true"></span>
+        <span class="paper-fold" aria-hidden="true"></span>
         <details>
           <summary class="canvas-summary" @click="returnToCollapsedHeading">
             <span class="canvas-cover">
               <span class="canvas-kicker">BỨC TRANH TỔNG THỂ</span>
               <strong>9 mảnh ghép, một mô hình.</strong>
-              <span class="canvas-subtitle">Business Model Canvas · Giá trị, khách hàng và nguồn lực của dự án.</span>
-              <span class="canvas-open-label">Mở mô hình <ChevronDown aria-hidden="true" /></span>
+              <span class="canvas-subtitle">Giá trị · Khách hàng · Nguồn lực</span>
+              
             </span>
               <span class="canvas-preview" aria-hidden="true">
-                <span v-for="(block, index) in canvasBlocks" :key="block.title">{{ String(index + 1).padStart(2, '0') }}</span>
+                <span v-for="block in canvasPreview" :key="block.title"><component :is="block.icon" />{{ block.title }}</span>
               </span>
+            <span class="canvas-arrow" aria-hidden="true"><ChevronDown /></span>
           </summary>
           <div class="canvas-content">
             <div class="business-canvas">
@@ -153,36 +162,34 @@ function openChapter(id: string) {
     </motion.div>
 
     <div class="folder-layout">
-      <nav class="chapter-index" aria-label="Mục lục năm chương hồ sơ">
-        <p>ĐI ĐẾN CHƯƠNG</p>
-        <ol>
-          <li v-for="chapter in chapters" :key="chapter.id" :style="{ '--chapter-accent': chapter.accent, '--chapter-ink': chapter.ink }">
-            <a :href="`#${chapter.id}`" @click="openChapter(chapter.id)"><span>{{ chapter.number }}</span>{{ chapter.title }}</a>
-          </li>
-        </ol>
-      </nav>
       <div class="chapter-papers">
         <motion.div v-for="chapter in chapters" :key="chapter.id" class="folder-reveal"
-          :initial="{ opacity: 0, y: 18, clipPath: 'inset(0px 0px 65% 0px)' }"
+          :initial="{ opacity: 0, y: 18, clipPath: 'inset(-24px -24px -24px -24px)' }"
           :while-in-view="{ opacity: 1, y: 0, clipPath: 'inset(-24px -24px -24px -24px)' }"
           :in-view-options="{ once: true, amount: 0.15 }" :transition="{ duration: 0.65, ease: 'easeOut' }"
         >
-          <Card class="chapter-paper" :style="{ '--chapter-accent': chapter.accent, '--chapter-ink': chapter.ink }">
-            <span class="paper-roll paper-roll-top" aria-hidden="true"></span>
+          <Card class="chapter-paper" :class="{ 'chapter-paper-open': openChapters.includes(chapter.id) }" :style="{ '--chapter-accent': chapter.accent, '--chapter-ink': chapter.ink }">
+            <span class="paper-pin pin-right" aria-hidden="true"></span><span class="paper-fold" aria-hidden="true"></span>
             <section :id="chapter.id" class="chapter-sheet" :aria-labelledby="`${chapter.id}-title`">
               <header class="chapter-heading">
                 <span class="chapter-number" aria-hidden="true">{{ chapter.number }}</span>
-                <div><span class="chapter-eyebrow">TRANG HỒ SƠ / {{ chapter.number }}</span><h3 :id="`${chapter.id}-title`">{{ chapter.title }}</h3><p>{{ chapter.intro }}</p></div>
-                <component :is="chapter.icon" class="chapter-icon" aria-hidden="true" />
+                <div><h3 :id="`${chapter.id}-title`">{{ chapter.title }}</h3><p>{{ chapter.intro }}</p></div>
+                <span class="chapter-doodle" aria-hidden="true">
+                  <span class="doodle-wash"></span>
+                  <component :is="chapter.decoration" class="doodle-main" />
+                  <component :is="chapter.detailDecoration" class="doodle-detail" />
+                  <span class="doodle-dash"></span>
+                </span>
                 <Button type="button" variant="outline" class="chapter-roll-button" :aria-label="`${openChapters.includes(chapter.id) ? 'Thu gọn' : 'Mở'} chương ${chapter.number}: ${chapter.title}`" :title="openChapters.includes(chapter.id) ? 'Thu gọn trang giấy' : 'Mở trang giấy'" :aria-expanded="openChapters.includes(chapter.id)" :aria-controls="`${chapter.id}-body`" @click="toggleChapter(chapter.id)">
                   <ChevronDown aria-hidden="true" />
                 </Button>
               </header>
-              <div v-show="openChapters.includes(chapter.id)" :id="`${chapter.id}-body`" class="chapter-body">
+              <div :id="`${chapter.id}-body`" class="chapter-body" :inert="!openChapters.includes(chapter.id)" :aria-hidden="!openChapters.includes(chapter.id)">
+              <div class="chapter-body-inner">
               <div class="chapter-scroll" data-collapse-scroll role="region" :aria-labelledby="`${chapter.id}-title`" :aria-describedby="`${chapter.id}-scroll-hint`" tabindex="0">
-              <details v-for="topic in chapter.topics" :id="`noi-dung-${topic.id}`" :key="topic.id" class="folder-topic">
+              <details v-for="topic in chapter.topics" :id="`noi-dung-${topic.id}`" :key="topic.id" class="folder-topic" :open="topic.id === 'tinh-trang'">
                 <summary @click="returnToCollapsedHeading">
-                  <span class="topic-heading"><strong>{{ topic.title }}</strong><span>{{ topic.hint }}</span></span>
+                  <span class="topic-heading"><strong>{{ topic.title }}</strong></span>
                   <span class="topic-toggle" aria-hidden="true"></span>
                 </summary>
           <div class="content-topic-body">
@@ -214,8 +221,8 @@ function openChapter(id: string) {
               </div>
               <footer class="chapter-sheet-footer"><span :id="`${chapter.id}-scroll-hint`">Mở mục để đọc · Cuộn trong trang giấy khi nội dung dài</span><span aria-hidden="true">{{ chapter.number }} / 05</span></footer>
               </div>
+              </div>
             </section>
-            <span class="paper-roll paper-roll-bottom" aria-hidden="true"></span>
           </Card>
         </motion.div>
       </div>
@@ -229,37 +236,43 @@ function openChapter(id: string) {
 .project-content, .project-content section, details, summary { scroll-margin-top: 130px; }
 .folder-reveal, .folder-layout, .chapter-papers { min-width: 0; }
 .project-content [aria-hidden='true'] { pointer-events: none; }
-.folder-heading { display: grid; grid-template-columns: minmax(0, 1fr) 280px; align-items: center; gap: 48px; padding: 0 16px 40px; }
-.folder-label { color: #396884; font-size: 12px; font-weight: 600; letter-spacing: 1.4px; line-height: 1.8; }
-.folder-heading h2 { margin-top: 14px; font: 700 clamp(30px, 3.3vw, 43px)/1.4 'Lora', Georgia, serif; letter-spacing: -.8px; }
-.folder-heading h2 em { font-weight: 500; color: #39779f; }
-.folder-heading-copy > p { max-width: 560px; margin-top: 16px; font-size: 16px; line-height: 1.85; }
-.folder-reading-note { position: relative; padding: 25px 24px 20px; background: #fff2c9; border: 1px solid #e7d6a3; box-shadow: 3px 4px 0 #b89c6020; transform: rotate(2deg); }
-.reading-note-tape { position: absolute; width: 76px; height: 22px; left: calc(50% - 38px); top: -11px; background: repeating-linear-gradient(90deg, #e6b3c3aa 0 5px, #fce5eccc 5px 10px); transform: rotate(-4deg); }
-.folder-reading-note > svg { width: 22px; height: 22px; margin-bottom: 12px; color: #88682d; }
-.folder-reading-note strong { display: block; font: 600 17px/1.6 'Lora', Georgia, serif; }
-.folder-reading-note p { font-size: 14px; line-height: 1.8; margin-top: 7px; }
-.folder-reading-note > span:last-child { display: block; margin-top: 15px; padding-top: 12px; border-top: 1px dashed #d8c58f; font-size: 12px; line-height: 1.7; }
-.canvas-folder { padding: 0; border: 1px solid #c7dce5; border-radius: 4px 18px 4px 4px; background: #f4f9fa; box-shadow: 0 5px 0 #bfd4de4d; color: inherit; }
+.folder-heading { text-align: center; padding: 0 10px 38px; }
+.folder-label { display: inline-flex; align-items: center; gap: 16px; color: #70503d; font-size: 14px; letter-spacing: 2px; }
+.folder-label::before, .folder-label::after { content: ''; width: 42px; border-top: 1px solid #c7a58e; }
+.folder-heading h2 { margin-top: 15px; font: 600 clamp(30px, 3.5vw, 45px)/1.45 'Lora', Georgia, serif; letter-spacing: -.7px; }
+.folder-heading h2 em { color: #305d83; font-weight: 500; }
+.folder-heading > p { margin-top: 10px; font-size: 16px; line-height: 1.8; }
+.canvas-folder, .chapter-paper { position: relative; isolation: isolate; min-width: 0; padding: 0; border: 1px solid #d8c5af; border-radius: 3px; background: linear-gradient(115deg, #fffcf5, #fcf7ee); color: inherit; box-shadow: 0 3px 5px #72533712; }
+.canvas-folder::before, .chapter-paper::before { content: ''; position: absolute; z-index: -1; inset: 6px -6px -7px 6px; border: 1px solid #d8c5af; border-radius: 3px; background: #fffaf0; box-shadow: 0 3px 5px #7253370d; pointer-events: none; }
+.canvas-folder::after, .chapter-paper::after { content: ''; position: absolute; top: 18px; bottom: 18px; left: 22px; width: 1px; background: #debdab99; pointer-events: none; }
+.paper-pin { position: absolute; z-index: 3; top: 13px; width: 15px; height: 15px; border-radius: 50%; border: 1px solid #a38b56; background: radial-gradient(circle at 33% 27%, #fff8d4 0%, #ead598 23%, #b79853 60%, #796132 100%); box-shadow: inset -1px -1px 2px #72532555, 1px 3px 3px #65492e33; pointer-events: none; }
+.pin-left { left: 13px; }
+.pin-right { right: 13px; }
+.paper-fold { position: absolute; z-index: 2; right: -1px; bottom: -1px; width: 20px; height: 20px; clip-path: polygon(0 0, 100% 0, 0 100%); background: linear-gradient(135deg, #eadfce, #fffcf4 55%, #cbb99f); filter: drop-shadow(-1px -1px 1px #8c715b44); pointer-events: none; }
 summary { display: flex; align-items: center; justify-content: space-between; min-height: 48px; gap: 20px; list-style: none; cursor: pointer; }
 summary::-webkit-details-marker { display: none; }
 summary:focus-visible, a:focus-visible, .collapse-button:focus-visible, .content-table-scroll:focus-visible, .chapter-scroll:focus-visible { outline: 3px solid #2a659a; outline-offset: 4px; border-radius: 4px; }
-.canvas-summary { padding: 25px 32px; }
-.canvas-cover { display: grid; gap: 9px; min-width: 0; }
-.canvas-kicker { font-size: 12px; letter-spacing: 1.3px; font-weight: 600; color: #396884; }
-.canvas-cover > strong { font: 600 clamp(22px, 2.4vw, 29px)/1.5 'Lora', Georgia, serif; }
-.canvas-subtitle { max-width: 620px; font-size: 15px; line-height: 1.8; color: #526571; }
-.canvas-open-label { display: inline-flex; align-items: center; gap: 10px; margin-top: 4px; color: #305d83; font-size: 14px; font-weight: 600; }
-.canvas-open-label svg { width: 17px; height: 17px; transition: transform .2s; }
-details[open] > summary .canvas-open-label svg { transform: rotate(180deg); }
-.canvas-preview { flex-shrink: 0; display: grid; grid-template-columns: repeat(3, 37px); gap: 5px; transform: rotate(-4deg); padding: 10px; border: 1px solid #d4e0e4; background: #fffdf7; box-shadow: 3px 4px 0 #d1dee54d; }
-.canvas-preview > span { display: grid; place-items: center; height: 31px; background: #dfedf4; color: #396884; font: 500 12px 'Lora', Georgia, serif; border-radius: 2px; }
-.canvas-preview > span:nth-child(3n + 2) { background: #faedc3; color: #73551f; }
-.canvas-preview > span:nth-child(3n) { background: #f3dfe6; color: #80455e; }
+.canvas-summary { display: grid; grid-template-columns: minmax(0, 1fr) minmax(340px, 1.05fr) 44px; gap: 24px; padding: 35px 28px 28px 45px; }
+.canvas-cover { display: grid; justify-items: start; gap: 13px; }
+.canvas-kicker { padding: 5px 12px; border-radius: 20px; background: #fae2e5; font-size: 12px; letter-spacing: 1px; font-weight: 600; }
+.canvas-cover > strong { font: 600 clamp(22px, 2.5vw, 30px)/1.5 'Lora', Georgia, serif; }
+.canvas-subtitle { font-size: 16px; line-height: 1.8; }
+.canvas-preview { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; padding-left: 22px; border-left: 1px solid #dfcdb9; }
+.canvas-preview > span { display: flex; align-items: center; gap: 9px; min-height: 43px; padding: 9px; background: #e7e1f3; color: #514270; border: 1px solid #dcd1ec; border-radius: 6px; font-size: 13px; line-height: 1.5; }
+.canvas-preview > span:nth-child(3n + 2) { background: #e3efe0; border-color: #d2dfca; color: #48623c; }
+.canvas-preview > span:nth-child(3n) { background: #fae3e6; border-color: #eed0d7; color: #7d4556; }
+.canvas-preview > span:nth-child(4), .canvas-preview > span:nth-child(8) { background: #fff0c7; border-color: #edddb1; color: #73551f; }
+.canvas-preview > span:nth-child(5), .canvas-preview > span:nth-child(7) { background: #e0eef8; border-color: #c9dfed; color: #305d83; }
+.canvas-preview svg { width: 18px; height: 18px; flex-shrink: 0; stroke-width: 1.5; }
+.canvas-arrow { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #bda68e; border-radius: 50%; }
+.canvas-arrow svg { width: 18px; height: 18px; transition: transform .25s; }
+details[open] > summary .canvas-arrow svg { transform: rotate(180deg); }
 .canvas-content { padding: 0 28px 26px; }
-.business-canvas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; padding-top: 22px; border-top: 1px dashed #c7d7dd; }
-.canvas-piece { min-width: 0; padding: 18px; border: 1px solid #ddd3bf; background: #fffcf5; border-radius: 3px 9px 3px 3px; }
-.canvas-piece-wide { grid-column: span 2; }
+.business-canvas { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; padding-top: 22px; border-top: 1px dashed #c7d7dd; }
+.canvas-piece { grid-column: span 2; min-width: 0; padding: 18px; border: 1px solid #ddd3bf; background: #fffcf5; border-radius: 3px 9px 3px 3px; }
+.canvas-piece:nth-child(7) { grid-column: 1 / -1; }
+.canvas-piece:nth-child(7) ul { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 28px; }
+.canvas-piece:nth-last-child(-n + 2) { grid-column: span 3; }
 .canvas-piece-highlighted { background: #e5f0f5; border-color: #bdd4de; }
 .canvas-block-head { display: flex; justify-content: space-between; gap: 12px; padding-bottom: 12px; margin-bottom: 12px; border-bottom: 1px dashed #d5c9b4; }
 .canvas-piece h3 { font: 600 17px/1.6 'Lora', Georgia, serif; }
@@ -267,46 +280,40 @@ details[open] > summary .canvas-open-label svg { transform: rotate(180deg); }
 .canvas-piece ul { margin: 0; padding-left: 18px; display: grid; gap: 9px; }
 .canvas-piece li { font-size: 15px; line-height: 1.8; }
 .canvas-note { margin-top: 20px; font-size: 13px; line-height: 1.8; color: #526571; }
-.folder-layout { margin-top: 36px; }
-.chapter-index { margin-bottom: 38px; padding: 0 4px; }
-.chapter-index > p { font-size: 11px; font-weight: 600; letter-spacing: 1.3px; color: #725b47; margin-bottom: 12px; }
-.chapter-index ol { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); list-style: none; margin: 0; padding: 0; gap: 9px; }
-.chapter-index a { display: flex; align-items: center; gap: 9px; min-height: 62px; height: 100%; padding: 10px 12px; background: #fffbf2; border: 1px solid #e1d3c2; border-bottom: 3px solid var(--chapter-accent); border-radius: 3px 9px 3px 3px; color: #54392c; font-size: 13px; line-height: 1.6; text-decoration: none; transition: background .2s, transform .2s; }
-.chapter-index a:hover { background: var(--chapter-accent); transform: translateY(-2px); }
-.chapter-index a span { flex-shrink: 0; color: var(--chapter-ink); font: 600 18px 'Lora', Georgia, serif; }
-.chapter-papers { display: grid; gap: 38px; }
-.chapter-paper { position: relative; min-width: 0; padding: 0; border: 1px solid #dfd0bc; border-radius: 5px; background: #fffbf4; color: inherit; box-shadow: 0 5px 0 #dfd0bc55, 0 12px 24px #77523408; }
-.chapter-paper::before { content: ''; position: absolute; width: 8px; top: 27px; bottom: 27px; left: -1px; background: var(--chapter-accent); border-radius: 0 3px 3px 0; }
-.chapter-sheet { min-width: 0; padding-block: 14px; }
-.chapter-body > .chapter-scroll { max-height: min(560px, calc(100svh - 350px)); }
-.chapter-roll-button { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 44px; height: 44px; min-height: 44px; padding: 0; border: 1px solid #d8cbb8; border-radius: 50%; background: #fffaf0; color: var(--chapter-ink); }
+.folder-layout { margin-top: 30px; }
+.chapter-papers { display: grid; gap: 28px; }
+.chapter-sheet { min-width: 0; }
+.chapter-number { position: absolute; z-index: 2; left: -13px; top: 5px; display: grid; place-items: center; width: 58px; height: 58px; border: 1px solid color-mix(in srgb, var(--chapter-ink) 35%, #fff); border-radius: 5px 5px 7px 5px; background: var(--chapter-accent); color: #54392c; box-shadow: 1px 2px 2px #76533422; font: 600 24px 'Lora', Georgia, serif; }
+.chapter-heading { position: relative; display: flex; align-items: center; gap: 24px; min-height: 110px; padding: 22px 34px 20px 74px; }
+.chapter-heading > div { min-width: 0; flex: 1; }
+.chapter-doodle { position: relative; display: block; flex: 0 0 80px; width: 80px; height: 64px; color: var(--chapter-ink); pointer-events: none; }
+.doodle-wash { position: absolute; inset: 10px 8px 4px; border-radius: 56% 44% 63% 37%; background: var(--chapter-accent); opacity: .45; transform: rotate(-12deg); }
+.doodle-main { position: absolute; width: 36px; height: 36px; top: 16px; left: 17px; stroke-width: 1.35; transform: rotate(-12deg); opacity: .8; }
+.doodle-detail { position: absolute; width: 21px; height: 21px; top: 4px; right: 4px; stroke-width: 1.3; transform: rotate(14deg); opacity: .65; }
+.doodle-dash { position: absolute; bottom: 4px; right: 7px; width: 20px; border-top: 1px dashed currentColor; transform: rotate(-20deg); opacity: .4; }
+
+.chapter-heading h3 { font: 600 clamp(23px, 2.5vw, 31px)/1.5 'Lora', Georgia, serif; }
+.chapter-heading p { font-size: 15px; line-height: 1.8; color: #725b47; margin-top: 3px; }
+.chapter-roll-button { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 44px; height: 44px; min-height: 44px; padding: 0; border: 1px solid #bda68e; border-radius: 50%; background: transparent; color: #54392c; }
 .chapter-roll-button:hover { background: var(--chapter-accent); }
-.chapter-roll-button svg { width: 16px; height: 16px; transition: transform .2s; }
+.chapter-roll-button svg { width: 18px; height: 18px; transition: transform .3s; }
 .chapter-roll-button[aria-expanded='true'] svg { transform: rotate(180deg); }
-.paper-roll { position: absolute; z-index: 2; left: 0; right: 0; height: 10px; border: 1px solid #dacbb6; border-radius: 5px; background: linear-gradient(180deg, #eee3d0 0%, #fffcf3 40%, #f9f1e2 70%, #dfcfb7 100%); box-shadow: 0 2px 3px #62472d0d; pointer-events: none; }
-.paper-roll-top { top: -2px; }
-.paper-roll-bottom { bottom: -2px; transform: rotate(180deg); box-shadow: 0 -2px 3px #62472d0d; }
-.chapter-heading { display: flex; flex: 0 0 auto; align-items: center; gap: 23px; padding: 23px 34px 22px; }
-.chapter-scroll { min-height: 0; overflow-y: auto; overflow-x: hidden; padding-block: 10px 14px; scrollbar-gutter: stable; scrollbar-width: thin; scrollbar-color: var(--chapter-ink) #f0e7d7; -webkit-overflow-scrolling: touch; background: linear-gradient(#fffbf4 25%, #fffbf400) center top / 100% 30px local no-repeat, linear-gradient(#fffbf400, #fffbf4 75%) center bottom / 100% 30px local no-repeat, radial-gradient(farthest-side at 50% 0, #76533426, #76533400) center top / 100% 10px scroll no-repeat, radial-gradient(farthest-side at 50% 100%, #76533426, #76533400) center bottom / 100% 10px scroll no-repeat; }
+.chapter-body { display: grid; grid-template-rows: 0fr; opacity: 0; visibility: hidden; transition: grid-template-rows .4s ease, opacity .3s ease, visibility .4s; }
+.chapter-paper-open .chapter-body { grid-template-rows: 1fr; opacity: 1; visibility: visible; }
+.chapter-body-inner { min-height: 0; overflow: hidden; }
+.chapter-body-inner > .chapter-scroll { min-height: 0; overflow-y: auto; overflow-x: hidden; padding-block: 10px 14px; scrollbar-gutter: stable; scrollbar-width: thin; scrollbar-color: var(--chapter-ink) #f0e7d7; -webkit-overflow-scrolling: touch; background: linear-gradient(#fffbf4 25%, #fffbf400) center top / 100% 30px local no-repeat, linear-gradient(#fffbf400, #fffbf4 75%) center bottom / 100% 30px local no-repeat, radial-gradient(farthest-side at 50% 0, #76533426, #76533400) center top / 100% 10px scroll no-repeat, radial-gradient(farthest-side at 50% 100%, #76533426, #76533400) center bottom / 100% 10px scroll no-repeat; }
 .chapter-scroll::-webkit-scrollbar { width: 6px; }
 .chapter-scroll::-webkit-scrollbar-track { background: #f0e7d7; border-radius: 6px; }
 .chapter-scroll::-webkit-scrollbar-thumb { background: var(--chapter-ink); border-radius: 6px; }
 .chapter-scroll > details { scroll-margin-top: 12px; }
 .chapter-sheet-footer { display: flex; flex: 0 0 auto; justify-content: space-between; gap: 16px; padding: 12px 30px 4px; margin-inline: 5px; border-top: 1px dashed #dfd0bc; color: #725b47; font-size: 12px; line-height: 1.7; }
 .chapter-sheet-footer > span:last-child { flex-shrink: 0; color: var(--chapter-ink); font-variant-numeric: tabular-nums; }
-.chapter-number { flex-shrink: 0; color: var(--chapter-ink); background: var(--chapter-accent); width: 64px; height: 70px; display: grid; place-items: center; font: 500 30px 'Lora', Georgia, serif; border-radius: 4px 15px 4px 4px; }
-.chapter-heading > div { min-width: 0; flex: 1; }
-.chapter-eyebrow { display: block; font-size: 11px; letter-spacing: 1.2px; font-weight: 600; color: var(--chapter-ink); margin-bottom: 5px; }
-.chapter-heading h3 { font: 600 clamp(22px, 2.3vw, 28px)/1.5 'Lora', Georgia, serif; }
-.chapter-heading p { font-size: 14px; line-height: 1.8; margin-top: 5px; color: #725b47; }
-.chapter-icon { width: 34px; height: 34px; flex-shrink: 0; color: var(--chapter-ink); stroke-width: 1.3; }
-.folder-topic { min-width: 0; margin: 0 30px 10px; border: 1px solid #e7ddce; border-radius: 5px; background: #fffef9; }
-.folder-topic:last-child { margin-bottom: 0; }
-.folder-topic > summary { padding: 16px 19px; border-radius: 5px; transition: background .2s; }
-.folder-topic > summary:hover { background: #f7f0e4; }
-.topic-heading { display: grid; gap: 4px; min-width: 0; }
+.folder-topic { min-width: 0; margin: 0 30px 0 44px; border: 0; border-bottom: 1px dashed #dcd1c0; background: transparent; border-radius: 0; }
+.folder-topic:last-child { border-bottom: 0; }
+.folder-topic > summary { padding: 17px 12px; border-radius: 4px; transition: background .2s; }
+.folder-topic > summary:hover { background: #f5eddf; }
+.topic-heading { min-width: 0; }
 .topic-heading strong { font: 600 17px/1.7 'Lora', Georgia, serif; color: #4b3022; }
-.topic-heading > span { font-size: 13px; line-height: 1.7; color: #715b49; }
 .topic-toggle { display: block; position: relative; width: 29px; height: 29px; flex-shrink: 0; border: 1px solid #d8cdbb; border-radius: 50%; background: #fffaf0; color: var(--chapter-ink); }
 .topic-toggle::before, .topic-toggle::after { content: ''; position: absolute; width: 11px; height: 1.5px; left: 8px; top: 13px; background: currentColor; }
 .topic-toggle::after { transform: rotate(90deg); transition: transform .2s; }
@@ -330,53 +337,63 @@ details[open] > summary .canvas-open-label svg { transform: rotate(180deg); }
 .collapse-button { min-height: 44px; max-width: 100%; height: auto; white-space: normal; margin-top: 17px; color: #62452e; font-size: 13px; }
 .collapse-button svg { transform: rotate(180deg); }
 .content-source { margin: 30px 12px 0; padding-top: 20px; border-top: 1px dashed #d6c6b3; font-size: 13px; line-height: 1.9; color: #725b47; }
+@media (min-width: 900px) {
+  .chapter-paper:not(.chapter-paper-open) .chapter-heading > div { display: flex; align-items: baseline; gap: 22px; flex-wrap: wrap; }
+  .chapter-paper:not(.chapter-paper-open) .chapter-heading { min-height: 90px; }
+  .chapter-paper:not(.chapter-paper-open) .chapter-heading h3 { font-size: 26px; }
+}
 @media (max-width: 850px) {
-  .folder-heading { grid-template-columns: minmax(0, 1fr) 245px; gap: 24px; padding-inline: 4px; }
-  .chapter-index ol { display: flex; overflow-x: auto; padding-bottom: 8px; scroll-snap-type: x proximity; }
-  .chapter-index li { flex: 0 0 180px; scroll-snap-align: start; }
+  .canvas-summary { grid-template-columns: minmax(0, 1fr) 44px; padding: 32px 25px 25px 38px; }
+  .canvas-preview { grid-column: 1 / -1; grid-row: 2; padding: 16px 0 0; border-left: 0; border-top: 1px solid #dfcdb9; }
+  .canvas-arrow { grid-column: 2; grid-row: 1; }
   .business-canvas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .canvas-piece-wide { grid-column: auto; }
+  .canvas-piece, .canvas-piece:nth-last-child(-n + 2) { grid-column: auto; }
+  .canvas-piece:nth-child(7) ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 600px) {
-  .project-content { width: calc(100% - 32px); padding: 35px 0 48px; }
-  .folder-heading { grid-template-columns: minmax(0, 1fr); gap: 28px; padding-bottom: 28px; }
-  .folder-heading h2 { font-size: 30px; letter-spacing: -.5px; }
-  .folder-reading-note { transform: none; padding: 20px; }
-  .folder-reading-note > svg { float: right; margin: 0; }
-  .folder-reading-note > span:last-child { margin-top: 10px; padding-top: 8px; }
-  .canvas-summary { padding: 22px 20px; gap: 14px; }
-  .canvas-preview { grid-template-columns: repeat(3, 20px); gap: 3px; padding: 5px; }
-  .canvas-preview > span { height: 22px; font-size: 10px; }
-  .canvas-cover > strong { font-size: 22px; }
-  .canvas-kicker { font-size: 11px; letter-spacing: .6px; }
+  .project-content { width: calc(100% - 40px); padding: 35px 0 48px; }
+  .folder-heading { padding-bottom: 26px; }
+  .folder-heading h2 { font-size: 29px; }
+  .folder-heading > p { font-size: 15px; }
+  .folder-label { font-size: 12px; gap: 10px; }
+  .folder-label::before, .folder-label::after { width: 25px; }
+  .canvas-summary { gap: 16px; padding: 32px 16px 20px 28px; }
+  .canvas-cover > strong { font-size: 23px; }
   .canvas-subtitle { font-size: 14px; }
+  .canvas-preview { gap: 5px; }
+  .canvas-preview > span { flex-direction: column; justify-content: center; text-align: center; gap: 4px; font-size: 12px; padding: 8px 4px; }
+  .canvas-folder::after, .chapter-paper::after { left: 13px; }
   .canvas-content { padding: 0 16px 22px; }
   .business-canvas { grid-template-columns: minmax(0, 1fr); }
-  .folder-layout { margin-top: 28px; }
-  .chapter-index { margin-bottom: 24px; }
-  .chapter-papers { gap: 28px; }
-  .chapter-body > .chapter-scroll { max-height: min(520px, calc(100svh - 325px)); }
-  .chapter-heading { flex-wrap: wrap; }
-  .chapter-heading > div { flex-basis: calc(100% - 75px); }
-  .chapter-roll-button { margin-left: 59px; }
-  .chapter-heading { gap: 14px; padding: 17px 20px 16px; }
-  .chapter-sheet-footer { padding: 10px 15px 3px; font-size: 12px; }
-  .chapter-number { width: 45px; height: 56px; font-size: 24px; }
+  .canvas-piece:nth-child(7) ul { grid-template-columns: minmax(0, 1fr); }
+  .chapter-papers { gap: 25px; }
+  .chapter-heading { gap: 12px; padding: 22px 19px 18px 49px; min-height: 108px; }
+  .chapter-number { left: -10px; top: 10px; width: 45px; height: 47px; font-size: 21px; }
   .chapter-heading h3 { font-size: 22px; }
+  .chapter-doodle { flex-basis: 28px; width: 28px; height: 34px; }
+  .doodle-main { top: 4px; left: 0; width: 27px; height: 27px; }
+  .doodle-wash { inset: 2px -3px 0; }
+  .doodle-detail, .doodle-dash { display: none; }
   .chapter-heading p { font-size: 13px; }
-  .chapter-icon { display: none; }
-  .folder-topic { margin: 0 14px 9px; }
-  .folder-topic > summary { padding: 14px 12px; gap: 12px; }
+  .chapter-body-inner > .chapter-scroll { max-height: min(520px, max(180px, calc(100svh - 325px))); }
+  .folder-topic { margin: 0 14px 0 23px; }
+  .folder-topic > summary { padding: 14px 8px; gap: 10px; }
   .topic-heading strong { font-size: 16px; }
-  .topic-heading > span { font-size: 13px; }
-  .content-topic-body { margin-inline: 14px; font-size: 15px; }
-  .folder-topic:last-child { margin-bottom: 0; }
+  .content-topic-body { margin-inline: 9px; font-size: 15px; }
+  .chapter-sheet-footer { padding: 12px 18px 16px 23px; font-size: 12px; }
+  .paper-pin { width: 12px; height: 12px; top: 8px; }
+  .pin-right { right: 8px; }
+  .pin-left { left: 8px; }
+}
+@media (max-width: 420px) {
+  .chapter-heading { gap: 9px; padding-left: 51px; padding-right: 13px; }
+  .chapter-doodle { display: none; }
 }
 @media (max-height: 500px) {
-  .chapter-body > .chapter-scroll { max-height: 55svh; }
+  .chapter-body-inner > .chapter-scroll { max-height: 55svh; }
 }
 @media (prefers-reduced-motion: reduce) {
   .folder-reveal { opacity: 1 !important; transform: none !important; clip-path: none !important; animation: none !important; transition: none !important; }
-  .chapter-index a, .folder-topic > summary, .topic-toggle::after, .canvas-open-label svg, .chapter-roll-button svg { transition: none; }
+  .chapter-body, .folder-topic > summary, .topic-toggle::after, .canvas-arrow svg, .chapter-roll-button svg { transition: none; }
 }
 </style>

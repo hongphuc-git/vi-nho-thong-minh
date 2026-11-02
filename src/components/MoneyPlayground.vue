@@ -7,6 +7,7 @@ import { Card } from '@/components/ui/card'
 import { walletPockets } from '@/data/walletPockets'
 import { firstScenario, practiceScenarios, type PracticeScenario } from '@/data/practiceScenarios'
 import { publicAsset } from '@/lib/publicAsset'
+import ScenarioArtwork from '@/components/ScenarioArtwork.vue'
 
 const startingAmounts = [40, 25, 25, 10]
 const allocations = ref(walletPockets.map((pocket, index) => ({
@@ -104,7 +105,7 @@ function focusPocket(id: string) {
               <span class="practice-art-need">Ưu tiên đồ dùng cần thiết</span>
               <span class="practice-art-price">45.000đ<span>HỘP BÚT MỚI</span></span>
             </div>
-            <div v-else class="scenario-illustration" aria-hidden="true"><component :is="scenario.icon" /><span>{{ scenario.skill }}</span><div><span v-for="fact in scenario.facts" :key="fact">{{ fact }}</span></div></div>
+            <ScenarioArtwork v-else :id="scenario.id" />
             <h3>{{ scenario.title }}<br /><em>{{ scenario.subtitle }}</em></h3>
             <p class="practice-scenario-story">{{ scenario.story }}</p>
             <p class="practice-scenario-question">{{ scenario.question }}</p>
@@ -117,7 +118,7 @@ function focusPocket(id: string) {
           </Card>
         </div>
       </div>
-      <p class="practice-privacy"><ShieldCheck aria-hidden="true" /><span>5 tình huống TH01–TH05 theo hồ sơ dự án · Lựa chọn và lời gợi ý được biên tập cho web · Tự do thử phân bổ tiền, không có tỷ lệ cố định · Không gửi hoặc lưu câu trả lời · Không thay thế bài đánh giá trước–sau DGA/DGB</span></p>
+      <p class="practice-privacy"><ShieldCheck aria-hidden="true" /><span>Em có thể thử nhiều cách chia tiền và cùng tìm hiểu qua từng tình huống.<br />Các lựa chọn chỉ được dùng trong lúc thực hành và không được lưu lại khi em rời trang.</span></p>
     </div>
   </section>
 </template>
@@ -127,11 +128,6 @@ function focusPocket(id: string) {
 .scenario-picker button { flex: 1; min-width: 62px; min-height: 44px; height: auto; padding: 8px; border: 1px solid #d9cfbb; border-radius: 10px; background: #fffaf0; color: #6b5140; font-size: var(--text-small); }
 .scenario-picker button[aria-pressed='true'] { background: #e0e9d5; border-color: #91a47b; color: #384e2b; box-shadow: inset 0 -3px #91a47b44; }
 .scenario-picker button:focus-visible { outline: 3px solid #3972a0; outline-offset: 3px; }
-.scenario-illustration { display: grid; justify-items: center; gap: 14px; margin: 20px 0 24px; padding: 24px 16px; border: 1px solid #d5d9bd; border-radius: 16px; background: #edf1e2; color: #536845; text-align: center; }
-.scenario-illustration > svg { width: 64px; height: 64px; stroke-width: 1.3; }
-.scenario-illustration > span { font: 500 20px/1.5 'Lora', Georgia, serif; }
-.scenario-illustration > div { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
-.scenario-illustration > div > span { padding: 5px 10px; background: #fffcf3; border-radius: 8px; color: #66513a; font-size: var(--text-small); }
 .practice-section { position: relative; padding: 42px 0 38px; color: #56392b; background: transparent; }
 .practice-section-divider { display: flex; align-items: center; gap: 20px; width: min(1100px, calc(100% - 80px)); margin: 0 auto 40px; }
 .practice-section-divider > span:first-child, .practice-section-divider > span:last-child { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, #be859c80); }
