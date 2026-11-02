@@ -128,7 +128,9 @@ onUnmounted(() => window.removeEventListener('hashchange', syncGuide))
       </header>
 
       <div class="discovery-grid">
-        <motion.div v-for="(item, index) in guideLinks" :key="item.id" class="discovery-item" :while-hover="{ y: -6 }" :initial="{ opacity: 0, y: 16 }" :while-in-view="{ opacity: 1, y: 0 }" :in-view-options="{ once: true }" :transition="{ duration: 0.4, delay: index * 0.08 }">
+        <motion.div v-for="(item, index) in guideLinks" :key="item.id" class="discovery-item" :while-hover="{ y: -3, rotate: index % 2 === 0 ? -0.5 : 0.5 }" :initial="{ opacity: 0, y: 16 }" :while-in-view="{ opacity: 1, y: 0 }" :in-view-options="{ once: true }" :transition="{ duration: 0.4, delay: index * 0.08 }">
+          <svg class="frame-hanger" viewBox="0 0 200 58" preserveAspectRatio="none" aria-hidden="true"><path class="frame-cord-shadow" d="M8 56 100 7 192 56" /><path class="frame-cord" d="M8 54 100 5 192 54" /></svg>
+          <span class="frame-pin" aria-hidden="true"></span>
           <Card class="discovery-card" :class="`discovery-${item.color}`" @click="openFromCard(item.id, $event)">
             <a class="qr-link" :href="`#${item.id}`" :aria-label="`Mở hướng dẫn ${item.title}`" @click.prevent="revealGuide(item.id, $event)">
               <QrcodeVue v-if="pageUrl" :value="item.url" :size="176" :margin="4" level="M" render-as="svg" foreground="#173d2d" background="#fffaf0" role="img" :aria-label="`Mã QR hướng dẫn ${item.title}`" />
@@ -171,9 +173,14 @@ onUnmounted(() => window.removeEventListener('hashchange', syncGuide))
 .heading-wallet, .heading-calculator { position: absolute; top: 22px; width: 68px; height: 68px; stroke-width: 1.4; }
 .heading-wallet { left: 0; color: #947142; fill: #c4e2f3; transform: rotate(-12deg); }
 .heading-calculator { right: 0; color: #87a964; transform: rotate(18deg); }
-.discovery-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
-.discovery-item { min-width: 0; display: flex; }
-.discovery-card { --tool-color: #cce7f9; position: relative; width: 100%; display: flex; flex-direction: column; align-items: center; padding: 24px 16px 18px; background: #fffefa; border: 1px solid #eee3d4; border-radius: 32px; box-shadow: 0 5px 12px #654b2b13, 0 2px 3px #654b2b0d; text-align: center; }
+.discovery-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; padding-top: 52px; }
+.discovery-item { position: relative; min-width: 0; display: flex; transform-origin: 50% -42px; }
+.frame-hanger { position: absolute; width: 68%; height: 52px; left: 16%; top: -48px; overflow: visible; pointer-events: none; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.frame-cord-shadow { stroke: #79563b24; stroke-width: 4; }
+.frame-cord { stroke: #a27b51; stroke-width: 1.7; vector-effect: non-scaling-stroke; }
+.frame-pin { position: absolute; top: -47px; left: calc(50% - 6px); width: 12px; height: 12px; border-radius: 50%; border: 1px solid #806747; background: radial-gradient(circle at 35% 28%, #fff9e4, #c8a574 55%, #8c6945); box-shadow: 1px 3px 3px #64432c40; pointer-events: none; }
+.discovery-card { --tool-color: #cce7f9; position: relative; width: 100%; display: flex; flex-direction: column; align-items: center; padding: 28px 16px 22px; background: #fffefa; border: 8px solid #d9bd98; border-radius: 5px; box-shadow: inset 0 0 0 1px #b39673, inset 0 0 0 6px #fff8eb, inset 0 0 15px #8b674524, 0 2px 0 1px #a88761, 5px 10px 0 #714e2f0a, 8px 16px 24px #67452f26; text-align: center; }
+.discovery-card::before { content: ''; position: absolute; inset: -8px; border: 1px solid #ae8b65; border-top-color: #efdbc0; border-left-color: #efdbc0; border-radius: inherit; box-shadow: inset 0 0 0 2px #f4e2c455; pointer-events: none; }
 .discovery-yellow { --tool-color: #fff0b5; }
 .discovery-pink { --tool-color: #f8d0e1; }
 .discovery-green { --tool-color: #dcebc5; }
@@ -197,7 +204,7 @@ onUnmounted(() => window.removeEventListener('hashchange', syncGuide))
 .discovery-footer { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: 32px; padding-top: 22px; border-top: 2px dashed #aacfe5; font-family: 'Lora', Georgia, serif; font-style: italic; color: #356c9a; font-size: var(--text-body); text-align: center; }
 .discovery-footer > svg:last-child { color: #dd91ae; }
 @media (max-width: 1150px) {
-  .discovery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+  .discovery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 80px 28px; }
   .discovery-heading { padding-inline: 60px; }
   .heading-wallet, .heading-calculator { width: 48px; height: 48px; }
   .discovery-card h3 { font-size: 23px; }
@@ -210,7 +217,7 @@ onUnmounted(() => window.removeEventListener('hashchange', syncGuide))
   .discovery-eyebrow { font-size: var(--text-caption); line-height: 1.8; letter-spacing: .8px; }
   .discovery-heading h2 { font-size: 30px; }
   .discovery-heading > p:last-of-type { font-size: var(--text-body); }
-  .discovery-grid { grid-template-columns: 1fr; gap: 20px; }
+  .discovery-grid { grid-template-columns: 1fr; gap: 76px; }
   .discovery-card { padding: 24px 20px 18px; }
   .discovery-art { height: 230px; }
   .discovery-art img { max-height: 210px; }
@@ -228,14 +235,17 @@ onUnmounted(() => window.removeEventListener('hashchange', syncGuide))
 .guide-dialog-content li > span { display: grid; place-items: center; width: 30px; height: 30px; flex-shrink: 0; background: #cce3f4; border-radius: 50%; color: #315f84; font-weight: 600; }
 .guide-dialog-content li > p { color: #624a36; font-size: var(--text-body); line-height: 1.9; }
 .guide-practice-link { min-height: 44px; height: auto; white-space: normal; padding: 12px 18px; }
-.discovery-card { cursor: pointer; transition: box-shadow .2s, border-color .2s; }
-.discovery-card:focus-within { border-color: #81aac6; box-shadow: 0 5px 0 #c4dcea55; }
+.discovery-card { cursor: pointer; }
+.discovery-card:focus-within { outline: 3px solid #3972a0; outline-offset: 4px; }
+.qr-link:focus-visible { outline: 3px solid #3972a0; outline-offset: 3px; }
 .discovery-link { width: 100%; margin-top: auto; border: 1px solid #bbcfb1; border-radius: 24px; background: #eff6e9; }
 .discovery-art > .card-doodle { pointer-events: none; }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .discovery-card:hover { border-color: #a9c7dc; box-shadow: 0 12px 24px #654b2b20; }
   .discovery-art img { transition: transform .25s; }
   .discovery-card:hover .discovery-art img { transform: rotate(0deg) scale(1.03); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .discovery-item { opacity: 1 !important; transform: none !important; }
 }
 
 .discovery-local-note > svg { width: 30px; height: 30px; flex-shrink: 0; color: #779266; stroke-width: 1.5; }
