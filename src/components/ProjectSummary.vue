@@ -11,8 +11,8 @@ import ImagePreview from '@/components/ImagePreview.vue'
 <template>
   <section id="tom-tat" class="project-summary" aria-labelledby="project-summary-title">
     <header class="summary-heading">
-      <p>DỰ ÁN TRONG MỘT PHÚT</p>
-      <h2 id="project-summary-title">Từ phân chia tiền<br class="summary-mobile-break" /> đến tự nhìn lại lựa chọn.</h2>
+      <p>KHÁM PHÁ VÍ NHỎ</p>
+      <h2 id="project-summary-title">Tập quản lý tiền,<br class="summary-mobile-break" /> bắt đầu từ những điều nhỏ.</h2>
     </header>
 
     <motion.div

@@ -65,7 +65,7 @@ export const projectTopics: ProjectTopic[] = [
     id: 'tinh-trang',
     title: '1.1 Tình trạng và tính cần thiết của dự án',
     paragraphs: [
-      'Theo hồ sơ, tính đến ngày 28/10/2026, nhóm đã thiết kế các cấu phần và chế tạo 01 bộ sản phẩm mẫu phiên bản số 1, đồng thời kiểm tra thao tác bước đầu. Dự án đang tiếp tục hoàn thiện sản phẩm; chưa triển khai bán hàng chính thức.',
+      'Theo hồ sơ, tính đến ngày 01/11/2026, nhóm đã thiết kế các cấu phần và chế tạo 01 bộ sản phẩm mẫu phiên bản số 1, đồng thời kiểm tra thao tác bước đầu. Dự án đang tiếp tục hoàn thiện sản phẩm; chưa triển khai bán hàng chính thức.',
       'Những việc cần tiếp tục thực hiện gồm làm đủ 10 bộ mẫu phục vụ trải nghiệm, kiểm tra chất lượng đầy đủ theo bảng kiểm 11 hạng mục, thu thập báo giá thực tế và tổ chức trải nghiệm có đánh giá.',
       'Bộ công cụ giúp học sinh thực hành quản lý khoản tiền nhỏ, phân biệt nhu cầu và mong muốn, ghi chép thu – chi và lập mục tiêu. Có thể dùng tiền mô phỏng để mọi học sinh đều có cơ hội tham gia, không phụ thuộc tiền tiêu vặt hay thiết bị số.',
     ],

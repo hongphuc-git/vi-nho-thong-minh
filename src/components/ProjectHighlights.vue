@@ -34,7 +34,7 @@ onUnmounted(() => resizeObserver?.disconnect())
 const highlights = [
   { value: '4', label: 'ngăn ví thực hành', note: 'Cần thiết · Tiết kiệm · Mục tiêu · Chia sẻ' },
   { value: '30', label: 'ngày thực hành', note: 'Hành trình đề xuất, chưa phải kết quả' },
-  { value: '1', label: 'bộ mẫu phiên bản số 1', note: 'Ghi nhận trong hồ sơ ngày 28/10/2026' },
+  { value: '1', label: 'bộ mẫu phiên bản số 1', note: 'Ghi nhận trong hồ sơ ngày 01/11/2026' },
   { value: '55', label: 'phiếu khảo sát hợp lệ', note: 'Theo hồ sơ cập nhật ngày 01/11/2026' },
 ]
 const learningTopics = [
