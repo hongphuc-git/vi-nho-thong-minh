@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import type { Component } from 'vue'
 import { motion } from 'motion-v'
-import { ChevronDown, Handshake, Settings, Gem, Users, UserRound, Database, Truck, Receipt, ChartColumn, Lightbulb, Pencil, Ruler, Star, Sparkles, Coins, Send } from '@lucide/vue'
+import { ChevronDown, Handshake, Settings, Gem, Users, UserRound, Database, Truck, Receipt, ChartColumn, Lightbulb, Pencil, Ruler, Star, Sparkles, Coins, Send, Heart } from '@lucide/vue'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { collapseFromButton, returnToCollapsedHeading } from '@/lib/collapse'
@@ -121,20 +121,14 @@ const canvasPreview = [
       :in-view-options="{ once: true }" :transition="{ duration: 0.4 }"
     >
       <Card class="canvas-folder">
-        <span class="paper-pin pin-left" aria-hidden="true"></span>
-        <span class="paper-pin pin-right" aria-hidden="true"></span>
-        <span class="paper-fold" aria-hidden="true"></span>
-        <details>
+        <details open>
           <summary class="canvas-summary" @click="returnToCollapsedHeading">
             <span class="canvas-cover">
-              <span class="canvas-kicker">BỨC TRANH TỔNG THỂ</span>
+              <span class="canvas-kicker">GÓC Ý TƯỞNG CỦA NHÓM</span>
               <strong>9 mảnh ghép, một mô hình.</strong>
-              <span class="canvas-subtitle">Giá trị · Khách hàng · Nguồn lực</span>
+              <span class="canvas-subtitle">Cùng nối những ý tưởng nhỏ.</span>
               
             </span>
-              <span class="canvas-preview" aria-hidden="true">
-                <span v-for="block in canvasPreview" :key="block.title"><component :is="block.icon" />{{ block.title }}</span>
-              </span>
             <span class="canvas-arrow" aria-hidden="true"><ChevronDown /></span>
           </summary>
           <div class="canvas-content">
@@ -145,7 +139,9 @@ const canvasPreview = [
                 class="canvas-piece"
                 :class="{ 'canvas-piece-wide': block.wide, 'canvas-piece-highlighted': block.highlighted }"
               >
+                <span class="note-pin" aria-hidden="true"></span>
                 <div class="canvas-block-head">
+                  <component :is="canvasPreview[index]?.icon ?? Lightbulb" class="canvas-note-icon" aria-hidden="true" />
                   <h3>{{ block.title }}</h3>
                   <span class="canvas-block-num" aria-hidden="true">{{ String(index + 1).padStart(2, '0') }}</span>
                 </div>
@@ -154,7 +150,8 @@ const canvasPreview = [
                 </ul>
               </article>
             </div>
-            <p class="canvas-note">Mô hình được tóm lược từ hồ sơ “Ví nhỏ thông minh” sửa ngày 01.11.2026. Các mức giá, chi phí và hướng mở rộng nêu trên là dự kiến, cần tiếp tục kiểm chứng khi triển khai.</p>
+            <p class="canvas-board-motto">Mỗi mảnh ghép, một phần việc chung. <Heart aria-hidden="true" /></p>
+            <p class="canvas-note">Mô hình dự kiến đến ngày 01.11.2026 của dự án “Ví nhỏ thông minh”. Các mức giá, chi phí và hướng mở rộng nêu trên cần tiếp tục được xác minh khi triển khai.</p>
             <Button type="button" variant="ghost" class="collapse-button" @click="collapseFromButton">Thu gọn mô hình <ChevronDown aria-hidden="true" /></Button>
           </div>
         </details>
@@ -162,6 +159,10 @@ const canvasPreview = [
     </motion.div>
 
     <div class="folder-layout">
+      <header class="chapter-introduction">
+        <h3>CÙNG MỞ HỒ SƠ DỰ ÁN</h3>
+        <p>Từ ý tưởng nhỏ đến những bước đi cụ thể.</p>
+      </header>
       <div class="chapter-papers">
         <motion.div v-for="chapter in chapters" :key="chapter.id" class="folder-reveal"
           :initial="{ opacity: 0, y: 18, clipPath: 'inset(-24px -24px -24px -24px)' }"
@@ -173,13 +174,13 @@ const canvasPreview = [
             <section :id="chapter.id" class="chapter-sheet" :aria-labelledby="`${chapter.id}-title`">
               <header class="chapter-heading">
                 <span class="chapter-number" aria-hidden="true">{{ chapter.number }}</span>
-                <div><h3 :id="`${chapter.id}-title`">{{ chapter.title }}</h3><p>{{ chapter.intro }}</p></div>
                 <span class="chapter-doodle" aria-hidden="true">
                   <span class="doodle-wash"></span>
                   <component :is="chapter.decoration" class="doodle-main" />
                   <component :is="chapter.detailDecoration" class="doodle-detail" />
                   <span class="doodle-dash"></span>
                 </span>
+                <div><h3 :id="`${chapter.id}-title`">{{ chapter.title }}</h3><p>{{ chapter.intro }}</p></div>
                 <Button type="button" variant="outline" class="chapter-roll-button" :aria-label="`${openChapters.includes(chapter.id) ? 'Thu gọn' : 'Mở'} chương ${chapter.number}: ${chapter.title}`" :title="openChapters.includes(chapter.id) ? 'Thu gọn trang giấy' : 'Mở trang giấy'" :aria-expanded="openChapters.includes(chapter.id)" :aria-controls="`${chapter.id}-body`" @click="toggleChapter(chapter.id)">
                   <ChevronDown aria-hidden="true" />
                 </Button>
@@ -242,9 +243,9 @@ const canvasPreview = [
 .folder-heading h2 { margin-top: 15px; font: 600 clamp(30px, 3.5vw, 45px)/1.45 'Lora', Georgia, serif; letter-spacing: -.7px; }
 .folder-heading h2 em { color: #305d83; font-weight: 500; }
 .folder-heading > p { margin-top: 10px; font-size: 16px; line-height: 1.8; }
-.canvas-folder, .chapter-paper { position: relative; isolation: isolate; min-width: 0; padding: 0; border: 1px solid #d8c5af; border-radius: 3px; background: linear-gradient(115deg, #fffcf5, #fcf7ee); color: inherit; box-shadow: 0 3px 5px #72533712; }
-.canvas-folder::before, .chapter-paper::before { content: ''; position: absolute; z-index: -1; inset: 6px -6px -7px 6px; border: 1px solid #d8c5af; border-radius: 3px; background: #fffaf0; box-shadow: 0 3px 5px #7253370d; pointer-events: none; }
-.canvas-folder::after, .chapter-paper::after { content: ''; position: absolute; top: 18px; bottom: 18px; left: 22px; width: 1px; background: #debdab99; pointer-events: none; }
+.chapter-paper { position: relative; isolation: isolate; min-width: 0; padding: 0; border: 1px solid #d8c5af; border-radius: 3px; background: linear-gradient(115deg, #fffcf5, #fcf7ee); color: inherit; box-shadow: 0 3px 5px #72533712; }
+.chapter-paper::before { content: ''; position: absolute; z-index: -1; inset: 6px -6px -7px 6px; border: 1px solid #d8c5af; border-radius: 3px; background: #fffaf0; box-shadow: 0 3px 5px #7253370d; pointer-events: none; }
+.chapter-paper::after { content: ''; position: absolute; top: 0; bottom: 0; left: 10px; width: 10px; border-right: 1px solid color-mix(in srgb, var(--chapter-ink) 25%, transparent); background: var(--chapter-accent); pointer-events: none; }
 .paper-pin { position: absolute; z-index: 3; top: 13px; width: 15px; height: 15px; border-radius: 50%; border: 1px solid #a38b56; background: radial-gradient(circle at 33% 27%, #fff8d4 0%, #ead598 23%, #b79853 60%, #796132 100%); box-shadow: inset -1px -1px 2px #72532555, 1px 3px 3px #65492e33; pointer-events: none; }
 .pin-left { left: 13px; }
 .pin-right { right: 13px; }
@@ -252,49 +253,61 @@ const canvasPreview = [
 summary { display: flex; align-items: center; justify-content: space-between; min-height: 48px; gap: 20px; list-style: none; cursor: pointer; }
 summary::-webkit-details-marker { display: none; }
 summary:focus-visible, a:focus-visible, .collapse-button:focus-visible, .content-table-scroll:focus-visible, .chapter-scroll:focus-visible { outline: 3px solid #2a659a; outline-offset: 4px; border-radius: 4px; }
-.canvas-summary { display: grid; grid-template-columns: minmax(0, 1fr) minmax(340px, 1.05fr) 44px; gap: 24px; padding: 35px 28px 28px 45px; }
+.canvas-summary { display: grid; grid-template-columns: minmax(0, 1fr) 44px; gap: 24px; padding: 30px 24px 25px; }
 .canvas-cover { display: grid; justify-items: start; gap: 13px; }
-.canvas-kicker { padding: 5px 12px; border-radius: 20px; background: #fae2e5; font-size: 12px; letter-spacing: 1px; font-weight: 600; }
+.canvas-kicker { font-size: 13px; letter-spacing: 1.2px; font-weight: 600; color: #64452d; }
 .canvas-cover > strong { font: 600 clamp(22px, 2.5vw, 30px)/1.5 'Lora', Georgia, serif; }
-.canvas-subtitle { font-size: 16px; line-height: 1.8; }
-.canvas-preview { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; padding-left: 22px; border-left: 1px solid #dfcdb9; }
-.canvas-preview > span { display: flex; align-items: center; gap: 9px; min-height: 43px; padding: 9px; background: #e7e1f3; color: #514270; border: 1px solid #dcd1ec; border-radius: 6px; font-size: 13px; line-height: 1.5; }
-.canvas-preview > span:nth-child(3n + 2) { background: #e3efe0; border-color: #d2dfca; color: #48623c; }
-.canvas-preview > span:nth-child(3n) { background: #fae3e6; border-color: #eed0d7; color: #7d4556; }
-.canvas-preview > span:nth-child(4), .canvas-preview > span:nth-child(8) { background: #fff0c7; border-color: #edddb1; color: #73551f; }
-.canvas-preview > span:nth-child(5), .canvas-preview > span:nth-child(7) { background: #e0eef8; border-color: #c9dfed; color: #305d83; }
-.canvas-preview svg { width: 18px; height: 18px; flex-shrink: 0; stroke-width: 1.5; }
+.canvas-subtitle { display: inline-block; position: relative; padding-bottom: 6px; color: #305d83; font: italic 500 20px/1.8 'Lora', Georgia, serif; }
+.canvas-subtitle::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; border-top: 2px solid #7babc9; border-radius: 50%; transform: rotate(-1deg); }
 .canvas-arrow { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #bda68e; border-radius: 50%; }
 .canvas-arrow svg { width: 18px; height: 18px; transition: transform .25s; }
 details[open] > summary .canvas-arrow svg { transform: rotate(180deg); }
-.canvas-content { padding: 0 28px 26px; }
-.business-canvas { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; padding-top: 22px; border-top: 1px dashed #c7d7dd; }
-.canvas-piece { grid-column: span 2; min-width: 0; padding: 18px; border: 1px solid #ddd3bf; background: #fffcf5; border-radius: 3px 9px 3px 3px; }
-.canvas-piece:nth-child(7) { grid-column: 1 / -1; }
+.canvas-folder { position: relative; padding: 0; border: 9px solid #eedcbb; border-radius: 7px; background-color: #e6d8bf; background-image: repeating-linear-gradient(0deg, #fff7df45 0 1px, transparent 1px 4px), repeating-linear-gradient(90deg, #a88b6322 0 1px, transparent 1px 4px); color: #54392c; box-shadow: inset 0 0 0 1px #b49b7355, inset 0 3px 8px #93764d19, 0 4px 7px #75533118; }
+.canvas-content { margin: 0 18px; padding: 28px 5px 18px; border-top: 1px dashed #af9472; }
+.business-canvas { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 24px 20px; }
+.note-pin { position: absolute; z-index: 1; top: -8px; left: calc(50% - 7px); width: 14px; height: 14px; border: 1px solid #a38b56; border-radius: 50%; background: radial-gradient(circle at 32% 25%, #fff8d4, #d8bc7d 35%, #997337 78%); box-shadow: 1px 3px 3px #65492e44; pointer-events: none; }
+.canvas-note-icon { flex-shrink: 0; width: 27px; height: 27px; stroke-width: 1.5; color: var(--canvas-ink); }
+.canvas-board-motto { display: flex; align-items: center; justify-content: center; gap: 9px; margin-top: 22px; text-align: center; font: italic 500 18px/1.8 'Lora', Georgia, serif; color: #305d83; }
+.canvas-board-motto svg { width: 20px; height: 20px; flex-shrink: 0; stroke-width: 1.5; }
+
+.canvas-piece { --canvas-paper: #e8ddf3; --canvas-border: #b9a0cf; --canvas-ink: #503464; --canvas-tab: #9d7ab9; position: relative; grid-column: span 2; min-width: 0; padding: 23px 17px 20px; border: 1px solid var(--canvas-border); background: linear-gradient(115deg, #fffdf526, transparent 65%), var(--canvas-paper); border-radius: 1px; color: #463124; box-shadow: 2px 5px 7px #65492e26; }
+.canvas-piece:nth-child(2) { --canvas-paper: #deebd4; --canvas-border: #a4bd8c; --canvas-ink: #3d542d; --canvas-tab: #839f65; }
+.canvas-piece:nth-child(3), .canvas-piece:nth-child(8) { --canvas-paper: #f5dce4; --canvas-border: #d5a0b2; --canvas-ink: #713c50; --canvas-tab: #bd7e94; }
+.canvas-piece:nth-child(4), .canvas-piece:nth-child(9) { --canvas-paper: #ffedba; --canvas-border: #d7b76b; --canvas-ink: #654a18; --canvas-tab: #b28b3d; }
+.canvas-piece:nth-child(5) { --canvas-paper: #d9eaf6; --canvas-border: #93b8d1; --canvas-ink: #284f71; --canvas-tab: #6d9cbd; }
+.canvas-piece:nth-child(6) { --canvas-paper: #e8ddf3; --canvas-border: #b9a0cf; --canvas-ink: #503464; }
+.canvas-piece:nth-child(7) { grid-column: 1 / -1; --canvas-paper: #deebd4; --canvas-border: #a4bd8c; --canvas-ink: #3d542d; }
+@media (min-width: 851px) {
+  .canvas-piece:nth-child(1) { transform: rotate(-.45deg); }
+  .canvas-piece:nth-child(6) { transform: rotate(.45deg); }
+}
 .canvas-piece:nth-child(7) ul { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 28px; }
 .canvas-piece:nth-last-child(-n + 2) { grid-column: span 3; }
-.canvas-piece-highlighted { background: #e5f0f5; border-color: #bdd4de; }
-.canvas-block-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding-bottom: 12px; margin-bottom: 12px; border-bottom: 1px dashed #d5c9b4; }
-.canvas-piece h3 { min-width: 0; font: 600 17px/1.6 'Lora', Georgia, serif; }
-.canvas-block-num { flex-shrink: 0; color: #6b7c87; font-size: 13px; }
+.canvas-block-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-bottom: 12px; margin-bottom: 12px; border-bottom: 1px dashed var(--canvas-border); }
+.canvas-piece h3 { flex: 1; min-width: 0; color: var(--canvas-ink); font: 700 18px/1.6 'Lora', Georgia, serif; }
+.canvas-block-num { display: grid; place-items: center; min-width: 29px; min-height: 27px; padding: 2px 5px; flex-shrink: 0; color: var(--canvas-ink); background: transparent; border: 0; border-radius: 0; font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
 .canvas-piece ul { margin: 0; padding-left: 19px; display: grid; align-content: start; align-items: start; gap: 8px; list-style: disc outside; }
 .canvas-piece li { display: list-item; min-width: 0; padding-left: 3px; font-size: 15px; line-height: 1.8; overflow-wrap: break-word; }
-.canvas-piece li::marker { color: #947751; font-size: .8em; }
+.canvas-piece li::marker { color: var(--canvas-ink); font-size: .8em; }
 .canvas-note { margin-top: 20px; font-size: 13px; line-height: 1.8; color: #526571; }
 .folder-layout { margin-top: 30px; }
-.chapter-papers { display: grid; gap: 28px; }
+.chapter-introduction { text-align: center; margin-bottom: 28px; padding: 12px 8px; }
+.chapter-introduction h3 { color: #54392c; font: 600 clamp(22px, 2.5vw, 30px)/1.5 'Lora', Georgia, serif; }
+.chapter-introduction p { margin-top: 8px; color: #725b47; font-size: 16px; line-height: 1.8; }
+.chapter-papers { display: grid; gap: 25px; padding-left: 16px; }
+.chapter-paper > .pin-right { right: 91px; top: 15px; }
 .chapter-sheet { min-width: 0; }
-.chapter-number { position: absolute; z-index: 2; left: -13px; top: 5px; display: grid; place-items: center; width: 58px; height: 58px; border: 1px solid color-mix(in srgb, var(--chapter-ink) 35%, #fff); border-radius: 5px 5px 7px 5px; background: var(--chapter-accent); color: #54392c; box-shadow: 1px 2px 2px #76533422; font: 600 24px 'Lora', Georgia, serif; }
-.chapter-heading { position: relative; display: flex; align-items: center; gap: 24px; min-height: 110px; padding: 22px 34px 20px 74px; }
+.chapter-number { position: absolute; z-index: 2; left: -24px; top: 17px; display: grid; place-items: center; width: 57px; height: 52px; border: 1px solid color-mix(in srgb, var(--chapter-ink) 35%, #fff); border-radius: 5px 5px 7px 5px; background: var(--chapter-accent); color: #54392c; box-shadow: 1px 2px 2px #76533422; font: 600 24px 'Lora', Georgia, serif; }
+.chapter-heading { position: relative; display: flex; align-items: center; gap: 19px; min-height: 112px; padding: 23px 30px 23px 49px; }
 .chapter-heading > div { min-width: 0; flex: 1; }
-.chapter-doodle { position: relative; display: block; flex: 0 0 80px; width: 80px; height: 64px; color: var(--chapter-ink); pointer-events: none; }
-.doodle-wash { position: absolute; inset: 10px 8px 4px; border-radius: 56% 44% 63% 37%; background: var(--chapter-accent); opacity: .45; transform: rotate(-12deg); }
-.doodle-main { position: absolute; width: 36px; height: 36px; top: 16px; left: 17px; stroke-width: 1.35; transform: rotate(-12deg); opacity: .8; }
-.doodle-detail { position: absolute; width: 21px; height: 21px; top: 4px; right: 4px; stroke-width: 1.3; transform: rotate(14deg); opacity: .65; }
+.chapter-doodle { position: relative; display: block; flex: 0 0 57px; width: 57px; height: 57px; color: var(--chapter-ink); pointer-events: none; }
+.doodle-wash { position: absolute; inset: 8px 3px 3px; border-radius: 56% 44% 63% 37%; background: var(--chapter-accent); opacity: .45; transform: rotate(-12deg); }
+.doodle-main { position: absolute; width: 38px; height: 38px; top: 11px; left: 6px; stroke-width: 1.35; transform: rotate(-12deg); opacity: 1; }
+.doodle-detail { position: absolute; width: 17px; height: 17px; top: 0; right: -3px; stroke-width: 1.3; transform: rotate(14deg); opacity: .65; }
 .doodle-dash { position: absolute; bottom: 4px; right: 7px; width: 20px; border-top: 1px dashed currentColor; transform: rotate(-20deg); opacity: .4; }
 
 .chapter-heading h3 { font: 600 clamp(23px, 2.5vw, 31px)/1.5 'Lora', Georgia, serif; }
-.chapter-heading p { font-size: 15px; line-height: 1.8; color: #725b47; margin-top: 3px; }
+.chapter-heading p { font-size: 16px; line-height: 1.8; color: #725b47; margin-top: 3px; }
 .chapter-roll-button { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 44px; height: 44px; min-height: 44px; padding: 0; border: 1px solid #bda68e; border-radius: 50%; background: transparent; color: #54392c; }
 .chapter-roll-button:hover { background: var(--chapter-accent); }
 .chapter-roll-button svg { width: 18px; height: 18px; transition: transform .3s; }
@@ -302,7 +315,7 @@ details[open] > summary .canvas-arrow svg { transform: rotate(180deg); }
 .chapter-body { display: grid; grid-template-rows: 0fr; opacity: 0; visibility: hidden; transition: grid-template-rows .4s ease, opacity .3s ease, visibility .4s; }
 .chapter-paper-open .chapter-body { grid-template-rows: 1fr; opacity: 1; visibility: visible; }
 .chapter-body-inner { min-height: 0; overflow: hidden; }
-.chapter-body-inner > .chapter-scroll { min-height: 0; overflow-y: auto; overflow-x: hidden; padding-block: 10px 14px; scrollbar-gutter: stable; scrollbar-width: thin; scrollbar-color: var(--chapter-ink) #f0e7d7; -webkit-overflow-scrolling: touch; background: linear-gradient(#fffbf4 25%, #fffbf400) center top / 100% 30px local no-repeat, linear-gradient(#fffbf400, #fffbf4 75%) center bottom / 100% 30px local no-repeat, radial-gradient(farthest-side at 50% 0, #76533426, #76533400) center top / 100% 10px scroll no-repeat, radial-gradient(farthest-side at 50% 100%, #76533426, #76533400) center bottom / 100% 10px scroll no-repeat; }
+.chapter-body-inner > .chapter-scroll { max-height: min(560px, max(200px, calc(100svh - 350px))); min-height: 0; overflow-y: auto; overflow-x: hidden; padding-block: 10px 14px; scrollbar-gutter: stable; scrollbar-width: thin; scrollbar-color: var(--chapter-ink) #f0e7d7; -webkit-overflow-scrolling: touch; background: linear-gradient(#fffbf4 25%, #fffbf400) center top / 100% 30px local no-repeat, linear-gradient(#fffbf400, #fffbf4 75%) center bottom / 100% 30px local no-repeat, radial-gradient(farthest-side at 50% 0, #76533426, #76533400) center top / 100% 10px scroll no-repeat, radial-gradient(farthest-side at 50% 100%, #76533426, #76533400) center bottom / 100% 10px scroll no-repeat; }
 .chapter-scroll::-webkit-scrollbar { width: 6px; }
 .chapter-scroll::-webkit-scrollbar-track { background: #f0e7d7; border-radius: 6px; }
 .chapter-scroll::-webkit-scrollbar-thumb { background: var(--chapter-ink); border-radius: 6px; }
@@ -338,14 +351,8 @@ details[open] > summary .canvas-arrow svg { transform: rotate(180deg); }
 .collapse-button { min-height: 44px; max-width: 100%; height: auto; white-space: normal; margin-top: 17px; color: #62452e; font-size: 13px; }
 .collapse-button svg { transform: rotate(180deg); }
 .content-source { margin: 30px 12px 0; padding-top: 20px; border-top: 1px dashed #d6c6b3; font-size: 13px; line-height: 1.9; color: #725b47; }
-@media (min-width: 900px) {
-  .chapter-paper:not(.chapter-paper-open) .chapter-heading > div { display: flex; align-items: baseline; gap: 22px; flex-wrap: wrap; }
-  .chapter-paper:not(.chapter-paper-open) .chapter-heading { min-height: 90px; }
-  .chapter-paper:not(.chapter-paper-open) .chapter-heading h3 { font-size: 26px; }
-}
 @media (max-width: 850px) {
   .canvas-summary { grid-template-columns: minmax(0, 1fr) 44px; padding: 32px 25px 25px 38px; }
-  .canvas-preview { grid-column: 1 / -1; grid-row: 2; padding: 16px 0 0; border-left: 0; border-top: 1px solid #dfcdb9; }
   .canvas-arrow { grid-column: 2; grid-row: 1; }
   .business-canvas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .canvas-piece, .canvas-piece:nth-last-child(-n + 2) { grid-column: auto; }
@@ -360,22 +367,26 @@ details[open] > summary .canvas-arrow svg { transform: rotate(180deg); }
   .folder-label::before, .folder-label::after { width: 25px; }
   .canvas-summary { gap: 16px; padding: 32px 16px 20px 28px; }
   .canvas-cover > strong { font-size: 23px; }
-  .canvas-subtitle { font-size: 14px; }
-  .canvas-preview { gap: 5px; }
-  .canvas-preview > span { flex-direction: column; justify-content: center; text-align: center; gap: 4px; font-size: 12px; padding: 8px 4px; }
-  .canvas-folder::after, .chapter-paper::after { left: 13px; }
-  .canvas-content { padding: 0 16px 22px; }
+  .canvas-subtitle { font-size: 17px; }
+  .chapter-paper::after { left: 6px; width: 7px; }
+  .canvas-content { margin: 0 12px; padding: 26px 0 17px; }
+  .canvas-folder { border-width: 6px; }
+  .business-canvas { gap: 23px; }
+  .canvas-note-icon { width: 25px; height: 25px; }
+  .canvas-board-motto { font-size: 16px; }
+  .canvas-piece { padding-inline: 16px; }
   .business-canvas { grid-template-columns: minmax(0, 1fr); }
   .canvas-piece:nth-child(7) ul { grid-template-columns: minmax(0, 1fr); }
   .chapter-papers { gap: 25px; }
-  .chapter-heading { gap: 12px; padding: 22px 19px 18px 49px; min-height: 108px; }
-  .chapter-number { left: -10px; top: 10px; width: 45px; height: 47px; font-size: 21px; }
+  .chapter-heading { gap: 12px; padding: 27px 14px 20px 28px; min-height: 112px; }
+  .chapter-number { left: -19px; top: 12px; width: 39px; height: 42px; font-size: 20px; }
   .chapter-heading h3 { font-size: 22px; }
   .chapter-doodle { flex-basis: 28px; width: 28px; height: 34px; }
   .doodle-main { top: 4px; left: 0; width: 27px; height: 27px; }
   .doodle-wash { inset: 2px -3px 0; }
   .doodle-detail, .doodle-dash { display: none; }
-  .chapter-heading p { font-size: 13px; }
+  .chapter-heading p { font-size: 14px; }
+  .chapter-paper > .pin-right { right: 71px; top: 10px; }
   .chapter-body-inner > .chapter-scroll { max-height: min(520px, max(180px, calc(100svh - 325px))); }
   .folder-topic { margin: 0 14px 0 23px; }
   .folder-topic > summary { padding: 14px 8px; gap: 10px; }
@@ -387,7 +398,7 @@ details[open] > summary .canvas-arrow svg { transform: rotate(180deg); }
   .pin-left { left: 8px; }
 }
 @media (max-width: 420px) {
-  .chapter-heading { gap: 9px; padding-left: 51px; padding-right: 13px; }
+  .chapter-heading { gap: 9px; padding-left: 28px; padding-right: 12px; }
   .chapter-doodle { display: none; }
 }
 @media (max-height: 500px) {
@@ -395,6 +406,7 @@ details[open] > summary .canvas-arrow svg { transform: rotate(180deg); }
 }
 @media (prefers-reduced-motion: reduce) {
   .folder-reveal { opacity: 1 !important; transform: none !important; clip-path: none !important; animation: none !important; transition: none !important; }
+  .canvas-piece { transform: none !important; }
   .chapter-body, .folder-topic > summary, .topic-toggle::after, .canvas-arrow svg, .chapter-roll-button svg { transition: none; }
 }
 </style>

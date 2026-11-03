@@ -7,7 +7,7 @@ import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 
 const props = withDefaults(defineProps<{ photoSrc?: string }>(), {
-  photoSrc: publicAsset('/images/video-posters/nhom-du-an-tai-truong.jpg'),
+  photoSrc: publicAsset('/images/team-group-photo.png'),
 })
 const photoFailed = ref(false)
 watch(() => props.photoSrc, () => { photoFailed.value = false })
@@ -168,7 +168,7 @@ const members = [
 .team-photo::before { content: ''; position: absolute; z-index: -1; inset: -7px -9px -10px -13px; background: #b9d7e9; background-image: repeating-linear-gradient(14deg, #ffffff30 0 1px, transparent 1px 4px); mask: url('/images/scrapbook/team-torn-edge.svg') center / 100% 100% no-repeat; transform: rotate(2.6deg); }
 .team-photo::after { content: ''; position: absolute; z-index: -2; inset: 8px -3px -13px -4px; background: #886a4722; filter: blur(10px); transform: rotate(1deg); }
 .team-photo-paper { position: relative; padding: 19px 19px 15px; background-color: #fffaf0; background-image: repeating-linear-gradient(23deg, #9675470c 0 1px, transparent 1px 4px), repeating-linear-gradient(112deg, #fffefa55 0 1px, transparent 1px 7px); mask: url('/images/scrapbook/team-torn-edge.svg') center / 100% 100% no-repeat; }
-.team-photo-paper > img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: contain; background: #ece5d6; border-radius: 0; }
+.team-photo-paper > img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain; background: #ece5d6; border-radius: 0; }
 .team-photo-paper figcaption { position: relative; padding: 19px 10px 15px; font-size: clamp(1.125rem, 1.4vw, 19px); line-height: 1.8; background: transparent; color: #624734; }
 .team-photo-paper figcaption::after { content: ''; display: block; width: 58%; height: 5px; margin: 6px auto 0; background: #e9a3ba; border-radius: 50%; transform: rotate(-1deg); }
 .team-photo-paper figcaption svg { display: inline-block; width: 17px; height: 17px; vertical-align: middle; margin-left: 4px; color: #d98aa5; stroke-width: 1.7; }

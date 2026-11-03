@@ -30,8 +30,8 @@ const activities = [
           <Card class="wall-photo-card">
             <span class="wall-tape" aria-hidden="true"></span>
             <figure>
-              <ImagePreview :src="publicAsset(`/images/team-activities/${activity.file}.png`)" :alt="activity.alt">
-                <img :src="publicAsset(`/images/team-activities/${activity.file}.png`)" :alt="activity.alt" width="1920" height="1080" loading="lazy" decoding="async" />
+              <ImagePreview :src="publicAsset(`/images/team-activities/${activity.file}-enhanced.png`)" :alt="activity.alt">
+                <img :src="publicAsset(`/images/team-activities/${activity.file}-enhanced.png`)" :alt="activity.alt" width="1920" height="1080" loading="lazy" decoding="async" />
               </ImagePreview>
               <figcaption>
                 <span class="wall-photo-label">{{ activity.label }}</span>
@@ -51,12 +51,12 @@ const activities = [
 <style scoped>
 .activity-wall { width: min(1240px, calc(100% - 64px)); margin: 0 auto; padding: 35px 0 65px; color: #54392c; scroll-margin-top: 125px; }
 .wall-heading { text-align: center; margin-bottom: 34px; }
-.wall-heading > p { display: flex; align-items: center; justify-content: center; gap: 9px; font-size: 13px; letter-spacing: 1.4px; color: #396884; font-weight: 600; }
+.wall-heading > p { display: flex; align-items: center; justify-content: center; gap: 9px; font-size: var(--text-small); letter-spacing: 1px; color: #396884; font-weight: 600; }
 .wall-heading > p svg { width: 19px; height: 19px; }
 .wall-heading h2 { margin: 12px 0; font: 600 clamp(27px, 3vw, 38px)/1.5 'Lora', Georgia, serif; }
 .wall-heading h2 em { font-weight: 500; color: #39779f; }
 .wall-heading > span { font-size: 16px; line-height: 1.8; }
-.wall-board { position: relative; padding: 30px 32px 22px; border: 1px solid #d8c7ac; border-radius: 7px; background-color: #f0e5d2; background-image: radial-gradient(#a8895d16 .8px, transparent .8px), repeating-linear-gradient(115deg, #fff8e733 0 1px, transparent 1px 5px); background-size: 6px 6px, auto; box-shadow: inset 0 0 0 7px #fff9ec66, 0 5px 0 #cdbb9c44; }
+.wall-board { position: relative; padding: 30px 32px 22px; border: 1px solid #dfbdc1; border-radius: 20px; background-color: #f3e3de; background-image: radial-gradient(#a8895d16 .8px, transparent .8px), repeating-linear-gradient(115deg, #fff8e733 0 1px, transparent 1px 5px); background-size: 6px 6px, auto; box-shadow: inset 0 0 0 7px #fff7ed66, 0 5px 0 #dbb9c244; }
 .wall-pin { position: absolute; top: 13px; width: 13px; height: 13px; border-radius: 50%; background: radial-gradient(circle at 30% 25%, #fff4cc, #c4a365 55%, #7f673b); border: 1px solid #a58b57; box-shadow: 1px 2px 3px #67503144; }
 .pin-left { left: 14px; }
 .pin-right { right: 14px; }
@@ -65,31 +65,31 @@ const activities = [
 .wall-top-note svg:first-child { color: #7b9db4; }
 .wall-gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; list-style: none; padding: 0; margin: 0; }
 .wall-item { min-width: 0; }
-.wall-item-featured { grid-column: 1 / -1; }
-.wall-photo-card { position: relative; padding: 10px 10px 0; border: 1px solid #e1d3bf; border-radius: 3px; background: #fffdf6; box-shadow: 2px 5px 9px #6b50341a; color: inherit; }
+.wall-item-featured { grid-column: 1 / -1; width: min(840px, 100%); justify-self: center; }
+.wall-photo-card { position: relative; padding: 12px 12px 0; border: 1px solid #e1d3bf; border-radius: 10px; background: #fff7ed; box-shadow: 2px 5px 9px #6b50341a; color: inherit; }
 .wall-item:nth-child(2n) .wall-photo-card { transform: rotate(-.7deg); }
 .wall-item:nth-child(2n + 3) .wall-photo-card { transform: rotate(.7deg); }
 .wall-tape { position: absolute; z-index: 2; left: calc(50% - 36px); top: -12px; width: 72px; height: 24px; background: repeating-linear-gradient(45deg, #c1dce9bb 0 6px, #f8f3e4bb 6px 12px); transform: rotate(-4deg); pointer-events: none; }
 .wall-item:nth-child(2n) .wall-tape { background: repeating-linear-gradient(45deg, #edc1d0bb 0 6px, #fff1e2bb 6px 12px); transform: rotate(4deg); }
 .wall-photo-card figure { margin: 0; }
-.wall-photo-card img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain; background: #eee5d8; }
-.wall-item-featured .wall-photo-card img { max-height: 520px; }
+.wall-photo-card img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain; border-radius: 5px; background: #fff7ed; }
+.wall-item-featured .wall-photo-card img { max-height: none; }
 .wall-photo-card figcaption { position: relative; padding: 18px 40px 20px 10px; }
-.wall-photo-label { font-size: 12px; line-height: 1.7; letter-spacing: .8px; color: #57788e; font-weight: 600; }
+.wall-photo-label { font-size: var(--text-caption); line-height: 1.7; letter-spacing: .8px; color: #57788e; font-weight: 600; }
 .wall-photo-card h3 { margin-top: 5px; font: 600 22px/1.5 'Lora', Georgia, serif; }
-.wall-photo-card figcaption p { margin-top: 5px; font-size: 14px; line-height: 1.85; }
+.wall-photo-card figcaption p { margin-top: 5px; font-size: var(--text-small); line-height: 1.85; }
 .wall-photo-number { position: absolute; right: 9px; bottom: 22px; font: italic 500 20px 'Lora', Georgia, serif; color: #9a8164; }
 .wall-footer { display: flex; align-items: center; justify-content: center; gap: 9px; margin-top: 24px; font: italic 500 16px/1.8 'Lora', Georgia, serif; text-align: center; }
 .wall-footer svg { width: 18px; height: 18px; flex-shrink: 0; color: #b77f96; }
 @media (max-width: 700px) {
   .activity-wall { width: calc(100% - 32px); padding: 25px 0 45px; }
-  .wall-board { padding: 29px 16px 20px; }
+  .wall-board { padding: 29px 12px 20px; }
   .wall-gallery { grid-template-columns: minmax(0, 1fr); gap: 28px; }
-  .wall-item-featured { grid-column: auto; }
+  .wall-item-featured { grid-column: auto; width: 100%; }
   .wall-top-note { font-size: 16px; gap: 9px; }
   .wall-photo-card h3 { font-size: 21px; }
   .wall-photo-card figcaption { padding-left: 5px; }
-  .wall-heading > span { font-size: 15px; }
+  .wall-heading > span { font-size: var(--text-small); }
 }
 @media (prefers-reduced-motion: reduce) {
   .wall-item { opacity: 1 !important; transform: none !important; }
