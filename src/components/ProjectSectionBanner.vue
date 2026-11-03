@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { publicAsset } from '@/lib/publicAsset'
-import { NotebookPen } from '@lucide/vue'
+import { PhNotebook as NotebookPen } from '@phosphor-icons/vue'
 
 withDefaults(defineProps<{
   part: string
@@ -26,7 +26,7 @@ withDefaults(defineProps<{
         <span v-for="chip in chips" :key="chip" class="section-banner-chip" role="listitem">{{ chip }}</span>
       </div>
     </div>
-    <div v-if="variant === 'scrapbook'" class="banner-notebook" aria-hidden="true"><NotebookPen /><span>Cùng nhau<br />bắt đầu.</span></div>
+    <div v-if="variant === 'scrapbook'" class="banner-notebook" aria-hidden="true"><NotebookPen weight="duotone" /><span>Cùng nhau<br />bắt đầu.</span></div>
   </header>
 </template>
 

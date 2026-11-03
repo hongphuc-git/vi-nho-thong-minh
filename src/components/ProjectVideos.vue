@@ -2,7 +2,8 @@
 import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue'
 import { motion } from 'motion-v'
 import { PageFlip } from 'page-flip/dist/js/page-flip.module.js'
-import { ArrowLeft, ArrowRight, CirclePlay, Heart, Play, RotateCcw } from '@lucide/vue'
+import { ArrowLeft, ArrowRight, CirclePlay, Play, RotateCcw } from '@lucide/vue'
+import { PhHeart as Heart } from '@phosphor-icons/vue'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { projectVideos } from '@/data/projectVideos'
@@ -188,7 +189,7 @@ function retryVideo() {
     <header class="album-heading">
       <p class="album-eyebrow">VIDEO DỰ ÁN</p>
       <h2 id="project-videos-title">Gặp nhóm, <em>xem những đoạn phim.</em></h2>
-      <p>Các đoạn phim ngắn do nhóm cung cấp; chưa thay thế video hướng dẫn hoàn chỉnh dự kiến trong hồ sơ.</p>
+      <p>Từ giới thiệu nhóm, quá trình làm sản phẩm đến những dự định tiếp theo. Chọn một đoạn phim trong mục lục để xem.</p>
     </header>
 
     <motion.div v-if="selectedVideo" :initial="{ opacity: 0, y: 14 }" :while-in-view="{ opacity: 1, y: 0 }" :in-view-options="{ once: true }" :transition="{ duration: 0.45 }">
@@ -230,18 +231,18 @@ function retryVideo() {
           </div>
 
           <aside class="book-page book-contents-page" aria-labelledby="book-contents-title">
-            <span class="book-ribbon" aria-hidden="true"><Heart /></span>
+            <span class="book-ribbon" aria-hidden="true"><Heart weight="duotone" /></span>
             <header class="book-contents-heading"><p class="album-eyebrow">NHỮNG TRANG CHUYỆN NHỎ</p><h3 id="book-contents-title">Mục lục thước phim</h3></header>
-            <ol class="book-contents-list">
+            <ol class="book-contents-list" aria-label="Danh sách video dự án, cuộn để xem thêm" tabindex="0">
               <li v-for="(video, index) in projectVideos" :key="video.id">
                 <Button type="button" variant="ghost" class="book-choice" :class="{ 'book-choice-selected': video.id === selectedId }" :aria-pressed="video.id === selectedId" :aria-disabled="Boolean(turningVideo)" :aria-label="`Chọn video ${index + 1}: ${video.title}`" @click="selectVideo(video.id)">
                   <span class="book-choice-number" aria-hidden="true">{{ String(index + 1).padStart(2, '0') }}</span>
                   <span class="book-thumbnail"><img :src="video.poster" alt="" width="1024" height="576" loading="lazy" /><span class="book-thumbnail-play" aria-hidden="true"><Play /></span><span class="book-duration">{{ video.duration }}</span></span>
-                  <span class="book-choice-copy"><span class="book-choice-title">{{ video.title }}</span><span class="book-choice-status"><span v-if="video.id === selectedId" class="book-choice-dot" aria-hidden="true"></span>{{ video.id === selectedId ? (playing ? 'Đang phát' : 'Đang chọn') : 'Khám phá đoạn phim' }}</span></span>
+                  <span class="book-choice-copy"><span class="book-choice-title">{{ video.title }}</span><span v-if="video.id === selectedId" class="book-choice-status"><span class="book-choice-dot" aria-hidden="true"></span>{{ playing ? 'Đang phát' : 'Đang chọn' }}</span></span>
                 </Button>
               </li>
             </ol>
-            <footer class="book-page-footer"><span class="book-footer-number">{{ String(projectVideos.length).padStart(2, '0') }}</span><span class="book-footer-copy">thước phim · Những điều nhỏ, được lưu lại.</span><Heart aria-hidden="true" /></footer>
+            <footer class="book-page-footer"><span class="book-footer-number">{{ String(projectVideos.length).padStart(2, '0') }}</span><span class="book-footer-copy">thước phim · Những điều nhỏ, được lưu lại.</span><Heart weight="duotone" aria-hidden="true" /></footer>
           </aside>
           <div ref="flipLayer" class="album-flip-layer" :class="{ 'album-flip-visible': showPageTurn }" aria-hidden="true" inert></div>
         </div>
@@ -271,10 +272,10 @@ function retryVideo() {
 .book-paper-right { right: 0; border-left: 0; border-radius: 0 24px 30px 0; transform: translate(calc(var(--sheet) * var(--paper-offset-x)), calc(var(--sheet) * var(--paper-offset-y))); }
 .book-paper-stack::after { content: ''; position: absolute; z-index: 10; top: 0; bottom: calc(-8 * var(--paper-offset-y)); left: calc(50% - 14px); width: 28px; background: linear-gradient(90deg, transparent, #bfa58a18 40%, #a98c6c26 50%, #bfa58a18 60%, transparent); pointer-events: none; }
 .book-spread { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; border: 1px solid #ead7bf; border-radius: 22px 22px 27px 27px; background: #fff7ed; box-shadow: 0 2px 4px #76543c1f; }
-.book-page { position: relative; min-width: 0; display: flex; flex-direction: column; padding: clamp(23px, 2.6vw, 37px); background-color: #fff7ed; }
+.book-page { position: relative; min-width: 0; display: flex; flex-direction: column; padding: clamp(20px, 2vw, 28px); background-color: #fff7ed; }
 .book-page.book-player-page { padding: 0; }
 .book-player-content { display: flex; flex-direction: column; flex: 1; min-width: 0; border-radius: inherit; }
-.book-page-face { display: flex; flex-direction: column; flex: 1; min-width: 0; padding: clamp(23px, 2.6vw, 37px); border-radius: inherit; background-color: #fff7ed; background-image: linear-gradient(90deg, #e7d3bb22, transparent 10%, transparent 93%, #9b735b1f); }
+.book-page-face { display: flex; flex-direction: column; flex: 1; min-width: 0; padding: clamp(20px, 2vw, 28px); border-radius: inherit; background-color: #fff7ed; background-image: linear-gradient(90deg, #e7d3bb22, transparent 10%, transparent 93%, #9b735b1f); }
 .book-player-content[inert] { pointer-events: none; }
 .album-flip-layer { position: absolute; inset: 0; z-index: 10; visibility: hidden; pointer-events: none; overflow: hidden; border-radius: inherit; }
 .album-flip-visible { visibility: visible; }
@@ -282,7 +283,7 @@ function retryVideo() {
 .album-flip-layer :deep(.stf__wrapper) { height: 100%; }
 .album-flip-layer :deep(.album-flip-page) { overflow: hidden; background: #fff7ed; color: #583023; }
 .album-flip-layer :deep(.album-flip-page > .book-player-content) { height: 100%; }
-.album-flip-layer :deep(.album-flip-contents) { position: relative; display: flex; flex-direction: column; height: 100%; padding: clamp(23px, 2.6vw, 37px); background-image: linear-gradient(90deg, #9b735b18, transparent 8%, transparent 94%, #e7d3bb22); }
+.album-flip-layer :deep(.album-flip-contents) { position: relative; display: flex; flex-direction: column; height: 100%; padding: clamp(20px, 2vw, 28px); background-image: linear-gradient(90deg, #9b735b18, transparent 8%, transparent 94%, #e7d3bb22); }
 .album-flip-layer :deep(.album-flip-poster) { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: contain; border-radius: 9px; background: #281d18; }
 .book-is-turning > .book-page { visibility: hidden; }
 @media (max-width: 1100px) { .book-page-face { padding: 25px; } .album-flip-layer :deep(.album-flip-contents) { padding: 25px; } }
@@ -295,13 +296,13 @@ function retryVideo() {
 .book-screen { border-radius: 9px; background: #281d18; }
 .book-screen video { display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: inherit; object-fit: contain; background: #281d18; }
 .book-screen video:focus-visible { outline: 3px solid #92516c; outline-offset: 4px; }
-.book-video-copy { padding-block: 20px 24px; }
+.book-video-copy { padding-block: 14px 18px; }
 .book-title-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
 .book-title-row h3 { font-family: 'Lora', Georgia, serif; font-size: clamp(23px, 2.1vw, 29px); font-weight: 600; line-height: 1.5; }
 .book-time { padding: 3px 11px; border: 1px solid #e5c3bc; border-radius: 20px; background: #f9e6dd; color: #6c4538; font-size: var(--text-small); line-height: 1.7; }
-.book-video-copy > p { margin-top: 12px; font-size: var(--text-body); line-height: 1.85; color: #5c4633; }
+.book-video-copy > p { margin-top: 8px; font-size: var(--text-body); line-height: 1.85; color: #5c4633; }
 .book-copy-flourish { display: block; width: 106px; height: 19px; margin-top: 12px; stroke: #bd7189; stroke-width: 1.2; stroke-linecap: round; }
-.book-page-footer { display: flex; align-items: center; gap: 14px; min-height: 52px; margin-top: auto; padding-top: 16px; border-top: 1px solid #dbb4b2; color: #78503e; font-size: var(--text-small); line-height: 1.8; }
+.book-page-footer { display: flex; align-items: center; gap: 14px; min-height: 44px; margin-top: auto; padding-top: 12px; border-top: 1px solid #dbb4b2; color: #78503e; font-size: var(--text-small); line-height: 1.8; }
 .book-footer-number { flex-shrink: 0; font-family: 'Lora', Georgia, serif; font-size: 19px; font-style: italic; font-variant-numeric: tabular-nums; color: #a8556b; }
 .book-footer-copy { flex: 1; min-width: 0; }
 .book-page-footer > svg { width: 18px; height: 18px; flex-shrink: 0; color: #a8556b; }
@@ -310,10 +311,11 @@ function retryVideo() {
 .book-contents-heading { padding-right: 27px; margin-bottom: 18px; }
 .book-contents-heading .album-eyebrow { font-size: var(--text-caption); letter-spacing: 1.5px; }
 .book-contents-heading h3 { margin-top: 10px; font-family: 'Lora', Georgia, serif; font-size: clamp(23px, 2.2vw, 30px); line-height: 1.5; font-weight: 600; }
-.book-contents-list { display: grid; gap: 6px; list-style: none; padding: 0; margin: 0 0 20px; }
+.book-contents-list { display: grid; align-content: start; gap: 6px; max-height: 360px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #ba8894 #f2e2d5; list-style: none; padding: 4px 8px 4px 4px; margin: 0 0 14px; }
+.book-contents-list:focus-visible { outline: 3px solid #92516c; outline-offset: 3px; }
 .book-contents-list li { min-width: 0; }
-.book-contents-list li + li { border-top: 1px solid #e7c8bf; padding-top: 6px; }
-.book-choice { display: grid; grid-template-columns: 24px minmax(110px, 136px) minmax(0, 1fr); align-items: center; gap: 12px; width: 100%; height: auto; min-height: 100px; padding: 10px; white-space: normal; text-align: left; color: #583023; border: 1px solid transparent; border-left: 3px solid transparent; border-radius: 9px; background: transparent; box-shadow: none; }
+.book-contents-list li + li { border-top: 1px solid #e7c8bf; padding-top: 3px; }
+.book-choice { display: grid; grid-template-columns: 24px minmax(80px, 100px) minmax(0, 1fr); align-items: center; gap: 12px; width: 100%; height: auto; min-height: 76px; padding: 7px 8px; white-space: normal; text-align: left; color: #583023; border: 1px solid transparent; border-left: 3px solid transparent; border-radius: 9px; background: transparent; box-shadow: none; }
 .book-choice:hover { background: #f8e7df; color: #583023; }
 .book-choice-selected { border-color: #edccd3; border-left-color: #a44d67; background: #f6dfe6; }
 .book-choice-selected:hover { background: #f0d3de; }
@@ -346,7 +348,7 @@ function retryVideo() {
 @media (prefers-reduced-motion: no-preference) { .book-choice { transition: background-color .2s, border-color .2s; } }
 @media (max-width: 1100px) { .book-page { padding: 25px; }  .book-choice { grid-template-columns: 20px 82px minmax(0, 1fr); gap: 8px; padding-inline: 7px; } .book-choice-title { font-size: var(--text-body); } .book-ribbon { right: 17px; } }
 @media (max-width: 900px) { .video-album { width: calc(100% - 40px); } .book-spread { grid-template-columns: 1fr; } .book-player-page { border-radius: 18px 18px 0 0; background-image: linear-gradient(90deg, #e7d3bb22, transparent 10%); } .book-contents-page { border-left: 0; border-top: 1px solid #dcc3af; border-radius: 0 0 21px 21px; background-image: linear-gradient(180deg, #9b735b14, transparent 20px); padding: 29px 25px 25px; } .book-ribbon { top: -1px; height: 61px; } .book-choice { grid-template-columns: 28px 112px minmax(0, 1fr); gap: 15px; } .book-page-footer { margin-top: 8px; } }
-@media (max-width: 500px) { .video-album { width: calc(100% - 24px); padding-block: 32px 40px; } .album-heading { padding-inline: 4px; margin-bottom: 25px; } .album-heading h2 { font-size: 31px; letter-spacing: -.6px; } .album-heading > p:last-child { font-size: var(--text-body); } .album-eyebrow { font-size: var(--text-caption); letter-spacing: 1.5px; } .video-book { padding: 6px 6px 13px; border-radius: 18px; } .book-page { padding: 23px 17px; } .book-page-heading { font-size: var(--text-caption); letter-spacing: 1px; gap: 10px; } .book-contents-page { padding-top: 26px; } .book-contents-heading h3 { font-size: 24px; } .book-contents-heading .album-eyebrow { font-size: var(--text-caption); letter-spacing: .7px; } .book-choice { grid-template-columns: 21px 82px minmax(0, 1fr); gap: 8px; padding: 10px 6px; min-height: 92px; } .book-choice-number { font-size: var(--text-body); } .book-choice-status { font-size: var(--text-small); } .book-page-footer { gap: 10px; font-size: var(--text-small); } .album-controls { gap: 12px; } .album-controls button { padding-inline: 13px; font-size: var(--text-small); } .album-controls > span { font-size: var(--text-small); } .album-play-note { padding-inline: 6px; text-align: left; } }
+@media (max-width: 500px) { .video-album { width: calc(100% - 24px); padding-block: 32px 40px; } .album-heading { padding-inline: 4px; margin-bottom: 25px; } .album-heading h2 { font-size: 31px; letter-spacing: -.6px; } .album-heading > p:last-child { font-size: var(--text-body); } .album-eyebrow { font-size: var(--text-caption); letter-spacing: 1.5px; } .video-book { padding: 6px 6px 13px; border-radius: 18px; } .book-page { padding: 23px 17px; } .book-page-heading { font-size: var(--text-caption); letter-spacing: 1px; gap: 10px; } .book-contents-page { padding-top: 26px; } .book-contents-heading h3 { font-size: 24px; } .book-contents-heading .album-eyebrow { font-size: var(--text-caption); letter-spacing: .7px; } .book-choice { grid-template-columns: 21px 82px minmax(0, 1fr); gap: 8px; padding: 10px 6px; min-height: 76px; } .book-choice-number { font-size: var(--text-body); } .book-choice-status { font-size: var(--text-small); } .book-page-footer { gap: 10px; font-size: var(--text-small); } .album-controls { gap: 12px; } .album-controls button { padding-inline: 13px; font-size: var(--text-small); } .album-controls > span { font-size: var(--text-small); } .album-play-note { padding-inline: 6px; text-align: left; } }
 @media (max-width: 350px) { .book-choice { grid-template-columns: 18px 68px minmax(0, 1fr); gap: 6px; } .book-contents-heading h3 { font-size: 22px; } .album-controls > span { order: -1; width: 100%; text-align: center; } }
 .book-player-page { border-top-left-radius: 22px; border-bottom-left-radius: 27px; }
 .book-contents-page { border-top-right-radius: 22px; border-bottom-right-radius: 27px; }

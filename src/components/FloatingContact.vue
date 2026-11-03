@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
-import { Phone } from '@lucide/vue'
+import { PhPhone as Phone } from '@phosphor-icons/vue'
 import { Button } from '@/components/ui/button'
 
 const nearContact = ref(false)
@@ -34,7 +34,7 @@ onUnmounted(() => { contactObserver?.disconnect(); heroObserver?.disconnect() })
       aria-label="Gọi liên hệ dự án Ví nhỏ thông minh: 0327 227 803"
       title="Gọi 0327 227 803"
     >
-      <Phone aria-hidden="true" />
+      <Phone weight="duotone" aria-hidden="true" />
     </a>
   </Button>
 </template>

@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { motion } from 'motion-v'
 import { computed, ref } from 'vue'
-import { ArrowUpRight, Check, GraduationCap, Heart, Mail, MessageCircle, Users, NotebookPen } from '@lucide/vue'
+import { ArrowUpRight, Check } from '@lucide/vue'
+import { PhGraduationCap as GraduationCap, PhHeart as Heart, PhEnvelopeSimple as Mail, PhChatCircle as MessageCircle, PhUsers as Users, PhNotebook as NotebookPen } from '@phosphor-icons/vue'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import ImagePreview from '@/components/ImagePreview.vue'
@@ -33,9 +34,9 @@ const trialLink = composeEmail('Hỏi về dùng thử', 'Tôi muốn hỏi về
   <section id="lien-he" class="invitation-section" aria-labelledby="contact-title">
     <header class="invitation-heading">
       <p class="invitation-margin-note">Những kỹ năng nhỏ.<br />Tạo nên<br />thay đổi lớn.<span aria-hidden="true">☺</span></p>
-      <p class="invitation-eyebrow"><MessageCircle aria-hidden="true" /> GÓC KẾT NỐI</p>
+      <p class="invitation-eyebrow"><MessageCircle weight="duotone" aria-hidden="true" /> GÓC KẾT NỐI</p>
       <h2 id="contact-title">Một chiếc ví nhỏ.<br /><em>Một khởi đầu ý nghĩa.</em></h2>
-      <aside class="invitation-pink-note"><span class="invitation-note-tape" aria-hidden="true"></span><p>Giáo dục tài chính<br />cho thế hệ<br />tự tin hơn <Heart aria-hidden="true" /></p></aside>
+      <aside class="invitation-pink-note"><span class="invitation-note-tape" aria-hidden="true"></span><p>Giáo dục tài chính<br />cho thế hệ<br />tự tin hơn <Heart weight="duotone" aria-hidden="true" /></p></aside>
     </header>
 
     <div class="invitation-sheet">
@@ -68,9 +69,9 @@ const trialLink = composeEmail('Hỏi về dùng thử', 'Tôi muốn hỏi về
           <p class="invitation-intro">Chọn nhu cầu bên dưới để soạn lời nhắn gửi cô hướng dẫn và nhóm. Khả năng dùng thử, quy cách bộ cá nhân và thời gian tổ chức sẽ được trao đổi, xác nhận trước.</p>
         </div>
         <div class="invitation-audiences" aria-label="Đối tượng có thể liên hệ">
-          <span><Heart aria-hidden="true" /> Phụ huynh</span>
-          <span><GraduationCap aria-hidden="true" /> Thầy cô</span>
-          <span><Users aria-hidden="true" /> Lớp học & CLB</span>
+          <span><Heart weight="duotone" aria-hidden="true" /> Phụ huynh</span>
+          <span><GraduationCap weight="duotone" aria-hidden="true" /> Thầy cô</span>
+          <span><Users weight="duotone" aria-hidden="true" /> Lớp học & CLB</span>
         </div>
         <figure class="invitation-teacher-poster">
           <span class="teacher-poster-tape" aria-hidden="true"></span>
@@ -79,7 +80,7 @@ const trialLink = composeEmail('Hỏi về dùng thử', 'Tôi muốn hỏi về
         </figure>
         <aside class="invitation-conversation" aria-labelledby="conversation-title">
           <span class="conversation-tape" aria-hidden="true"></span>
-          <div class="conversation-heading"><NotebookPen aria-hidden="true" /><h4 id="conversation-title">Chọn chủ đề liên hệ</h4></div>
+          <div class="conversation-heading"><NotebookPen weight="duotone" aria-hidden="true" /><h4 id="conversation-title">Chọn chủ đề liên hệ</h4></div>
           <p>Chọn chủ đề, rồi bấm “Gửi lời nhắn” bên dưới.</p>
           <ul>
             <li v-for="subject in conversationTopics" :key="subject.title"><Button type="button" variant="outline" class="conversation-choice" :aria-pressed="selectedTopic === subject.title" @click="selectedTopic = subject.title"><span>{{ subject.title }}</span><Check v-if="selectedTopic === subject.title" aria-hidden="true" /><span v-else class="choice-empty" aria-hidden="true"></span></Button></li>
@@ -87,7 +88,7 @@ const trialLink = composeEmail('Hỏi về dùng thử', 'Tôi muốn hỏi về
           <small>Bạn có thể sửa nội dung trước khi gửi.</small>
         </aside>
         <div class="invitation-contact">
-          <Button as-child class="invitation-email-button"><a :href="emailLink"><Mail aria-hidden="true" /><span>Gửi lời nhắn cho dự án</span><ArrowUpRight aria-hidden="true" /></a></Button>
+          <Button as-child class="invitation-email-button"><a :href="emailLink"><Mail weight="duotone" aria-hidden="true" /><span>Gửi lời nhắn cho dự án</span><ArrowUpRight aria-hidden="true" /></a></Button>
         </div>
       </Card>
     </div>

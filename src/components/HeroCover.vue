@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { publicAsset } from '@/lib/publicAsset'
 import { motion } from 'motion-v'
-import { ArrowDown, ArrowUpRight, Coins, GraduationCap, Heart, Play, Star } from '@lucide/vue'
+import { ArrowDown, ArrowUpRight, Play } from '@lucide/vue'
+import { PhCoins as Coins, PhGraduationCap as GraduationCap, PhHeart as Heart, PhStar as Star } from '@phosphor-icons/vue'
 import { Button } from '@/components/ui/button'
 import FallingDecorations from '@/components/FallingDecorations.vue'
 import ImagePreview from '@/components/ImagePreview.vue'
@@ -18,7 +19,7 @@ import ImagePreview from '@/components/ImagePreview.vue'
           <h1 id="project-title">Ví nhỏ<br /><span>thông minh</span></h1>
           <p class="scrap-motto">Ví nhỏ, thói quen lớn.</p>
           <p class="scrap-description">Học cách chi tiêu, tiết kiệm và sẻ chia<br class="scrap-wide-break" /> từ những điều nhỏ mỗi ngày.</p>
-          <div class="scrap-audience"><span><GraduationCap aria-hidden="true" /> Học sinh THCS</span><span class="audience-dot" aria-hidden="true">·</span><span><Coins aria-hidden="true" /> Tiền mô phỏng</span></div>
+          <div class="scrap-audience"><span><GraduationCap weight="duotone" aria-hidden="true" /> Học sinh THCS</span><span class="audience-dot" aria-hidden="true">·</span><span><Coins weight="duotone" aria-hidden="true" /> Tiền mô phỏng</span></div>
           <div class="scrap-actions">
             <Button as-child class="scrap-primary"><a href="#bo-cong-cu">Khám phá bộ công cụ <ArrowUpRight aria-hidden="true" /></a></Button>
             <Button as-child variant="outline" class="scrap-secondary"><a href="#video-du-an"><span class="scrap-play"><Play aria-hidden="true" /></span>Xem video dự án</a></Button>
@@ -34,12 +35,12 @@ import ImagePreview from '@/components/ImagePreview.vue'
             <span class="product-sheet-tape" aria-hidden="true"></span>
             <ImagePreview :src="publicAsset('/images/learning-kit/kit-scrapbook.png')" alt="Bộ công cụ Ví nhỏ thông minh"><img :src="publicAsset('/images/learning-kit/kit-scrapbook.png')" alt="Bộ công cụ Ví nhỏ thông minh gồm ví vải đen, sổ thu chi, bảng mục tiêu, tiền mô phỏng và các thẻ tình huống" width="1448" height="1086" fetchpriority="high" /></ImagePreview>
             <figcaption>
-              <span>Một chiếc ví nhỏ. Nhiều điều để học. <Heart aria-hidden="true" /></span>
+              <span>Một chiếc ví nhỏ. Nhiều điều để học. <Heart weight="duotone" aria-hidden="true" /></span>
             </figcaption>
           </figure>
           <p class="scrap-sticky sticky-pockets"><strong>4 ngăn ví</strong><span aria-hidden="true">←</span></p>
           <p class="scrap-sticky sticky-days"><strong>30 ngày<br />thực hành</strong><span>Lộ trình đề xuất <span aria-hidden="true">✦</span></span></p>
-          <Star class="scrap-star star-bottom" aria-hidden="true" />
+          <Star weight="duotone" class="scrap-star star-bottom" aria-hidden="true" />
           <span class="scrap-coin coin-top" aria-hidden="true"></span>
         </motion.div>
       </div>

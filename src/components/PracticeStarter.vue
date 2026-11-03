@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { BookOpen, Check, Coins, Heart, Layers, MessageCircle, NotebookPen, ShieldCheck, Target, Wallet } from '@lucide/vue'
+import { Check } from '@lucide/vue'
+import { PhBookOpen as BookOpen, PhCoins as Coins, PhHeart as Heart, PhStack as Layers, PhChatCircle as MessageCircle, PhNotebook as NotebookPen, PhShieldCheck as ShieldCheck, PhTarget as Target, PhWallet as Wallet } from '@phosphor-icons/vue'
 
 const steps = [
   { title: 'Mở ra xem nhé', description: 'Cùng khám phá bốn ngăn ví và thử ghi những dòng đầu tiên.', icon: BookOpen },
@@ -24,16 +25,16 @@ const materials = [
         <h4 id="starter-title">Mình cùng thử, <span>từng chút một nhé!</span></h4>
         <ol class="starter-steps">
           <li v-for="(step, index) in steps" :key="step.title">
-            <div class="step-sheet"><span class="step-number" aria-hidden="true">{{ String(index + 1).padStart(2, '0') }}</span><component :is="step.icon" class="step-art" aria-hidden="true" /><h5>{{ step.title }}</h5><p>{{ step.description }}</p></div>
+            <div class="step-sheet"><span class="step-number" aria-hidden="true">{{ String(index + 1).padStart(2, '0') }}</span><component weight="duotone" :is="step.icon" class="step-art" aria-hidden="true" /><h5>{{ step.title }}</h5><p>{{ step.description }}</p></div>
             <svg v-if="index < steps.length - 1" class="step-arrow" viewBox="0 0 55 32" fill="none" aria-hidden="true"><path class="step-arrow-outline" d="M3 22Q26 0 48 17m-10-10 10 10-14 1" /><path d="M3 22Q26 0 48 17" stroke-dasharray="5 4" /><path d="m38 7 10 10-14 1" /></svg>
           </li>
         </ol>
       </div>
       <aside class="starter-checklist" aria-labelledby="starter-materials-title">
         <span class="starter-clip" aria-hidden="true"></span>
-        <div class="checklist-sheet"><p class="starter-eyebrow">NHỮNG NGƯỜI BẠN NHỎ</p><h4 id="starter-materials-title">Những học liệu<br />được giới thiệu</h4><ul><li v-for="item in materials" :key="item.title"><Check class="material-check" aria-hidden="true" /><span class="material-icon"><component :is="item.icon" aria-hidden="true" /></span><span>{{ item.title }}</span></li></ul><p class="starter-scope-note">Danh sách học liệu mẫu; thành phần đóng gói của bộ cá nhân sẽ được nhóm xác nhận khi hoàn thiện quy cách.</p></div>
+        <div class="checklist-sheet"><p class="starter-eyebrow">NHỮNG NGƯỜI BẠN NHỎ</p><h4 id="starter-materials-title">Những học liệu<br />được giới thiệu</h4><ul><li v-for="item in materials" :key="item.title"><Check class="material-check" aria-hidden="true" /><span class="material-icon"><component weight="duotone" :is="item.icon" aria-hidden="true" /></span><span>{{ item.title }}</span></li></ul><p class="starter-scope-note">Danh sách học liệu mẫu; thành phần đóng gói của bộ cá nhân sẽ được nhóm xác nhận khi hoàn thiện quy cách.</p></div>
       </aside>
-      <div class="starter-reassurance"><p><ShieldCheck aria-hidden="true" /><span><strong>Thử trước bằng tiền mô phỏng nhé!</strong><small>Em có thể tập chia tiền, ghi sổ và lựa chọn mà chưa cần dùng tiền thật.</small></span></p><p><Heart aria-hidden="true" /><span><strong>Có người cùng em khám phá.</strong><small>Rủ bố mẹ, thầy cô hoặc một người bạn cùng chơi và kể nhau nghe.</small></span></p></div>
+      <div class="starter-reassurance"><p><ShieldCheck weight="duotone" aria-hidden="true" /><span><strong>Thử trước bằng tiền mô phỏng nhé!</strong><small>Em có thể tập chia tiền, ghi sổ và lựa chọn mà chưa cần dùng tiền thật.</small></span></p><p><Heart weight="duotone" aria-hidden="true" /><span><strong>Có người cùng em khám phá.</strong><small>Rủ bố mẹ, thầy cô hoặc một người bạn cùng chơi và kể nhau nghe.</small></span></p></div>
     </section>
   </div>
 </template>

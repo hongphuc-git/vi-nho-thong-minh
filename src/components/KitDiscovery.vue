@@ -3,7 +3,8 @@ import { publicAsset } from '@/lib/publicAsset'
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { motion } from 'motion-v'
 import QrcodeVue from 'qrcode.vue'
-import { ArrowRight, Calculator, Heart, Star, Wallet } from '@lucide/vue'
+import { ArrowRight } from '@lucide/vue'
+import { PhCalculator as Calculator, PhHeart as Heart, PhStar as Star, PhWallet as Wallet } from '@phosphor-icons/vue'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Dialog } from '@/components/ui/dialog'
@@ -125,11 +126,11 @@ onUnmounted(() => window.removeEventListener('hashchange', syncGuide))
   <section id="qr-cong-cu" class="kit-discovery" aria-labelledby="discovery-title">
     <div class="discovery-shell">
       <header class="discovery-heading">
-        <Wallet class="heading-wallet" aria-hidden="true" />
+        <Wallet weight="duotone" class="heading-wallet" aria-hidden="true" />
         <p class="discovery-eyebrow">BỘ CÔNG CỤ · XEM ẢNH VÀ MỞ HƯỚNG DẪN</p>
         <h2 id="discovery-title" tabindex="-1"><span>Nhỏ gọn trong tay. Đủ đầy để bắt đầu.</span></h2>
         <p>Mỗi học liệu có ảnh phóng to và hướng dẫn riêng. Bấm vào thẻ để đọc, hoặc quét QR để mở trên điện thoại.</p>
-        <Calculator class="heading-calculator" aria-hidden="true" />
+        <Calculator weight="duotone" class="heading-calculator" aria-hidden="true" />
       </header>
 
       <div class="discovery-grid">
@@ -144,7 +145,7 @@ onUnmounted(() => window.removeEventListener('hashchange', syncGuide))
             <div class="discovery-art">
               <span class="discovery-blob" aria-hidden="true"></span>
               <ImagePreview :src="item.image" :alt="item.title"><img :src="item.image" :alt="item.title" loading="lazy" width="240" height="220" /></ImagePreview>
-              <Star v-if="index % 2 === 0" class="card-doodle" aria-hidden="true" /><Heart v-else class="card-doodle" aria-hidden="true" />
+              <Star weight="duotone" v-if="index % 2 === 0" class="card-doodle" aria-hidden="true" /><Heart weight="duotone" v-else class="card-doodle" aria-hidden="true" />
             </div>
             <h3><span>{{ item.title }}</span></h3>
             <p class="discovery-description">{{ item.description }}</p>
@@ -152,8 +153,8 @@ onUnmounted(() => window.removeEventListener('hashchange', syncGuide))
           </Card>
         </motion.div>
       </div>
-      <p class="discovery-local-note"><Wallet aria-hidden="true" /><span><strong>Chọn một công cụ, bắt đầu một điều nhỏ.</strong><br />Bấm “Mở hướng dẫn” để đọc ngay, hoặc quét mã QR bằng điện thoại để cùng thực hành.</span></p>
-      <p class="discovery-footer"><Star aria-hidden="true" /><span>Tự tay thực hành. Từng bước trưởng thành.</span><Heart aria-hidden="true" /></p>
+      <p class="discovery-local-note"><Wallet weight="duotone" aria-hidden="true" /><span><strong>Chọn một công cụ, bắt đầu một điều nhỏ.</strong><br />Bấm “Mở hướng dẫn” để đọc ngay, hoặc quét mã QR bằng điện thoại để cùng thực hành.</span></p>
+      <p class="discovery-footer"><Star weight="duotone" aria-hidden="true" /><span>Tự tay thực hành. Từng bước trưởng thành.</span><Heart weight="duotone" aria-hidden="true" /></p>
 
       <Dialog :open="Boolean(selectedGuide)" appearance="chalkboard" :title="selectedGuide?.title ?? 'Hướng dẫn sử dụng'" :description="selectedGuide?.intro ?? 'Thực hành từng bước cùng Ví nhỏ thông minh.'" @update:open="updateGuideOpen" @close-auto-focus="restoreGuideFocus">
         <ChalkboardGuide v-if="selectedGuide" :key="selectedGuide.id" :titles="selectedGuide.titles" :steps="selectedGuide.steps" :link="selectedGuide.link" :action="selectedGuide.action" @practice="followPracticeLink">

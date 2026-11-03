@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { publicAsset } from '@/lib/publicAsset'
 import { motion } from 'motion-v'
-import { ArrowUpRight, Coins, NotebookPen, Sprout, Heart, Star } from '@lucide/vue'
+import { ArrowUpRight } from '@lucide/vue'
+import { PhCoins as Coins, PhNotebook as NotebookPen, PhPlant as Sprout, PhHeart as Heart, PhStar as Star } from '@phosphor-icons/vue'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import ImagePreview from '@/components/ImagePreview.vue'
@@ -24,16 +25,16 @@ import ImagePreview from '@/components/ImagePreview.vue'
       <div class="summary-sheet-wrap">
         <span class="summary-sheet-tape" aria-hidden="true"></span>
         <span class="summary-sheet-clip" aria-hidden="true"></span>
-        <div class="summary-sheet-doodles" aria-hidden="true"><Star /><Heart /><svg viewBox="0 0 45 40"><path d="m8 22-5-8m18 3 1-12m10 18 10-7" /></svg></div>
+        <div class="summary-sheet-doodles" aria-hidden="true"><Star weight="duotone" /><Heart weight="duotone" /><svg viewBox="0 0 45 40"><path d="m8 22-5-8m18 3 1-12m10 18 10-7" /></svg></div>
 <Card class="summary-idea">
         <div class="summary-idea-copy">
           <p class="idea-eyebrow"><span aria-hidden="true"></span> HỌC TỪ NHỮNG ĐIỀU NHỎ</p>
           <h3>Học cách quản lý tiền từ <em>những lựa chọn nhỏ</em> mỗi ngày.</h3>
           <p class="idea-description">Bốn ngăn ví giúp phân bổ tiền theo mục đích; sổ thu–chi 30 ngày ghi lại việc sử dụng; thẻ tình huống và bảng mục tiêu giúp luyện lựa chọn, lập kế hoạch và tự đánh giá. Các thành phần được dùng cùng nhau trong một quy trình thực hành.</p>
           <ul class="idea-highlights" aria-label="Điểm nổi bật của ý tưởng">
-            <li><Coins aria-hidden="true" />Tiền mô phỏng</li>
-            <li><NotebookPen aria-hidden="true" />Tình huống đời thường</li>
-            <li><Sprout aria-hidden="true" />Gia đình & Nhà trường</li>
+            <li><Coins weight="duotone" aria-hidden="true" />Tiền mô phỏng</li>
+            <li><NotebookPen weight="duotone" aria-hidden="true" />Tình huống đời thường</li>
+            <li><Sprout weight="duotone" aria-hidden="true" />Gia đình & Nhà trường</li>
           </ul>
           <div class="summary-next-actions">
             <Button as-child class="summary-primary-action"><a href="#bo-cong-cu">Khám phá bộ công cụ <ArrowUpRight aria-hidden="true" /></a></Button>

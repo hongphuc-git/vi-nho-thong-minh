@@ -1,0 +1,54 @@
+{
+  "source": "Original files in Vid; unchanged",
+  "video_filter": "hqdn3d=1.0:0.75:1.5:1.0,eq=brightness=0.008:contrast=1.025:gamma=1.045:saturation=1.015,colorbalance=rs=-0.008:bs=0.012:rh=-0.006:bh=0.008:pl=1,unsharp=5:5:0.35:3:3:0",
+  "audio_filter": "highpass=f=75,afftdn=nr=5:nf=-45:tn=1",
+  "loudness_target": "-16 LUFS, -1.5 dBTP, two-pass loudnorm",
+  "application_review": "pending_user",
+  "videos": [
+    {
+      "id": "gioi-thieu-nhom",
+      "audio_input_lufs": "-17.27",
+      "output_bytes": 7256344
+    },
+    {
+      "id": "van-de-hien-nay",
+      "audio_input_lufs": "-17.37",
+      "output_bytes": 15327111
+    },
+    {
+      "id": "tinh-huong",
+      "audio_input_lufs": "-20.92",
+      "output_bytes": 18243970
+    },
+    {
+      "id": "qua-trinh-lam-viec",
+      "audio_input_lufs": "-19.49",
+      "output_bytes": 15916741
+    },
+    {
+      "id": "tao-san-pham",
+      "audio_input_lufs": "-20.17",
+      "output_bytes": 17824245
+    },
+    {
+      "id": "thu-nghiem-san-pham",
+      "audio_input_lufs": "-18.78",
+      "output_bytes": 13592528
+    },
+    {
+      "id": "khao-sat-san-pham",
+      "audio_input_lufs": "-19.10",
+      "output_bytes": 25161099
+    },
+    {
+      "id": "cong-nang-san-pham",
+      "audio_input_lufs": "-20.09",
+      "output_bytes": 19092076
+    },
+    {
+      "id": "du-dinh-tuong-lai",
+      "audio_input_lufs": "-17.06",
+      "output_bytes": 13894170
+    }
+  ]
+}

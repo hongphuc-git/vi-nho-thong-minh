@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { publicAsset } from '@/lib/publicAsset'
-import { ArrowUp, BookOpen, Briefcase, GraduationCap, Heart, Mail, MessageCircle, Phone, Play, School, Send } from '@lucide/vue'
+import { ArrowUp, Play } from '@lucide/vue'
+import { PhBookOpen as BookOpen, PhBriefcase as Briefcase, PhGraduationCap as GraduationCap, PhHeart as Heart, PhEnvelopeSimple as Mail, PhChatCircle as MessageCircle, PhPhone as Phone, PhBuildings as School, PhPaperPlaneTilt as Send } from '@phosphor-icons/vue'
 import { Button } from '@/components/ui/button'
 </script>
 
@@ -9,11 +10,11 @@ import { Button } from '@/components/ui/button'
     <svg class="footer-waves" viewBox="0 0 1440 170" preserveAspectRatio="none" aria-hidden="true"><path d="M0 52C85 5 108 178 231 164S354 116 461 151S598 116 706 148S857 190 976 120S1118 14 1229 62S1357 12 1440 3V170H0Z" fill="#f7d6d2" /><path d="M0 110C91 50 136 180 260 166S434 127 534 159S721 136 831 161S1079 153 1181 94S1342 67 1440 41V170H0Z" fill="#fbe5de" /></svg>
     <div class="footer-content">
       <a class="footer-identity" href="#dau-trang" aria-label="Ví nhỏ thông minh — về đầu trang"><img :src="publicAsset('/images/vi-nho-logo.png')" alt="" width="1280" height="1280" loading="lazy" /><span><strong>Ví nhỏ<br />thông minh</strong><small>Ví nhỏ – Thói quen lớn.</small></span></a>
-      <nav class="footer-links" aria-label="Liên kết nhanh"><h2>Khám phá<span aria-hidden="true">✦</span></h2><a href="#tom-tat"><BookOpen aria-hidden="true" />Dự án</a><a href="#bo-cong-cu"><Briefcase aria-hidden="true" />Bộ công cụ</a><a href="#trai-nghiem"><Play aria-hidden="true" />Trải nghiệm</a><a href="#hoi-dap"><MessageCircle aria-hidden="true" />Hỏi đáp</a></nav>
-      <address class="footer-contact"><p><School aria-hidden="true" /><span>Trường THCS Thượng Long<br />Phân hiệu Phúc Khánh</span></p><a href="tel:0327227803"><Phone aria-hidden="true" />0327 227 803</a><a href="mailto:thuha03ulis@gmail.com"><Mail aria-hidden="true" /><span>thuha03ulis@gmail.com</span></a></address>
+      <nav class="footer-links" aria-label="Liên kết nhanh"><h2>Khám phá<span aria-hidden="true">✦</span></h2><a href="#tom-tat"><BookOpen weight="duotone" aria-hidden="true" />Dự án</a><a href="#bo-cong-cu"><Briefcase weight="duotone" aria-hidden="true" />Bộ công cụ</a><a href="#trai-nghiem"><Play aria-hidden="true" />Trải nghiệm</a><a href="#hoi-dap"><MessageCircle weight="duotone" aria-hidden="true" />Hỏi đáp</a></nav>
+      <address class="footer-contact"><p><School weight="duotone" aria-hidden="true" /><span>Trường THCS Thượng Long<br />Phân hiệu Phúc Khánh</span></p><a href="tel:0327227803"><Phone weight="duotone" aria-hidden="true" />0327 227 803</a><a href="mailto:thuha03ulis@gmail.com"><Mail weight="duotone" aria-hidden="true" /><span>thuha03ulis@gmail.com</span></a></address>
     </div>
-    <div class="footer-doodles" aria-hidden="true"><Send class="footer-plane" /><svg class="footer-flight" viewBox="0 0 140 70"><path d="M5 60Q37 20 72 38T133 4" fill="none" stroke="#e8aca8" stroke-width="2" stroke-dasharray="6 7" stroke-linecap="round" /></svg><div class="footer-books"><i></i><i></i><GraduationCap /></div></div>
-    <div class="footer-colophon"><p>© 2026 Nhóm 9B1 · Ví nhỏ thông minh</p><span>Làm từ những điều nhỏ <Heart aria-hidden="true" /> Dự án học sinh · 2026–2027</span><Button as-child variant="ghost" class="footer-top"><a href="#dau-trang"><ArrowUp aria-hidden="true" />Về đầu trang</a></Button></div>
+    <div class="footer-doodles" aria-hidden="true"><Send weight="duotone" class="footer-plane" /><svg class="footer-flight" viewBox="0 0 140 70"><path d="M5 60Q37 20 72 38T133 4" fill="none" stroke="#e8aca8" stroke-width="2" stroke-dasharray="6 7" stroke-linecap="round" /></svg><div class="footer-books"><i></i><i></i><GraduationCap weight="duotone" /></div></div>
+    <div class="footer-colophon"><p>© 2026 Nhóm 9B1 · Ví nhỏ thông minh</p><span>Làm từ những điều nhỏ <Heart weight="duotone" aria-hidden="true" /> Dự án học sinh · 2026–2027</span><Button as-child variant="ghost" class="footer-top"><a href="#dau-trang"><ArrowUp aria-hidden="true" />Về đầu trang</a></Button></div>
   </footer>
 </template>
 

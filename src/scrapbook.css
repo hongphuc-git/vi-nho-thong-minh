@@ -235,6 +235,20 @@ body {
   background-color: var(--surface-paper);
 }
 
+/* Duotone illustrations share the stationery palette; controls keep their compact size. */
+#app .pocket-icon { width: 52px; height: 52px; color: #52763b; background: #f5fae8; border: 2px solid #fffaf0; }
+#app .pocket-icon svg { width: 32px; height: 32px; }
+#app .wallet-yellow .pocket-icon { color: #98651c; background: #fff4ce; }
+#app .wallet-blue .pocket-icon { color: #326889; background: #e9f5fc; }
+#app .wallet-pink .pocket-icon { color: #a44d6d; background: #fff0f5; }
+#app .crew-task-icon { display: grid; place-items: center; flex-shrink: 0; width: 46px; height: 46px; border-radius: 14px; background: #fffaf0b3; }
+#app .crew-task-icon svg { width: 30px; height: 30px; }
+#app .starter-steps > li:nth-child(1) .step-art { color: #356c91; }
+#app .starter-steps > li:nth-child(2) .step-art { color: #a47423; }
+#app .starter-steps > li:nth-child(3) .step-art { color: #aa5475; }
+#app .material-icon { width: 40px; height: 40px; }
+#app .material-icon svg { width: 27px; height: 27px; }
+
 /* Shared reading scale; keep prose spacious and labels legible on every screen. */
 body { font-size: var(--text-body); line-height: 1.75; }
 #app .navigation-pill { font-size: var(--text-small); height: auto; min-height: 46px; }

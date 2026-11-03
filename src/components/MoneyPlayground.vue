@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { motion } from 'motion-v'
-import { ArrowRight, Check, Coins, Heart, Lightbulb, Minus, Plus, RotateCcw, ShieldCheck, Sparkles } from '@lucide/vue'
+import { ArrowRight, Check, Minus, Plus, RotateCcw } from '@lucide/vue'
+import { PhCoins as Coins, PhHeart as Heart, PhLightbulb as Lightbulb, PhShieldCheck as ShieldCheck, PhSparkle as Sparkles } from '@phosphor-icons/vue'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { walletPockets } from '@/data/walletPockets'
@@ -55,7 +56,7 @@ function focusPocket(id: string) {
 <template>
   <section id="trai-nghiem" class="practice-section" aria-labelledby="playground-title">
     <div class="practice-section-divider" aria-hidden="true">
-      <span></span><span class="practice-divider-detail"><Sparkles /><Heart /><Sparkles /></span><span></span>
+      <span></span><span class="practice-divider-detail"><Sparkles weight="duotone" /><Heart weight="duotone" /><Sparkles weight="duotone" /></span><span></span>
     </div>
     <div class="practice-shell">
       <header class="practice-heading">
@@ -66,7 +67,7 @@ function focusPocket(id: string) {
       <div class="practice-grid">
         <Card class="practice-ledger">
           <header class="practice-panel-heading"><div><p class="practice-eyebrow">01 / TỰ TAY PHÂN CHIA</p><h3>Chiếc ví của em</h3></div><Button variant="ghost" type="button" class="practice-reset" @click="reset"><RotateCcw aria-hidden="true" /><span>Làm lại</span></Button></header>
-          <div class="practice-banknote"><Coins aria-hidden="true" /><div><span>HÔM NAY EM CÓ</span><strong>100.000<small>đ</small></strong></div><span class="practice-banknote-seal">Tiền<br />mô phỏng</span></div>
+          <div class="practice-banknote"><Coins weight="duotone" aria-hidden="true" /><div><span>HÔM NAY EM CÓ</span><strong>100.000<small>đ</small></strong></div><span class="practice-banknote-seal">Tiền<br />mô phỏng</span></div>
           <div class="practice-wallet-scene">
             <img :src="publicAsset('/images/learning-kit/practice-open-wallet.png')" alt="Minh họa ví vải đen mở nắp, nút bấm bạc và bốn ngăn màu bên trong" class="practice-wallet-image" loading="lazy" />
             <div class="practice-wallet-tabs" role="group" aria-label="Chọn ngăn ví để điều chỉnh tiền">
@@ -76,18 +77,18 @@ function focusPocket(id: string) {
           <p class="practice-instruction">Chọn ngăn ví, kéo thanh trượt hoặc bấm + / −. Mỗi bước là 5.000đ.</p>
           <div class="practice-allocations">
             <div v-for="item in allocations" :key="item.id" class="practice-allocation" :class="[`practice-${item.color}`, { 'practice-allocation-active': selectedPocket === item.id }]" @focusin="selectedPocket = item.id">
-              <div class="practice-allocation-label"><label :for="`amount-${item.id}`"><span class="practice-pocket-icon"><component :is="item.icon" aria-hidden="true" /></span>{{ item.label }}</label><output :for="`amount-${item.id}`">{{ currency.format(item.amount * 1000) }}<small>đ</small></output></div>
+              <div class="practice-allocation-label"><label :for="`amount-${item.id}`"><span class="practice-pocket-icon"><component weight="duotone" :is="item.icon" aria-hidden="true" /></span>{{ item.label }}</label><output :for="`amount-${item.id}`">{{ currency.format(item.amount * 1000) }}<small>đ</small></output></div>
               <div class="practice-slider-row"><Button type="button" variant="ghost" size="icon" :aria-label="`Giảm ${item.label} 5.000 đồng`" :disabled="item.amount <= 0" @click="setAmount(item.id, item.amount - 5)"><Minus aria-hidden="true" /></Button><input :id="`amount-${item.id}`" type="range" min="0" max="100" step="5" :value="item.amount" :style="{ '--amount': `${item.amount}%` }" :aria-valuetext="`${currency.format(item.amount * 1000)} đồng`" @input="updateAmount(item.id, $event)" /><Button type="button" variant="ghost" size="icon" :aria-label="`Tăng ${item.label} 5.000 đồng`" :disabled="item.amount >= 100" @click="setAmount(item.id, item.amount + 5)"><Plus aria-hidden="true" /></Button></div>
             </div>
           </div>
           <div class="practice-allocation-bar" role="img" :aria-label="`Các khoản đã chia: ${allocationSummary}`"><span v-for="item in allocations" :key="item.id" :class="`practice-${item.color}`" :style="{ flexGrow: item.amount, flexBasis: '0%' }"></span></div>
           <div class="practice-budget-status" :class="{ 'practice-budget-over': remaining < 0, 'practice-budget-done': remaining === 0 }" role="status"><div><span class="practice-budget-label">ĐÃ PHÂN BỔ</span><strong>{{ currency.format(total * 1000) }}<small>đ</small></strong></div><p v-if="remaining === 0"><Check aria-hidden="true" /> Vừa đủ ngân sách!</p><p v-else-if="remaining > 0">Còn {{ currency.format(remaining * 1000) }}đ<br />để em cân nhắc thêm.</p><p v-else>Vượt {{ currency.format(-remaining * 1000) }}đ.<br />Mình điều chỉnh lại nhé!</p></div>
-          <p class="practice-footnote"><Lightbulb aria-hidden="true" /> Không có tỷ lệ chia cố định. Hãy cân nhắc nhu cầu và lý do cho mỗi khoản tiền.</p>
+          <p class="practice-footnote"><Lightbulb weight="duotone" aria-hidden="true" /> Không có tỷ lệ chia cố định. Hãy cân nhắc nhu cầu và lý do cho mỗi khoản tiền.</p>
         </Card>
 
         <div class="practice-scenario-stack">
           <Card class="practice-scenario">
-            <header class="practice-scenario-heading"><span><Sparkles aria-hidden="true" /> THẺ TÌNH HUỐNG</span><span>{{ scenario.id }}</span></header>
+            <header class="practice-scenario-heading"><span><Sparkles weight="duotone" aria-hidden="true" /> THẺ TÌNH HUỐNG</span><span>{{ scenario.id }}</span></header>
             <div class="scenario-picker" role="group" aria-label="Chọn một trong năm tình huống"><Button v-for="item in practiceScenarios" :key="item.id" variant="ghost" type="button" :aria-pressed="scenario.id === item.id" :aria-label="`${item.id}: ${item.title}`" :aria-controls="'practice-scenario-content'" @click="selectScenario(item)">{{ item.id }}</Button></div>
             <div id="practice-scenario-content" :key="scenario.id">
             <div v-if="scenario.id === 'TH01'" class="practice-scenario-art" aria-hidden="true">
@@ -112,13 +113,13 @@ function focusPocket(id: string) {
             <div class="practice-answers" role="group" aria-label="Chọn cách xử lý tình huống">
               <motion.div v-for="(answer, index) in answers" :key="answer.id" :while-hover="{ x: 3 }" :transition="{ type: 'spring', stiffness: 300, damping: 24 }"><Button variant="outline" type="button" class="practice-answer" :class="{ 'practice-answer-selected': selectedAnswer === answer.id }" :aria-pressed="selectedAnswer === answer.id" @click="selectedAnswer = answer.id"><span class="practice-answer-letter" aria-hidden="true">{{ String.fromCharCode(65 + index) }}</span><span>{{ answer.text }}</span><Check v-if="selectedAnswer === answer.id" aria-hidden="true" /><ArrowRight v-else aria-hidden="true" /></Button></motion.div>
             </div>
-            <div class="practice-feedback-region" aria-live="polite" aria-atomic="true"><motion.div v-if="feedback" :key="`${scenario.id}-${feedback.id}`" class="practice-feedback" :class="{ 'practice-feedback-positive': feedback.correct }" :initial="{ opacity: 0, y: 6 }" :animate="{ opacity: 1, y: 0 }" :transition="{ duration: .2 }"><Lightbulb aria-hidden="true" /><div><strong>{{ feedback.correct ? 'Một lựa chọn có cân nhắc!' : 'Mình cùng nghĩ thêm nhé.' }}</strong><p>{{ feedback.feedback }}</p></div></motion.div><p v-else class="practice-answer-hint">Chọn một phương án để mở lời gợi ý từ chiếc ví nhỏ.</p></div>
+            <div class="practice-feedback-region" aria-live="polite" aria-atomic="true"><motion.div v-if="feedback" :key="`${scenario.id}-${feedback.id}`" class="practice-feedback" :class="{ 'practice-feedback-positive': feedback.correct }" :initial="{ opacity: 0, y: 6 }" :animate="{ opacity: 1, y: 0 }" :transition="{ duration: .2 }"><Lightbulb weight="duotone" aria-hidden="true" /><div><strong>{{ feedback.correct ? 'Một lựa chọn có cân nhắc!' : 'Mình cùng nghĩ thêm nhé.' }}</strong><p>{{ feedback.feedback }}</p></div></motion.div><p v-else class="practice-answer-hint">Chọn một phương án để mở lời gợi ý từ chiếc ví nhỏ.</p></div>
             </div>
-            <p class="practice-handnote"><Heart aria-hidden="true" /> Học từ lựa chọn, lớn lên từng ngày.</p>
+            <p class="practice-handnote"><Heart weight="duotone" aria-hidden="true" /> Học từ lựa chọn, lớn lên từng ngày.</p>
           </Card>
         </div>
       </div>
-      <p class="practice-privacy"><ShieldCheck aria-hidden="true" /><span>Em có thể thử nhiều cách chia tiền và cùng tìm hiểu qua từng tình huống.<br />Các lựa chọn chỉ được dùng trong lúc thực hành và không được lưu lại khi em rời trang.</span></p>
+      <p class="practice-privacy"><ShieldCheck weight="duotone" aria-hidden="true" /><span>Em có thể thử nhiều cách chia tiền và cùng tìm hiểu qua từng tình huống.<br />Các lựa chọn chỉ được dùng trong lúc thực hành và không được lưu lại khi em rời trang.</span></p>
     </div>
   </section>
 </template>

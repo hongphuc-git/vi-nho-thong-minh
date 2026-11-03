@@ -1,4 +1,4 @@
-import { BookOpen, CalendarDays, ShoppingBag, Bike, Pencil } from '@lucide/vue'
+import { PhBookOpen as BookOpen, PhCalendarDots as CalendarDays, PhShoppingBag as ShoppingBag, PhBicycle as Bike, PhPencil as Pencil } from '@phosphor-icons/vue'
 import type { Component } from 'vue'
 
 export interface PracticeScenario {

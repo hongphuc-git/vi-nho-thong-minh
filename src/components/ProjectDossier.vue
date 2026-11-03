@@ -2,7 +2,8 @@
 import { ref } from 'vue'
 import type { Component } from 'vue'
 import { motion } from 'motion-v'
-import { ChevronDown, Handshake, Settings, Gem, Users, UserRound, Database, Truck, Receipt, ChartColumn, Lightbulb, Pencil, Ruler, Star, Sparkles, Coins, Send, Heart } from '@lucide/vue'
+import { ChevronDown } from '@lucide/vue'
+import { PhHandshake as Handshake, PhGear as Settings, PhDiamond as Gem, PhUsers as Users, PhUser as UserRound, PhDatabase as Database, PhTruck as Truck, PhReceipt as Receipt, PhChartBar as ChartColumn, PhLightbulb as Lightbulb, PhPencil as Pencil, PhRuler as Ruler, PhStar as Star, PhSparkle as Sparkles, PhCoins as Coins, PhPaperPlaneTilt as Send, PhHeart as Heart } from '@phosphor-icons/vue'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { collapseFromButton, returnToCollapsedHeading } from '@/lib/collapse'
@@ -150,7 +151,7 @@ const canvasPreview = [
                 </ul>
               </article>
             </div>
-            <p class="canvas-board-motto">Mỗi mảnh ghép, một phần việc chung. <Heart aria-hidden="true" /></p>
+            <p class="canvas-board-motto">Mỗi mảnh ghép, một phần việc chung. <Heart weight="duotone" aria-hidden="true" /></p>
             <p class="canvas-note">Mô hình dự kiến đến ngày 01.11.2026 của dự án “Ví nhỏ thông minh”. Các mức giá, chi phí và hướng mở rộng nêu trên cần tiếp tục được xác minh khi triển khai.</p>
             <Button type="button" variant="ghost" class="collapse-button" @click="collapseFromButton">Thu gọn mô hình <ChevronDown aria-hidden="true" /></Button>
           </div>

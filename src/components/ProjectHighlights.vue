@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { motion } from 'motion-v'
-import { Banknote, BookOpen, Heart, LayoutDashboard, Layers, Pause, PiggyBank, Play, ShoppingBag, Target } from '@lucide/vue'
+import { LayoutDashboard, Pause, Play } from '@lucide/vue'
+import { PhMoney as Banknote, PhBookOpen as BookOpen, PhHeart as Heart, PhStack as Layers, PhPiggyBank as PiggyBank, PhShoppingBag as ShoppingBag, PhTarget as Target } from '@phosphor-icons/vue'
 import { Button } from '@/components/ui/button'
 
 const paused = ref(false)
@@ -69,7 +70,7 @@ const learningTopics = [
       <p class="sr-only">Nội dung thực hành: {{ learningTopics.map(topic => topic.label).join(', ') }}.</p>
       <div ref="tickerWindow" class="ticker-window" aria-hidden="true">
         <div ref="tickerMeasure" class="ticker-sequence ticker-measure">
-          <span v-for="topic in learningTopics" :key="topic.label"><component :is="topic.icon" />{{ topic.label }}</span>
+          <span v-for="topic in learningTopics" :key="topic.label"><component weight="duotone" :is="topic.icon" />{{ topic.label }}</span>
         </div>
         <motion.div
           v-if="!paused"
@@ -81,15 +82,15 @@ const learningTopics = [
         >
           <div v-for="copy in 2" :key="copy" class="ticker-group">
             <div v-for="repeat in repetitions" :key="repeat" class="ticker-sequence">
-              <span v-for="topic in learningTopics" :key="topic.label"><component :is="topic.icon" />{{ topic.label }}</span>
+              <span v-for="topic in learningTopics" :key="topic.label"><component weight="duotone" :is="topic.icon" />{{ topic.label }}</span>
             </div>
           </div>
         </motion.div>
         <div v-else class="ticker-static">
-          <span v-for="topic in learningTopics" :key="topic.label"><component :is="topic.icon" />{{ topic.label }}</span>
+          <span v-for="topic in learningTopics" :key="topic.label"><component weight="duotone" :is="topic.icon" />{{ topic.label }}</span>
         </div>
         <div class="ticker-reduced">
-          <span v-for="topic in learningTopics" :key="topic.label"><component :is="topic.icon" />{{ topic.label }}</span>
+          <span v-for="topic in learningTopics" :key="topic.label"><component weight="duotone" :is="topic.icon" />{{ topic.label }}</span>
         </div>
       </div>
       <Button

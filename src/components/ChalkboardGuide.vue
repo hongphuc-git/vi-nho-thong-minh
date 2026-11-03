@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { motion, useReducedMotion } from 'motion-v'
-import { ArrowRight, FileText, Lightbulb, Calculator, Users, Heart } from '@lucide/vue'
+import { ArrowRight } from '@lucide/vue'
+import { PhFileText as FileText, PhLightbulb as Lightbulb, PhCalculator as Calculator, PhUsers as Users, PhHeart as Heart } from '@phosphor-icons/vue'
 import { Button } from '@/components/ui/button'
 
 const props = defineProps<{ titles: string[]; steps: string[]; link: string; action: string }>()
@@ -29,7 +30,7 @@ const lines = computed(() => {
       </li>
     </ol>
     <slot />
-    <div class="chalk-actions"><span><Heart aria-hidden="true" />Mỗi lựa chọn, một điều để học.</span><Button as-child class="chalk-practice"><a :href="link" @click="emit('practice', link)">{{ action }}<ArrowRight aria-hidden="true" /></a></Button></div>
+    <div class="chalk-actions"><span><Heart weight="duotone" aria-hidden="true" />Mỗi lựa chọn, một điều để học.</span><Button as-child class="chalk-practice"><a :href="link" @click="emit('practice', link)">{{ action }}<ArrowRight aria-hidden="true" /></a></Button></div>
     <div class="chalk-tray" aria-hidden="true"><i></i><i></i><span></span></div>
   </motion.div>
 </template>

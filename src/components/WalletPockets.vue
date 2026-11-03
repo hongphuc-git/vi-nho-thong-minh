@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { motion } from 'motion-v'
-import { ArrowDown, ArrowUpRight, Coins, Heart, Sparkles, Star, Wallet } from '@lucide/vue'
+import { ArrowDown, ArrowUpRight } from '@lucide/vue'
+import { PhCoins as Coins, PhHeart as Heart, PhSparkle as Sparkles, PhStar as Star, PhWallet as Wallet } from '@phosphor-icons/vue'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { walletPockets } from '@/data/walletPockets'
@@ -10,7 +11,7 @@ import { walletPockets } from '@/data/walletPockets'
   <section id="bon-ngan-vi" class="wallet-learning-section" aria-labelledby="pockets-title">
     <div class="wallet-pockets-shell">
       <header class="wallet-pockets-heading">
-        <span class="wallet-sticker" aria-hidden="true"><Wallet /><Star /></span>
+        <span class="wallet-sticker" aria-hidden="true"><Wallet weight="duotone" /><Star weight="duotone" /></span>
         <div><p class="wallet-eyebrow">MỞ CHIẾC VÍ · HIỂU TỪNG LỰA CHỌN</p><h2 id="pockets-title">Bốn ngăn nhỏ.<br /><em>Bốn cách lớn lên.</em></h2></div>
         <div class="wallet-heading-note"><span aria-hidden="true">✦</span><p>Học cách cân nhắc điều cần,<br />dành dụm điều muốn<br />và sẻ chia điều có.</p></div>
       </header>
@@ -19,17 +20,17 @@ import { walletPockets } from '@/data/walletPockets'
         <motion.article v-for="pocket in walletPockets" :key="pocket.number" class="wallet-pocket-item" :class="`wallet-${pocket.color}`" :while-hover="{ y: -7 }" :transition="{ type: 'spring', stiffness: 260, damping: 22 }">
           <div class="pocket-receipt" aria-hidden="true"><span>{{ pocket.label }}</span><i></i></div>
           <Card class="wallet-pocket-front">
-            <div class="wallet-pocket-top"><span class="pocket-icon"><component :is="pocket.icon" aria-hidden="true" /></span><span class="pocket-index">NGĂN <strong>{{ pocket.number }}</strong></span></div>
+            <div class="wallet-pocket-top"><span class="pocket-icon"><component weight="duotone" :is="pocket.icon" aria-hidden="true" /></span><span class="pocket-index">NGĂN <strong>{{ pocket.number }}</strong></span></div>
             <h3>{{ pocket.name }}</h3><p class="pocket-description">{{ pocket.description }}</p>
             <div class="pocket-example"><span class="example-label">CHẲNG HẠN…</span><p>{{ pocket.example }}</p></div>
-            <p class="pocket-reminder">{{ pocket.reminder }} <Heart v-if="pocket.number === '04'" aria-hidden="true" /><Sparkles v-else aria-hidden="true" /></p>
+            <p class="pocket-reminder">{{ pocket.reminder }} <Heart weight="duotone" v-if="pocket.number === '04'" aria-hidden="true" /><Sparkles weight="duotone" v-else aria-hidden="true" /></p>
             <span class="pocket-seam" aria-hidden="true"></span>
           </Card>
         </motion.article>
       </div>
 
       <footer class="wallet-pockets-footer">
-        <div class="wallet-footer-note"><span class="wallet-footer-icon" aria-hidden="true"><Coins /></span><div><strong>Chia tiền phù hợp với nhu cầu của em.</strong><p>Em có thể điều chỉnh số tiền trong từng ngăn theo những khoản cần chi và mục tiêu muốn dành dụm.</p></div></div>
+        <div class="wallet-footer-note"><span class="wallet-footer-icon" aria-hidden="true"><Coins weight="duotone" /></span><div><strong>Chia tiền phù hợp với nhu cầu của em.</strong><p>Em có thể điều chỉnh số tiền trong từng ngăn theo những khoản cần chi và mục tiêu muốn dành dụm.</p></div></div>
         <Button as-child class="wallet-try-button"><a href="#trai-nghiem">Thực hành với 100.000đ <ArrowUpRight aria-hidden="true" /></a></Button>
       </footer>
       <p class="wallet-next-step"><ArrowDown aria-hidden="true" /> Cùng thử phân chia tiền mô phỏng vào bốn ngăn ví.</p>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { motion } from 'motion-v'
-import { Camera, Heart, Star } from '@lucide/vue'
+import { PhCamera as Camera, PhHeart as Heart, PhStar as Star } from '@phosphor-icons/vue'
 import { Card } from '@/components/ui/card'
 import ImagePreview from '@/components/ImagePreview.vue'
 import { publicAsset } from '@/lib/publicAsset'
@@ -17,14 +17,14 @@ const activities = [
 <template>
   <section id="hoat-dong-nhom" class="activity-wall" aria-labelledby="activity-wall-title">
     <header class="wall-heading">
-      <p><Camera aria-hidden="true" /> NHẬT KÝ BẰNG ẢNH</p>
+      <p><Camera weight="duotone" aria-hidden="true" /> NHẬT KÝ BẰNG ẢNH</p>
       <h2 id="activity-wall-title">Những lúc <em>chúng mình cùng làm.</em></h2>
       <span>Từ bàn học đến những lần chia sẻ trước lớp.</span>
     </header>
     <div class="wall-board">
       <span class="wall-pin pin-left" aria-hidden="true"></span>
       <span class="wall-pin pin-right" aria-hidden="true"></span>
-      <div class="wall-top-note"><Star aria-hidden="true" /><span>Tường hoạt động của chúng mình</span><Heart aria-hidden="true" /></div>
+      <div class="wall-top-note"><Star weight="duotone" aria-hidden="true" /><span>Tường hoạt động của chúng mình</span><Heart weight="duotone" aria-hidden="true" /></div>
       <ul class="wall-gallery" aria-label="Ảnh hoạt động nhóm">
         <motion.li v-for="(activity, index) in activities" :key="activity.file" class="wall-item" :class="{ 'wall-item-featured': activity.featured }" :initial="{ opacity: 0, y: 12 }" :while-in-view="{ opacity: 1, y: 0 }" :in-view-options="{ once: true }" :transition="{ duration: .35 }">
           <Card class="wall-photo-card">
@@ -43,7 +43,7 @@ const activities = [
           </Card>
         </motion.li>
       </ul>
-      <footer class="wall-footer"><Heart aria-hidden="true" /> Mỗi bức ảnh, một phần hành trình cùng nhau.</footer>
+      <footer class="wall-footer"><Heart weight="duotone" aria-hidden="true" /> Mỗi bức ảnh, một phần hành trình cùng nhau.</footer>
     </div>
   </section>
 </template>

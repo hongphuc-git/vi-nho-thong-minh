@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Send, Heart, Star, Pencil } from '@lucide/vue'
+import { PhPaperPlaneTilt as Send, PhHeart as Heart, PhStar as Star, PhPencil as Pencil } from '@phosphor-icons/vue'
 </script>
 
 <template>
@@ -9,8 +9,8 @@ import { Send, Heart, Star, Pencil } from '@lucide/vue'
       <g fill="#b0c589" stroke="#789460" stroke-width="1.3"><path d="M35 132Q0 130 6 99Q29 101 35 132Z" /><path d="M46 111Q36 78 62 64Q68 93 46 111Z" /><path d="M62 87Q81 58 107 72Q93 93 62 87Z" /><path d="M78 54Q70 21 98 8Q101 38 78 54Z" /><path d="M25 164Q38 135 62 147Q53 172 25 164Z" /></g>
       <g fill="#f4d180"><ellipse cx="18" cy="60" rx="5" ry="10" /><ellipse cx="18" cy="60" rx="5" ry="10" transform="rotate(60 18 60)" /><ellipse cx="18" cy="60" rx="5" ry="10" transform="rotate(120 18 60)" /><circle cx="18" cy="60" r="3" fill="#c79137" /></g>
     </svg>
-    <div class="plane-note"><p>Những lựa chọn nhỏ,<br />tạo nên một<br />tương lai tốt hơn.</p><Send /><svg viewBox="0 0 150 50"><path d="M5 35Q65 63 77 23Q85-5 55 10Q35 32 90 35Q126 39 145 4" /></svg></div>
-    <Heart class="art-heart" /><Star class="art-star" /><Pencil class="art-pencil" />
+    <div class="plane-note"><p>Những lựa chọn nhỏ,<br />tạo nên một<br />tương lai tốt hơn.</p><Send weight="duotone" /><svg viewBox="0 0 150 50"><path d="M5 35Q65 63 77 23Q85-5 55 10Q35 32 90 35Q126 39 145 4" /></svg></div>
+    <Heart weight="duotone" class="art-heart" /><Star weight="duotone" class="art-star" /><Pencil weight="duotone" class="art-pencil" />
     <svg class="bottom-leaves" viewBox="0 0 120 210" fill="none"><path d="M8 205Q28 112 99 11" stroke="#789460" stroke-width="2" /><g fill="#b0c589" stroke="#789460"><path d="M35 132Q0 130 6 99Q29 101 35 132Z" /><path d="M46 111Q36 78 62 64Q68 93 46 111Z" /><path d="M62 87Q81 58 107 72Q93 93 62 87Z" /><path d="M78 54Q70 21 98 8Q101 38 78 54Z" /><path d="M25 164Q38 135 62 147Q53 172 25 164Z" /></g></svg>
   </div>
 </template>

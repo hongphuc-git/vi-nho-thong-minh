@@ -1,4 +1,4 @@
-import { Heart, PiggyBank, ShoppingBag, Target } from '@lucide/vue'
+import { PhHeart as Heart, PhPiggyBank as PiggyBank, PhShoppingBag as ShoppingBag, PhTarget as Target } from '@phosphor-icons/vue'
 
 export const walletPockets = [
   { number: '01', name: 'Chi tiêu cần thiết', short: 'Cần thiết', description: 'Dành cho sách vở, đồ dùng học tập và những điều thực sự cần.', icon: ShoppingBag, color: 'sage', reminder: 'Điều cần trước nhé!', example: 'Bút đã hết mực, vở đã hết trang: đây là lúc ưu tiên đồ dùng học tập.', label: 'ƯU TIÊN NHU CẦU' },

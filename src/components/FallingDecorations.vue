@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { motion } from 'motion-v'
-import { Pause, Play, Star } from '@lucide/vue'
+import { Pause, Play } from '@lucide/vue'
+import { PhStar as Star } from '@phosphor-icons/vue'
 import { Button } from '@/components/ui/button'
 
 const container = ref<HTMLElement | null>(null)
@@ -82,7 +83,7 @@ onUnmounted(() => {
             :transition="{ duration: particle.duration / 2, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut' }"
           >
             <span v-if="particle.kind === 'coin'" class="falling-coin"></span>
-            <Star v-else class="falling-star" />
+            <Star weight="duotone" v-else class="falling-star" />
           </motion.span>
         </motion.div>
       </template>

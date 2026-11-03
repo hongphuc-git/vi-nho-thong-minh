@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { motion } from 'motion-v'
-import { ArrowUpRight, Backpack, BookOpen, Heart, Minus, Plus, Sprout, Users } from '@lucide/vue'
+import { ArrowUpRight, Minus, Plus } from '@lucide/vue'
+import { PhBackpack as Backpack, PhBookOpen as BookOpen, PhHeart as Heart, PhPlant as Sprout, PhUsers as Users } from '@phosphor-icons/vue'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 
@@ -20,20 +21,20 @@ const audiences = [
         <div class="quote-paper">
           <p class="paper-label">GÓC ĐỒNG HÀNH</p>
           <h2 id="companion-title">Cùng hỏi, cùng lắng nghe.<br /><span>Lớn lên từ lựa chọn.</span></h2>
-          <div class="quote-message"><Heart aria-hidden="true" /><p>Để mỗi cuộc trò chuyện về tiền trở thành một cơ hội cùng con trưởng thành.</p></div>
-          <Sprout class="quote-sprout" aria-hidden="true" />
+          <div class="quote-message"><Heart weight="duotone" aria-hidden="true" /><p>Để mỗi cuộc trò chuyện về tiền trở thành một cơ hội cùng con trưởng thành.</p></div>
+          <Sprout weight="duotone" class="quote-sprout" aria-hidden="true" />
         </div>
       </motion.div>
       <div class="audience-notes">
         <Card v-for="(audience, index) in audiences" :key="audience.title" class="audience-note">
           <span class="note-number" aria-hidden="true">{{ String(index + 1).padStart(2, '0') }}</span>
           <div><h3>{{ audience.title }}</h3><p>{{ audience.text }}</p></div>
-          <div class="audience-illustration" aria-hidden="true"><component :is="audience.icon" /><Heart /><span></span></div>
+          <div class="audience-illustration" aria-hidden="true"><component weight="duotone" :is="audience.icon" /><Heart weight="duotone" /><span></span></div>
         </Card>
       </div>
     </section>
 
-    <div class="companion-divider" aria-hidden="true"><span></span><Heart /><span></span></div>
+    <div class="companion-divider" aria-hidden="true"><span></span><Heart weight="duotone" /><span></span></div>
 
     <section id="hoi-dap" class="mailbox-section" aria-labelledby="mailbox-title">
       <div class="mailbox-intro">

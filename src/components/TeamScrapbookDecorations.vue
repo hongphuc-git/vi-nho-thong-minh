@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { Heart, Send, Sprout } from '@lucide/vue'
+import { PhHeart as Heart, PhPaperPlaneTilt as Send, PhPlant as Sprout } from '@phosphor-icons/vue'
 </script>
 
 <template>
   <div class="scrapbook-flight" aria-hidden="true">
     <p>Cùng nhau bắt đầu<br />những điều tốt đẹp hơn...</p>
-    <Send class="paper-plane" />
+    <Send weight="duotone" class="paper-plane" />
     <svg class="flight-path" viewBox="0 0 190 60" fill="none"><path d="M5 22C45 70 108 53 119 29C134-7 82-4 91 25C99 50 153 40 181 5" /></svg>
-    <Heart class="flight-heart" />
+    <Heart weight="duotone" class="flight-heart" />
   </div>
-  <div class="scrapbook-leaves" aria-hidden="true"><Sprout /><span>✿</span></div>
+  <div class="scrapbook-leaves" aria-hidden="true"><Sprout weight="duotone" /><span>✿</span></div>
 </template>
 
 <style scoped>

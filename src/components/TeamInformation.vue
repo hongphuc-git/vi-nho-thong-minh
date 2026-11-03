@@ -2,7 +2,8 @@
 import { publicAsset } from '@/lib/publicAsset'
 import { ref, watch } from 'vue'
 import { motion } from 'motion-v'
-import { ArrowUpRight, Calculator, Check, Compass, Heart, Lightbulb, Megaphone, NotebookPen, RefreshCcw, Users, Wallet } from '@lucide/vue'
+import { ArrowUpRight, Check } from '@lucide/vue'
+import { PhCalculator as Calculator, PhCompass as Compass, PhHeart as Heart, PhLightbulb as Lightbulb, PhMegaphone as Megaphone, PhNotebook as NotebookPen, PhArrowsClockwise as RefreshCcw, PhUsers as Users, PhWallet as Wallet } from '@phosphor-icons/vue'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 
@@ -12,10 +13,10 @@ const props = withDefaults(defineProps<{ photoSrc?: string }>(), {
 const photoFailed = ref(false)
 watch(() => props.photoSrc, () => { photoFailed.value = false })
 const members = [
-  { initials: 'TP', photo: publicAsset('/images/team/hoang-thu-phuong-v2.png'), name: 'Hoàng Thu Phượng', nameLines: ['Hoàng Thu', 'Phượng'], role: 'Kế hoạch & điều phối', detail: 'Trưởng nhóm · Thiết kế tổng thể', icon: Compass, color: 'blue' },
-  { initials: 'DL', photo: publicAsset('/images/team/hoang-dieu-linh.png'), name: 'Hoàng Diệu Linh', nameLines: ['Hoàng Diệu', 'Linh'], role: 'Nội dung & truyền thông', detail: 'Thẻ tình huống · Đánh giá trước–sau', icon: Megaphone, color: 'pink' },
-  { initials: 'NH', photo: publicAsset('/images/team/trieu-ngoc-ha.png'), name: 'Triệu Ngọc Hà', nameLines: ['Triệu Ngọc', 'Hà'], role: 'Dự toán & phản hồi', detail: 'Khảo giá và tổng hợp ý kiến', icon: Calculator, color: 'yellow' },
-  { initials: 'HN', photo: publicAsset('/images/team/hoang-thi-hong-nhung.png'), name: 'Hoàng Thị Hồng Nhung', nameLines: ['Hoàng Thị', 'Hồng Nhung'], role: 'Sản phẩm & trải nghiệm', detail: 'Hoàn thiện mẫu và chất lượng', icon: Lightbulb, color: 'sage' },
+  { initials: 'TP', photo: publicAsset('/images/team/hoang-thu-phuong-retouched.png'), name: 'Hoàng Thu Phượng', nameLines: ['Hoàng Thu', 'Phượng'], role: 'Kế hoạch & điều phối', detail: 'Trưởng nhóm · Thiết kế tổng thể', icon: Compass, color: 'blue' },
+  { initials: 'DL', photo: publicAsset('/images/team/hoang-dieu-linh-retouched.png'), name: 'Hoàng Diệu Linh', nameLines: ['Hoàng Diệu', 'Linh'], role: 'Nội dung & truyền thông', detail: 'Thẻ tình huống · Đánh giá trước–sau', icon: Megaphone, color: 'pink' },
+  { initials: 'NH', photo: publicAsset('/images/team/trieu-ngoc-ha-retouched.png'), name: 'Triệu Ngọc Hà', nameLines: ['Triệu Ngọc', 'Hà'], role: 'Dự toán & phản hồi', detail: 'Khảo giá và tổng hợp ý kiến', icon: Calculator, color: 'yellow' },
+  { initials: 'HN', photo: publicAsset('/images/team/hoang-thi-hong-nhung-retouched.png'), name: 'Hoàng Thị Hồng Nhung', nameLines: ['Hoàng Thị', 'Hồng Nhung'], role: 'Sản phẩm & trải nghiệm', detail: 'Hoàn thiện mẫu và chất lượng', icon: Lightbulb, color: 'sage' },
 ]
 </script>
 
@@ -32,14 +33,14 @@ const members = [
           <span class="team-photo-clip" aria-hidden="true"></span>
           <div class="team-photo-paper">
           <img v-if="props.photoSrc && !photoFailed" :src="props.photoSrc" alt="Bốn thành viên nhóm Ví nhỏ thông minh tại cổng trường" loading="lazy" @error="photoFailed = true" />
-          <div v-else class="team-photo-fallback"><Users aria-hidden="true" /><p>Nhóm học sinh lớp 9B1<br />Trường THCS Thượng Long</p></div>
-          <figcaption>Cùng học. Cùng làm. Cùng lớn lên. <Heart aria-hidden="true" /></figcaption>
+          <div v-else class="team-photo-fallback"><Users weight="duotone" aria-hidden="true" /><p>Nhóm học sinh lớp 9B1<br />Trường THCS Thượng Long</p></div>
+          <figcaption>Cùng học. Cùng làm. Cùng lớn lên. <Heart weight="duotone" aria-hidden="true" /></figcaption>
           </div>
-          <span class="team-photo-class">Lớp 9B1 <Heart aria-hidden="true" /></span>
+          <span class="team-photo-class">Lớp 9B1 <Heart weight="duotone" aria-hidden="true" /></span>
         </figure>
         <aside class="team-wish-note" aria-labelledby="team-wish-title">
           <span class="team-wish-tape" aria-hidden="true"></span>
-          <Heart class="team-wish-heart" aria-hidden="true" />
+          <Heart weight="duotone" class="team-wish-heart" aria-hidden="true" />
           <div><h3 id="team-wish-title">Điều chúng mình mong muốn</h3><p>Giúp các bạn học cách dùng tiền có trách nhiệm, bắt đầu từ những lựa chọn nhỏ mỗi ngày.</p></div>
         </aside>
       </div>
@@ -50,9 +51,9 @@ const members = [
         <section class="team-workflow" aria-labelledby="team-workflow-title">
           <h4 id="team-workflow-title">Cách chúng mình làm việc</h4>
           <ol>
-            <li><span class="team-step-tape" aria-hidden="true"></span><div class="team-step-top"><Lightbulb aria-hidden="true" /><span aria-hidden="true">01</span></div><strong>Lên ý tưởng</strong><p>Từ lựa chọn chi tiêu gần gũi mỗi ngày.</p></li>
-            <li><span class="team-step-tape" aria-hidden="true"></span><div class="team-step-top"><NotebookPen aria-hidden="true" /><span aria-hidden="true">02</span></div><strong>Làm học liệu</strong><p>Thiết kế ví, sổ ghi chép và thẻ tình huống.</p></li>
-            <li><span class="team-step-tape" aria-hidden="true"></span><div class="team-step-top"><RefreshCcw aria-hidden="true" /><span aria-hidden="true">03</span></div><strong>Thử & điều chỉnh</strong><p>Nhận góp ý, tiếp tục hoàn thiện mẫu.</p></li>
+            <li><span class="team-step-tape" aria-hidden="true"></span><div class="team-step-top"><span class="team-step-icon"><Lightbulb weight="duotone" aria-hidden="true" /></span><span aria-hidden="true">01</span></div><strong>Lên ý tưởng</strong><p>Từ lựa chọn chi tiêu gần gũi mỗi ngày.</p></li>
+            <li><span class="team-step-tape" aria-hidden="true"></span><div class="team-step-top"><span class="team-step-icon"><NotebookPen weight="duotone" aria-hidden="true" /></span><span aria-hidden="true">02</span></div><strong>Làm học liệu</strong><p>Thiết kế ví, sổ ghi chép và thẻ tình huống.</p></li>
+            <li><span class="team-step-tape" aria-hidden="true"></span><div class="team-step-top"><span class="team-step-icon"><RefreshCcw weight="duotone" aria-hidden="true" /></span><span aria-hidden="true">03</span></div><strong>Thử & điều chỉnh</strong><p>Nhận góp ý, tiếp tục hoàn thiện mẫu.</p></li>
           </ol>
         </section>
       </motion.div>
@@ -69,19 +70,19 @@ const members = [
             <div class="crew-card-heading"><div class="crew-member-label"><strong>VÍ NHỎ THÔNG MINH</strong><span>Thành viên dự án</span></div></div>
             <h4 :aria-label="member.name"><span v-for="line in member.nameLines" :key="line" aria-hidden="true">{{ line }}</span></h4>
             <span class="crew-name-stroke" aria-hidden="true"></span>
-            <div class="crew-task"><span class="crew-task-icon"><component :is="member.icon" aria-hidden="true" /></span><div><span>{{ member.role }}</span><p>{{ member.detail }}</p></div></div>
+            <div class="crew-task"><span class="crew-task-icon"><component weight="duotone" :is="member.icon" aria-hidden="true" /></span><div><span>{{ member.role }}</span><p>{{ member.detail }}</p></div></div>
           </Card>
         </motion.li>
       </ul>
-      <p class="crew-roster-handnote">Mỗi bạn một thế mạnh. Cùng làm nên điều có ích. <Heart aria-hidden="true" /></p>
+      <p class="crew-roster-handnote">Mỗi bạn một thế mạnh. Cùng làm nên điều có ích. <Heart weight="duotone" aria-hidden="true" /></p>
       <div class="crew-support-grid">
       <Card class="mentor-note">
           <span class="mentor-paper-tape" aria-hidden="true"></span>
           <div class="mentor-heading"><span class="mentor-teacher-avatar"><img :src="publicAsset('/images/nguyen-thu-ha-portrait.png')" alt="Cô Nguyễn Thu Hà, giáo viên hướng dẫn dự án" width="1122" height="1402" loading="lazy" /></span><div><p>NGƯỜI ĐỒNG HÀNH</p><h4>Cô Nguyễn Thu Hà</h4><span>Giáo viên Tiếng Anh · Giáo viên hướng dẫn</span><span>Trường THCS Thượng Long</span></div></div>
-          <aside class="mentor-thought"><span class="mentor-thought-tape" aria-hidden="true"></span><p class="mentor-thought-label">MỘT ĐIỀU NHỎ GỬI BẠN</p><p class="mentor-thought-message">Mỗi lựa chọn nhỏ hôm nay,<br /><em>một thói quen tốt cho ngày mai.</em></p><Heart aria-hidden="true" /></aside>
+          <aside class="mentor-thought"><span class="mentor-thought-tape" aria-hidden="true"></span><p class="mentor-thought-label">MỘT ĐIỀU NHỎ GỬI BẠN</p><p class="mentor-thought-message">Mỗi lựa chọn nhỏ hôm nay,<br /><em>một thói quen tốt cho ngày mai.</em></p><Heart weight="duotone" aria-hidden="true" /></aside>
           <div class="mentor-links"><p>Một người đồng hành cùng nhóm<br />trong quá trình xây dựng dự án.</p><Button as-child class="mentor-contact-button"><a href="#lien-he" aria-label="Đến phần liên hệ để trao đổi với cô Nguyễn Thu Hà">Trao đổi cùng cô <ArrowUpRight aria-hidden="true" /></a></Button></div>
         </Card>
-      <div class="crew-project-note"><span class="crew-prototype-sticker" aria-hidden="true"><Wallet /></span><p class="crew-journey-label">TỪ Ý TƯỞNG ĐẾN BỘ MẪU</p><h4>Từng bước nhỏ,<br /><em>để ý tưởng thành hình.</em></h4><div class="crew-progress"><span class="crew-status-label"><span aria-hidden="true"></span> ĐANG HOÀN THIỆN MẪU</span><div class="crew-progress-count"><strong>01 <small>bộ mẫu</small></strong><span>Mục tiêu tiếp theo<br /><b>10 bộ trải nghiệm</b></span></div><div class="crew-prototype-grid" role="progressbar" :aria-valuenow="1" :aria-valuemin="0" :aria-valuemax="10" aria-label="Số bộ mẫu hướng tới mục tiêu trải nghiệm" aria-valuetext="Đã ghi nhận 1 bộ mẫu phiên bản số 1, hướng tới 10 bộ trải nghiệm"><span v-for="number in 10" :key="number" class="crew-prototype-slot" :class="{ 'crew-prototype-recorded': number === 1 }" aria-hidden="true"><Check v-if="number === 1" /><Wallet v-else /><span>{{ String(number).padStart(2, '0') }}</span></span></div><div class="crew-prototype-legend"><span><i aria-hidden="true"></i>Đã có mẫu</span><span><i aria-hidden="true"></i>Mục tiêu tiếp theo</span></div><p>Theo hồ sơ, đến 01/11/2026 đã có 01 bộ mẫu phiên bản số 1. Chín ô còn lại là mục tiêu chuẩn bị, chưa phải bộ đã hoàn thành.</p></div></div>
+      <div class="crew-project-note"><span class="crew-prototype-sticker" aria-hidden="true"><Wallet weight="duotone" /></span><p class="crew-journey-label">TỪ Ý TƯỞNG ĐẾN BỘ MẪU</p><h4>Từng bước nhỏ,<br /><em>để ý tưởng thành hình.</em></h4><div class="crew-progress"><span class="crew-status-label"><span aria-hidden="true"></span> ĐANG HOÀN THIỆN MẪU</span><div class="crew-progress-count"><strong>01 <small>bộ mẫu</small></strong><span>Mục tiêu tiếp theo<br /><b>10 bộ trải nghiệm</b></span></div><div class="crew-prototype-grid" role="progressbar" :aria-valuenow="1" :aria-valuemin="0" :aria-valuemax="10" aria-label="Số bộ mẫu hướng tới mục tiêu trải nghiệm" aria-valuetext="Đã ghi nhận 1 bộ mẫu phiên bản số 1, hướng tới 10 bộ trải nghiệm"><span v-for="number in 10" :key="number" class="crew-prototype-slot" :class="{ 'crew-prototype-recorded': number === 1 }" aria-hidden="true"><span class="crew-mini-wallet"><Wallet weight="duotone" /><Check v-if="number === 1" class="crew-wallet-check" /></span><span class="crew-wallet-number">{{ String(number).padStart(2, '0') }}</span></span></div><div class="crew-prototype-legend"><span><i aria-hidden="true"></i>Đã có mẫu</span><span><i aria-hidden="true"></i>Mục tiêu tiếp theo</span></div><p>Theo hồ sơ, đến 01/11/2026 đã có 01 bộ mẫu phiên bản số 1. Chín ô còn lại là mục tiêu chuẩn bị, chưa phải bộ đã hoàn thành.</p></div></div>
       </div>
     </section>
   </section>
@@ -222,8 +223,8 @@ const members = [
 @media (max-width: 650px) { .mentor-school-logo { width: 62px; height: 62px; } .crew-progress-count > strong { font-size: 34px; } .crew-card h4 { min-height: 0; } }
 @media (max-width: 500px) { .team-eyebrow, .team-signature-label { font-size: var(--text-small); } .crew-card-heading { margin-bottom: 15px; } .crew-member-label { font-size: var(--text-small); } .mentor-heading h4 { font-size: 21px; } }
 
-.mentor-teacher-avatar { display: block; width: 76px; height: 76px; flex-shrink: 0; overflow: hidden; border: 3px solid #fffdf7; border-radius: 50%; background: #fff8eb; box-shadow: 0 0 0 1px #ddd0bb; }
-.mentor-teacher-avatar > img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 33%; transform: scale(2.5); transform-origin: 50% 33%; }
+.mentor-teacher-avatar { position: relative; display: block; width: 76px; height: 76px; flex-shrink: 0; overflow: hidden; border: 3px solid #fffdf7; border-radius: 50%; background: #fff8eb; box-shadow: 0 0 0 1px #ddd0bb; }
+.mentor-teacher-avatar > img { position: absolute; display: block; left: -75%; top: -49.5%; width: 250%; max-width: none; height: 250%; object-fit: cover; object-position: 50% 33%; }
 @media (max-width: 650px) { .mentor-teacher-avatar { width: 62px; height: 62px; } }
 /* Member stationery cards. */
 .crew-roster-heading { display: block; margin-bottom: 42px; text-align: center; }
@@ -268,7 +269,7 @@ const members = [
 .mentor-heading p { color: #6f593f; font-size: 12px; letter-spacing: 1px; }
 .mentor-heading h4 { font-size: clamp(23px, 2vw, 28px); margin-top: 7px; }
 .mentor-heading > div > span { font-size: 13px; line-height: 1.85; }
-.mentor-teacher-avatar { width: 96px; height: 112px; border-radius: 35px 35px 8px 8px; border: 4px solid #fffdf7; box-shadow: 0 0 0 1px #d7c6ab, 2px 4px 0 #e9dbc5; transform: rotate(-3deg); }
+.mentor-teacher-avatar { width: 96px; height: 112px; border-radius: 35px 35px 8px 8px; border: 4px solid #fffdf7; box-shadow: 0 0 0 1px #d7c6ab, 2px 4px 0 #e9dbc5; }
 .mentor-links { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding: 20px 0 0; border-left: 0; border-top: 1px dashed #d9c8ad; }
 .mentor-links > p { font-family: 'Lora', Georgia, serif; font-style: italic; font-size: 13px; line-height: 1.8; color: #7b644c; }
 .mentor-links .mentor-contact-button { display: inline-flex; justify-content: center; gap: 10px; min-height: 46px; height: auto; padding: 10px 16px; border: 1px solid #624331; border-radius: 24px; background: #624331; color: #fffaf0; font-size: 13px; line-height: 1.7; text-decoration: none; }
@@ -303,10 +304,18 @@ const members = [
 .crew-prototype-sticker { position: absolute; right: 27px; top: 45px; display: grid; place-items: center; width: 51px; height: 57px; border: 3px solid #fffdf4; border-radius: 15px; background: #e1ebd4; color: #6c8251; box-shadow: 2px 3px 0 #ced9be; transform: rotate(9deg); }
 .crew-prototype-sticker svg { width: 30px; height: 30px; stroke-width: 1.4; }
 .crew-prototype-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 9px; margin-top: 17px; }
-.crew-prototype-slot { display: grid; justify-items: center; gap: 5px; padding: 10px 5px 8px; border: 1px dashed #bac8aa; border-radius: 5px 9px 5px 9px; background: #ffffff4d; color: #748067; }
-.crew-prototype-slot > svg { width: 25px; height: 25px; stroke-width: 1.4; }
-.crew-prototype-slot > span { font-family: 'Lora', Georgia, serif; font-size: 12px; line-height: 1.4; }
-.crew-prototype-recorded { background: #dce9cc; border: 1px solid #a4bb8b; color: #486231; box-shadow: 0 2px 0 #bfd0ab; }
+.crew-prototype-slot { --wallet-ink: #447c9d; --wallet-paper: #e6f2fa; --wallet-edge: #bdd9e9; display: grid; justify-items: center; gap: 7px; min-width: 0; padding: 13px 5px 10px; border: 1px dashed var(--wallet-edge); border-radius: 12px; background: var(--wallet-paper); color: var(--wallet-ink); }
+.crew-prototype-slot:nth-child(5n + 2) { --wallet-ink: #b45c7e; --wallet-paper: #fce7ef; --wallet-edge: #e7b7c9; }
+.crew-prototype-slot:nth-child(5n + 3) { --wallet-ink: #a47925; --wallet-paper: #fff1ca; --wallet-edge: #e6ce8a; }
+.crew-prototype-slot:nth-child(5n + 4) { --wallet-ink: #7e65aa; --wallet-paper: #f0e9fa; --wallet-edge: #d2c1e7; }
+.crew-prototype-slot:nth-child(5n + 5) { --wallet-ink: #4d8873; --wallet-paper: #e4f3e9; --wallet-edge: #bad9c7; }
+.crew-mini-wallet { position: relative; display: grid; place-items: center; width: 44px; max-width: 100%; height: 40px; transform: rotate(-7deg); }
+.crew-mini-wallet > svg:first-child { width: 40px; max-width: 100%; height: 40px; filter: drop-shadow(0 2px 0 #ffffffb3); }
+.crew-mini-wallet > svg:first-child [opacity] { opacity: .35; }
+.crew-prototype-slot:nth-child(even) .crew-mini-wallet { transform: rotate(6deg); }
+.crew-prototype-slot .crew-wallet-check { position: absolute; right: -3px; bottom: -1px; width: 18px; height: 18px; padding: 3px; border: 2px solid #fffaf0; border-radius: 50%; background: #567b3d; color: #fff; }
+.crew-wallet-number { font-family: 'Lora', Georgia, serif; font-size: 13px; line-height: 1.4; font-variant-numeric: tabular-nums; }
+.crew-prototype-slot.crew-prototype-recorded { --wallet-ink: #527438; --wallet-paper: #e0edce; --wallet-edge: #a7c383; border: 2px solid var(--wallet-edge); box-shadow: 0 3px 0 #b8ce9b66; }
 .crew-prototype-legend { display: flex; flex-wrap: wrap; gap: 8px 17px; margin-top: 13px; }
 .crew-prototype-legend > span { display: flex; align-items: center; gap: 6px; font-size: 12px; line-height: 1.7; color: #5b6b4e; }
 .crew-prototype-legend i { width: 9px; height: 9px; border-radius: 2px; background: #bed2a5; }
@@ -335,12 +344,18 @@ const members = [
 .team-workflow li:nth-child(2) .team-step-tape { background: #aac6d366; transform: rotate(3deg); }
 .team-workflow li:nth-child(3) .team-step-tape { background: #b5c59e66; }
 .team-step-top { display: flex; justify-content: space-between; align-items: center; gap: 6px; margin-bottom: 11px; color: #705b3c; }
-.team-step-top svg { width: 22px; height: 22px; stroke-width: 1.5; flex-shrink: 0; }
+.team-step-top .team-step-icon { display: grid; place-items: center; width: 48px; height: 48px; flex-shrink: 0; border: 2px solid #fffaf0; border-radius: 15px; background: #ffe19a; color: #98651c; box-shadow: 0 2px 0 #a9782420; }
+.team-workflow li:nth-child(2) .team-step-icon { background: #bddff2; color: #326889; }
+.team-workflow li:nth-child(3) .team-step-icon { background: #d3e3b6; color: #577735; }
+.team-step-top svg { width: 30px; height: 30px; flex-shrink: 0; }
 .team-step-top > span { font-family: 'Lora', Georgia, serif; font-size: 12px; color: #78654e; }
 .team-workflow strong { display: block; font-size: 14px; line-height: 1.65; font-weight: 600; color: #5c4430; }
 .team-workflow li p { margin-top: 6px; font-size: 13px; line-height: 1.75; color: #6e583f; }
 @media (max-width: 1100px) and (min-width: 801px), (max-width: 500px) { .team-workflow ol { grid-template-columns: 1fr; gap: 15px; margin-top: 19px; } .team-workflow li { display: grid; grid-template-columns: 31px minmax(0, 1fr); column-gap: 10px; min-height: 0; padding: 16px 14px; } .team-step-top { grid-column: 1; grid-row: 1 / span 2; flex-direction: column; justify-content: flex-start; margin: 0; gap: 5px; } .team-workflow strong, .team-workflow li p { grid-column: 2; } .team-workflow li p { margin-top: 3px; } .team-step-tape { left: auto; right: 17px; width: 30px; } }
 /* Member portraits share the same paper frame and crop. */
+@media (max-width: 1100px) and (min-width: 801px), (max-width: 500px) {
+  .team-workflow li { grid-template-columns: 48px minmax(0, 1fr); column-gap: 13px; }
+}
 .crew-member-photo { position: relative; width: 100%; aspect-ratio: 4 / 5; padding: 7px 7px 15px; margin: 0 0 20px; background: #fffef9; border: 1px solid #e1d2bd; border-radius: 3px; box-shadow: 2px 4px 0 #cfbfa733; transform: rotate(-1.5deg); }
 .crew-member-photo::after { content: ''; position: absolute; top: -8px; left: calc(50% - 23px); width: 46px; height: 17px; background: repeating-linear-gradient(45deg, #fff9e7bb 0 5px, var(--crew-tab) 5px 10px); opacity: .8; transform: rotate(4deg); pointer-events: none; }
 .crew-member-photo img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 35%; border-radius: 1px; }
